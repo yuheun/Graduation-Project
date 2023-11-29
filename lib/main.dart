@@ -157,9 +157,9 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(" user_name 님",
-                          style: TextStyle(fontSize: 28)), // 이름 받아오는 기능 만들어야함
+                          style: TextStyle(fontSize: 25)), // 이름 받아오는 기능 만들어야함
                       Text(" 위치: 서울특별시 00구 00로",
-                          style: TextStyle(fontSize: 20)), // 위치 받아오는 기능 만들어야함
+                          style: TextStyle(fontSize: 17)), // 위치 받아오는 기능 만들어야함
                     ],
                   ),
                 ),
@@ -190,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     minimumSize:
-                    MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.2452),), //최소 사이즈 설정
+                    MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.229),), //최소 사이즈 설정
                     backgroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 57, 235, 161)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -214,7 +214,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     minimumSize:
-                    MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.2452)), //최소 사이즈 설정
+                    MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.229)), //최소 사이즈 설정
                     backgroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 121, 203, 250)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -247,7 +247,7 @@ class HomeScreen extends StatelessWidget {
               },
               style: ButtonStyle(
                 minimumSize:
-                MaterialStateProperty.all(Size(screenWidth*0.9, screenHeight*0.2452)), //최소 사이즈 설정
+                MaterialStateProperty.all(Size(screenWidth*0.9, screenHeight*0.229)), //최소 사이즈 설정
                 backgroundColor: MaterialStateProperty.all<Color>(
                     const Color.fromARGB(255, 130, 155, 255)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(

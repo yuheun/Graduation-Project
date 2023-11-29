@@ -82,7 +82,7 @@ class PersonalInfoScreen extends StatelessWidget {
             },
             child: Container(
               width: double.infinity,
-              height: 400,
+              height: 350,
               color: const Color.fromARGB(255, 121, 203, 250),
               child: const Center(
                 child: Text(
