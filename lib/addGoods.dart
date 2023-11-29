@@ -162,7 +162,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
                     _pickIMGFile(ImageSource.gallery);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, // 갤러리 버튼 색상
+                    primary: Color.fromARGB(255, 130, 155, 255), // 갤러리 버튼 색상
                     onPrimary: Colors.white, // 갤러리 텍스트 색상
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0), // 버튼 모서리를 조절
@@ -178,13 +178,15 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
                     ],
                   ),
                 ),
+
                 const SizedBox(width: 15), // 간격 조절
+
                 ElevatedButton(
                   onPressed: () {
                     _pickIMGFile(ImageSource.camera);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green, // 카메라 버튼 색상
+                    primary: Color.fromARGB(230, 170, 173, 173), // 카메라 버튼 색상
                     onPrimary: Colors.white, // 카메라 텍스트 색상
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0), // 버튼 모서리를 조절합니다.
