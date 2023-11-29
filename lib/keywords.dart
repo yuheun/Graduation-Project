@@ -48,7 +48,11 @@ class KeywordsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('알림받는 키워드'),
+        title: const Text('알림받는 키워드',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

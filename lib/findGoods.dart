@@ -50,7 +50,11 @@ class FindGoodsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('분실물 찾기'),
+        title: const Text('분실물 찾기',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

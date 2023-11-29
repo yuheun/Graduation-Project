@@ -52,7 +52,11 @@ class CommunityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('동네 커뮤니티'),
+        title: const Text('동네 커뮤니티',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

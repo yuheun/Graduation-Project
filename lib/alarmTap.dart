@@ -110,7 +110,11 @@ class _AlarmTapScreenState extends State<AlarmTapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_tabTitles[_currentIndex]),
+        title: Text(_tabTitles[_currentIndex],
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

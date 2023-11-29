@@ -48,7 +48,11 @@ class GoodsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('우리 동네 분실물 목록'),
+        title: const Text('우리 동네 분실물 목록',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
