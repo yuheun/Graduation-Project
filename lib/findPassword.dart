@@ -64,7 +64,11 @@ class _FindPasswordScreenState extends State<FindPasswordScreen>{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('비밀번호 찾기'),
+        title: const Text('비밀번호 찾기',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -90,17 +94,26 @@ class _FindPasswordScreenState extends State<FindPasswordScreen>{
                 width:300,
                 child: TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: '이메일 주소'),
+                  decoration: const InputDecoration(labelText: '이메일 주소',
+                      labelStyle: TextStyle(fontSize: 20,
+                        fontFamily: 'HakgyoansimDoldam',
+                        fontWeight: FontWeight.w700,)
+                  ),
                 ),
               ),
             ),
 
             const SizedBox(height: 16.0),
+
             ElevatedButton(
               onPressed: () {
                 _findPassword();
               },
-              child: const Text('비밀번호 찾기'),
+              child: const Text('비밀번호 찾기',
+                  style: TextStyle(fontSize: 20,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w700,)
+              ),
             ),
           ],
         ),
@@ -149,8 +162,16 @@ class _FindPasswordScreenState extends State<FindPasswordScreen>{
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('비밀번호 찾기'),
-          content: const Text('비밀번호 찾기 이메일이 전송되었습니다.'),
+          title: const Text('이메일 전송 완료',
+                    style: TextStyle(fontSize: 30,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w500,)
+          ),
+          content: const Text('비밀번호 찾기 이메일이 전송되었습니다.',
+                      style: TextStyle(fontSize: 15,
+                        fontFamily: 'HakgyoansimDoldam',
+                        fontWeight: FontWeight.w300,)
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {

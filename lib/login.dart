@@ -59,7 +59,7 @@ void goToAnotherPage(BuildContext context, String pageName){
 
 
 class LoginScreen extends StatefulWidget{
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -69,14 +69,11 @@ class LoginScreen extends StatefulWidget{
 class _LoginScreenState extends State<LoginScreen>{
   UserData? registeredUser; // Store the registered user data
 
-
   @override
   Widget build(BuildContext context) {
 
-
     TextEditingController idController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-
 
     void login() {
       String logId = idController.text;
@@ -102,7 +99,9 @@ class _LoginScreenState extends State<LoginScreen>{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('로그인'),
+        title: const Text('로그인', style: TextStyle(fontSize: 25,
+          fontFamily: 'HakgyoansimDoldam',
+          fontWeight: FontWeight.w600,)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -126,7 +125,11 @@ class _LoginScreenState extends State<LoginScreen>{
               width: 200,
               child: TextField(
                 controller: idController,
-                decoration: const InputDecoration(labelText: 'ID'),
+                decoration: const InputDecoration(labelText: 'ID',
+                    labelStyle: TextStyle(fontSize: 25,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,)
+                ),
                 maxLines: 1,
               ),
             ),
@@ -134,7 +137,11 @@ class _LoginScreenState extends State<LoginScreen>{
               width: 200,
               child: TextField(
                 controller: passwordController,
-                decoration: const InputDecoration(labelText: 'PW'),
+                decoration: const InputDecoration(labelText: 'PW',
+                    labelStyle: TextStyle(fontSize: 25,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,)
+                ),
                 maxLines: 1,
                 obscureText: true, // Hide the password
               ),
@@ -151,9 +158,12 @@ class _LoginScreenState extends State<LoginScreen>{
                 login();
               },
               child: Container(
-                width: 150, height: 40,
+                width: 150, height: 50,
                 alignment: Alignment.center,
-                child: const Text('로그인', style: TextStyle(fontSize: 25)),
+                child: const Text('로그인', style: TextStyle(fontSize: 32,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)
+                ),
               ),
             ),
 
@@ -168,7 +178,10 @@ class _LoginScreenState extends State<LoginScreen>{
                   onPressed: () {
                     goToAnotherPage(context, "JoinScreen");
                   },
-                  child: const Text('회원가입', style: TextStyle(fontSize: 20, decoration: TextDecoration.underline)),
+                  child: const Text('회원가입', style: TextStyle(fontSize: 25,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline)),
                 ),
 
 
@@ -179,7 +192,10 @@ class _LoginScreenState extends State<LoginScreen>{
                   onPressed: () {
                     goToAnotherPage(context, "FindPasswordScreen");
                   },
-                  child: const Text('비밀번호 찾기', style: TextStyle(fontSize: 20, decoration: TextDecoration.underline)),
+                  child: const Text('비밀번호 찾기', style: TextStyle(fontSize: 25,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline)),
                 ),
               ],
             ),

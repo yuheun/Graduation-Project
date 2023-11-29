@@ -53,13 +53,17 @@ void goToAnotherPage(BuildContext context, String pageName) {
 
 
 class PersonalInfoScreen extends StatelessWidget {
-  const PersonalInfoScreen({super.key});
+  const PersonalInfoScreen({Key? key}) : super(key:key);
+
+  //const PersonalInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('개인정보'),
+        title: const Text('개인정보',
+            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -81,15 +85,25 @@ class PersonalInfoScreen extends StatelessWidget {
               goToAnotherPage(context, "LoginScreen");
             },
             child: Container(
-              width: double.infinity,
-              height: 350,
-              color: const Color.fromARGB(255, 121, 203, 250),
+              height: 300,
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color.fromARGB(255, 84, 224, 255),
+                    Color.fromARGB(230, 106, 255, 204),
+                  ],
+                ),
+              ),
+
               child: const Center(
                 child: Text(
                   '로그인 해주세요 :)',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                    fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -111,7 +125,10 @@ class PersonalInfoScreen extends StatelessWidget {
                 SizedBox(width:10),
                 Icon(Icons.note, size: 40),
                 SizedBox(width: 20),
-                Text("내 게시글 보기", style: TextStyle(fontSize: 30)),
+                Text("내 게시글 보기", style: TextStyle(fontSize: 32,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,)
+                ),
               ],
             ),
           ),
@@ -130,7 +147,9 @@ class PersonalInfoScreen extends StatelessWidget {
                 SizedBox(width:10),
                 Icon(Icons.person, size: 40),
                 SizedBox(width: 20),
-                Text("프로필 수정", style: TextStyle(fontSize: 30)),
+                Text("프로필 수정", style: TextStyle(fontSize: 32,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)),
               ],
             ),
           ),
@@ -149,7 +168,9 @@ class PersonalInfoScreen extends StatelessWidget {
                 SizedBox(width:10),
                 Icon(Icons.lock, size: 40),
                 SizedBox(width: 20),
-                Text("비밀번호 변경", style: TextStyle(fontSize: 30)),
+                Text("비밀번호 변경", style: TextStyle(fontSize: 32,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)),
               ],
             ),
           ),
@@ -168,7 +189,9 @@ class PersonalInfoScreen extends StatelessWidget {
                 SizedBox(width:10),
                 Icon(Icons.account_circle, size: 40),
                 SizedBox(width: 20),
-                Text("회원 탈퇴", style: TextStyle(fontSize: 30)),
+                Text("회원 탈퇴", style: TextStyle(fontSize: 32,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)),
               ],
             ),
           ),

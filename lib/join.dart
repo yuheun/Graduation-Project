@@ -91,7 +91,11 @@ class _JoinScreenState extends State<JoinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('회원가입'),
+        title: const Text('회원가입',
+            style: TextStyle(fontSize: 25,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -120,7 +124,9 @@ class _JoinScreenState extends State<JoinScreen> {
               onPressed: () {
                 performSignUp(userData);
               },
-              child: const Text('회원가입', style: TextStyle(fontSize: 25)),
+              child: const Text('회원가입', style: TextStyle(fontSize: 25,
+                fontFamily: 'HakgyoansimDoldam',
+                fontWeight: FontWeight.w700,)),
             ),
           ],
         ),
@@ -166,11 +172,17 @@ class _JoinScreenState extends State<JoinScreen> {
         children: [
           SizedBox(
             width: 70,
-            child: Text(label),
+            child: Text(label, style: TextStyle(fontSize: 18,
+              fontFamily: 'HakgyoansimDoldam',
+              fontWeight: FontWeight.w700,)),
           ),
           Flexible(
             child: TextField(
-                decoration: InputDecoration(hintText: hint),
+                decoration: InputDecoration(hintText: hint,
+                                            hintStyle: TextStyle(fontSize: 20,
+                                              fontFamily: 'HakgyoansimDoldam',
+                                              fontWeight: FontWeight.w700,)
+                ),
                 controller: TextEditingController(text: value),
                 onChanged: (text) {
                   //Update in UserData
@@ -195,7 +207,10 @@ class _JoinScreenState extends State<JoinScreen> {
                 // 해당 버튼을 누를 때 실행할 작업
                 // 예: checkDuplication();
               },
-              child: Text(actionText),
+              child: Text(actionText, style: TextStyle(fontSize: 15,
+                fontFamily: 'HakgyoansimDoldam',
+                fontWeight: FontWeight.w700,),
+              ),
             ),
         ],
       ),
@@ -208,13 +223,21 @@ class _JoinScreenState extends State<JoinScreen> {
       width: 300,
       child: Row(
         children: [
-          SizedBox(width: 70, child: Text(label)),
+          SizedBox(width: 70, child: Text(label,
+              style: TextStyle(fontSize: 18,
+                fontFamily: 'HakgyoansimDoldam',
+                fontWeight: FontWeight.w700,)
+          )),
           Flexible(
             child: TextField(
               obscureText: true,
-              decoration: InputDecoration(hintText: hint),
-              controller:
-              _passwordController, // 비밀번호 필드에 _passwordController 사용
+              decoration: InputDecoration(hintText: hint,
+                hintStyle: TextStyle(fontSize: 20,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,
+                )
+              ),
+              controller: _passwordController, // 비밀번호 필드에 _passwordController 사용
               onChanged: (text) {
                 switch (label) {
                   case "PW":
@@ -234,11 +257,21 @@ class _JoinScreenState extends State<JoinScreen> {
       width: 300,
       child: Row(
         children: [
-          SizedBox(width: 70, child: Text(label)),
+          SizedBox(width: 70, child: Text(label,
+              style: TextStyle(fontSize: 18,
+                fontFamily: 'HakgyoansimDoldam',
+                fontWeight: FontWeight.w700,)
+            )
+          ),
           Flexible(
             child: TextField(
               obscureText: true,
-              decoration: InputDecoration(hintText: hint),
+              decoration: InputDecoration(hintText: hint,
+                hintStyle: TextStyle(fontSize: 20,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               controller: _confirmationController,
               onChanged: (_) {
                 checkPasswordMatch();
@@ -291,19 +324,30 @@ class _JoinScreenState extends State<JoinScreen> {
 
     if (emptyFields.isNotEmpty) {
       // Display a pop-up or snackbar indicating the missing information.
-      String message = '다음 필드를 입력해주세요: ${emptyFields.join(', ')}';
+      String message = '다음 필드를 입력해주세요:\n${emptyFields.join(', ')}';
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('입력 오류'),
-            content: Text(message),
+            title: const Text('입력 오류',
+                style: TextStyle(fontSize: 30,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)
+            ),
+            content: Text(message,
+                style: TextStyle(fontSize: 20,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)
+            ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('확인'),
+                child: const Text('확인',
+                    style: TextStyle(fontSize: 20,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,)),
               ),
             ],
           );
