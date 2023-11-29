@@ -25,3 +25,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: HakgyoansimDoldam
+      fonts:
+        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamL.ttf
+        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamM.ttf
+        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamB.ttf

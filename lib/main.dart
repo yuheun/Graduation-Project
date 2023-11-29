@@ -134,7 +134,9 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("분실물 어플"),
+        title: const Text("분실물 어플",
+            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
+            fontWeight: FontWeight.w700,)),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -157,9 +159,15 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(" user_name 님",
-                          style: TextStyle(fontSize: 25)), // 이름 받아오는 기능 만들어야함
+                          style: TextStyle(fontSize: 25,
+                                fontFamily: 'HakgyoansimDoldam',
+                                fontWeight: FontWeight.w800,)
+                          ), // 이름 받아오는 기능 만들어야함
                       Text(" 위치: 서울특별시 00구 00로",
-                          style: TextStyle(fontSize: 17)), // 위치 받아오는 기능 만들어야함
+                          style: TextStyle(fontSize: 18,
+                                fontFamily: 'HakgyoansimDoldam',
+                                fontWeight: FontWeight.w700,)
+                          ), // 위치 받아오는 기능 만들어야함
                     ],
                   ),
                 ),
@@ -203,8 +211,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: const Column(
                     children: [
-                      Icon(Icons.playlist_add, size: 120),
-                      Text("분실물 등록"),
+                      Icon(Icons.playlist_add, size: 130, color: Colors.white,),
+                      Text("분실물 등록",
+                          style: TextStyle(fontSize: 25, color: Colors.white,
+                            fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w700,) ),
                     ],
                   ),
                 ),
@@ -227,8 +237,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: const Column(
                     children: [
-                      Icon(Icons.manage_search, size: 120),
-                      Text("분실물 찾기"),
+                      Icon(Icons.manage_search, size: 130, color: Colors.white,),
+                      Text("분실물 찾기", style: TextStyle(fontSize: 25, color: Colors.white,
+                                                fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w700,)
+                      ),
                     ],
                   ),
                 ),
@@ -260,8 +272,10 @@ class HomeScreen extends StatelessWidget {
               ),
               child: const Column(
                 children: [
-                  Icon(Icons.view_list, size: 130),
-                  Text("우리 동네 분실물 목록"),
+                  Icon(Icons.view_list, size: 130, color: Colors.white,),
+                  Text("우리 동네 분실물 목록", style: TextStyle(fontSize: 25, color: Colors.white,
+                                              fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w700,)
+                  ),
                 ],
               ),
             ),
@@ -287,7 +301,8 @@ class HomeScreen extends StatelessWidget {
                       child: const Icon(Icons.loyalty,
                           size: 100, color: Color.fromARGB(255, 239, 151, 151)),
                     ),
-                    const Text("알림받는 키워드"),
+                    const Text("알림받는 키워드",
+                      style: TextStyle(fontSize: 15, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,),),
                   ],
                 ),
                 Column(
@@ -299,7 +314,8 @@ class HomeScreen extends StatelessWidget {
                       child: const Icon(Icons.apartment,
                           size: 100, color: Color.fromARGB(255, 139, 181, 229)),
                     ),
-                    const Text("내 동네 설정"),
+                    const Text("내 동네 설정",
+                        style: TextStyle(fontSize: 15, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,)),
                   ],
                 ),
                 Column(
@@ -312,7 +328,8 @@ class HomeScreen extends StatelessWidget {
                       child: const Icon(Icons.forum,
                           size: 100, color: Color.fromARGB(255, 255, 180, 93)),
                     ),
-                    const Text("동네 커뮤니티"),
+                    const Text("동네 커뮤니티",
+                        style: TextStyle(fontSize: 15, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,)),
                   ],
                 ),
               ],
