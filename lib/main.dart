@@ -11,10 +11,16 @@ import 'keywords.dart'; // keywords.dart 파일
 import 'personalInfo.dart'; // personalInfo.dart 파일
 import 'searchTap.dart'; // searchTap.dart 파일
 import 'village.dart'; // village.dart 파일
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter 바인딩 초기화
+  await Firebase.initializeApp( // Firebase 초기화
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp()); // 앱 실행
 }
 
 
