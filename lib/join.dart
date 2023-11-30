@@ -109,26 +109,29 @@ class _JoinScreenState extends State<JoinScreen> {
           )
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            buildTextField("이름", "입력해주세요", userData.name),
-            buildTextField("ID", "입력해주세요", userData.id, "중복확인"),
-            buildPasswordField("PW", "입력해주세요", userData.password),
-            buildPasswordConfirmationField("PW 확인", "입력해주세요"),
-            buildTextField("이메일", "입력해주세요", userData.email),
-            buildTextField("닉네임", "입력해주세요", userData.nickname, "중복확인"),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: () {
-                performSignUp(userData);
-              },
-              child: const Text('회원가입', style: TextStyle(fontSize: 25,
-                fontFamily: 'HakgyoansimDoldam',
-                fontWeight: FontWeight.w700,)),
-            ),
-          ],
+
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              buildTextField("이름", "입력해주세요", userData.name),
+              buildTextField("ID", "입력해주세요", userData.id, "중복확인"),
+              buildPasswordField("PW", "입력해주세요", userData.password),
+              buildPasswordConfirmationField("PW 확인", "입력해주세요"),
+              buildTextField("이메일", "입력해주세요", userData.email),
+              buildTextField("닉네임", "입력해주세요", userData.nickname, "중복확인"),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  performSignUp(userData);
+                },
+                child: const Text('회원가입', style: TextStyle(fontSize: 25,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

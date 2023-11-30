@@ -5,6 +5,7 @@ import 'package:fortest/main.dart';
 //import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
+import 'imageDisplay.dart';
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
@@ -80,18 +81,22 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
     final picker = ImagePicker();
     XFile? image = await picker.pickImage(source: source);
 
+    // if (image != null) {
+    //   setState(() {
+    //     _image = image;
+    //   });
+    //
+    //   String fileName = image.name;
+    //   Uint8List fileBytes = await image.readAsBytes();
+    //   debugPrint(fileName);
+
     if (image != null) {
-      setState(() {
-        _image = image;
-      });
-
-      String fileName = image.name;
-      Uint8List fileBytes = await image.readAsBytes();
-      debugPrint(fileName);
-
-      // Perform actions with the file as needed
-      /*    do jobs    */
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ImageDisplayScreen(imagePath: image.path)),
+      );
     }
+
   }
 
   @override
@@ -143,6 +148,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
             //   },
             //   child: const Text('폴더에서 이미지 선택'),
             // ),
+
             _image == null
                 ? const Text('업로드할 방식을 선택하세요',
                 style: TextStyle(fontSize: 28, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,))
