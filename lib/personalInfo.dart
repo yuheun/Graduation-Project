@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-
+import 'seeMyGul.dart';
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
@@ -25,6 +25,12 @@ void goToAnotherPage(BuildContext context, String pageName) {
       );
       break;
 
+    case "SeeMyGulScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SeeMyGulScreen(gulItems: [], imagePath: '', item: '', selectedCategory: '', features: '',  )),
+      );
+      break;
 
     case "CategoryTap":
       Navigator.push(
@@ -32,7 +38,6 @@ void goToAnotherPage(BuildContext context, String pageName) {
         MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
       );
       break;
-
 
     case "SearchTap":
       Navigator.push(
@@ -48,6 +53,8 @@ void goToAnotherPage(BuildContext context, String pageName) {
         MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
+
+
   }
 }
 
@@ -117,8 +124,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
           InkWell(
             onTap: () {
-              // '내 게시글 보기' 버튼을 누를 때 실행할 작업
-              // 예: goToAnotherPage(context, "MyPosts");
+              goToAnotherPage(context, "SeeMyGulScreen");
             },
             child: const Row(
               children: [
