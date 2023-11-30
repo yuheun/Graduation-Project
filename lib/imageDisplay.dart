@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
+import 'imsi_gul.dart';
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
@@ -140,6 +141,26 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                   buildInputField('종류', item),
                   buildCategoryDropdown(), // Added the category dropdown
                   buildInputField('특징', features),
+
+                  SizedBox(height: 7),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImsiGulScreen(
+                            imagePath: widget.imagePath,
+                            item: item,
+                            selectedCategory: selectedCategory,
+                            features: features,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('작성'),
+                  ),
+
                 ],
               ),
             ),
