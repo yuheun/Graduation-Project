@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
@@ -58,18 +60,26 @@ class UserData {
   String password;
   String email;
   String nickname;
+  String? profileImgUrl;
+
   UserData(
       {required this.name,
         required this.id,
         required this.password,
         required this.email,
-        required this.nickname});
+        required this.nickname,
+        this.profileImgUrl,
+      });
 }
 
 
 class _JoinScreenState extends State<JoinScreen> {
   UserData userData =
-  UserData(name: '', id: '', password: '', email: '', nickname: '');
+  UserData(name: '',
+      id: '',
+      password: '',
+      email: '',
+      nickname: '');
 
 
   final TextEditingController _passwordController = TextEditingController();
@@ -122,7 +132,7 @@ class _JoinScreenState extends State<JoinScreen> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                performSignUp(userData);
+                performSignUp(userData, context);
               },
               child: const Text('회원가입', style: TextStyle(fontSize: 25,
                 fontFamily: 'HakgyoansimDoldam',
@@ -179,9 +189,9 @@ class _JoinScreenState extends State<JoinScreen> {
           Flexible(
             child: TextField(
                 decoration: InputDecoration(hintText: hint,
-                                            hintStyle: TextStyle(fontSize: 20,
-                                              fontFamily: 'HakgyoansimDoldam',
-                                              fontWeight: FontWeight.w700,)
+                    hintStyle: TextStyle(fontSize: 20,
+                      fontFamily: 'HakgyoansimDoldam',
+                      fontWeight: FontWeight.w700,)
                 ),
                 controller: TextEditingController(text: value),
                 onChanged: (text) {
@@ -232,12 +242,13 @@ class _JoinScreenState extends State<JoinScreen> {
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                hintStyle: TextStyle(fontSize: 20,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w700,
-                )
+                  hintStyle: TextStyle(fontSize: 20,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w700,
+                  )
               ),
-              controller: _passwordController, // 비밀번호 필드에 _passwordController 사용
+              controller: _passwordController,
+              // 비밀번호 필드에 _passwordController 사용
               onChanged: (text) {
                 switch (label) {
                   case "PW":
@@ -261,7 +272,7 @@ class _JoinScreenState extends State<JoinScreen> {
               style: TextStyle(fontSize: 18,
                 fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700,)
-            )
+          )
           ),
           Flexible(
             child: TextField(
@@ -295,9 +306,30 @@ class _JoinScreenState extends State<JoinScreen> {
   }
 
 
-  void performSignUp(UserData userData) {
-    List<String> emptyFields = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Firebase 사용자 등록 함수
+  Future<void> registerUser(String email, String password, String username, String nickname,
+      String? profileImgUrl) async {
+    // Firebase Authentication을 사용하여 사용자 등록
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    // profileImgUrl이 null이면 기본 이미지로 경로 연결
+    String finalProfileImgUrl = profileImgUrl ?? '기본_이미지_URL';
+
+    // Firestore에 사용자 정보 저장
+    await _firestore.collection('users').doc(userCredential.user!.uid).set({
+      'user_id': userCredential.user!.uid, // Firebase Authentication에서 생성된 UID
+      'email': email,
+      'username': username,
+      'profile_img': finalProfileImgUrl,
+    });
+  }
+
+  void performSignUp(UserData userData, BuildContext context) async {
+    List<String> emptyFields = [];
 
     if (userData.name.isEmpty) {
       emptyFields.add('이름');
@@ -314,7 +346,6 @@ class _JoinScreenState extends State<JoinScreen> {
     if (userData.nickname.isEmpty) {
       emptyFields.add('닉네임');
     }
-
 
     if (_passwordController.text != _confirmationController.text) {
       // Passwords do not match
@@ -354,12 +385,19 @@ class _JoinScreenState extends State<JoinScreen> {
         },
       );
     } else {
-      // Proceed to the next screen if all fields are filled.
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ImsiJoinScreen(userData: userData)),
-      );
+      try {
+        // 모든 필드가 유효한 경우 사용자 등록
+        await registerUser(
+            userData.email,
+            userData.password,
+            userData.name,
+            userData.nickname,
+            userData.profileImgUrl ?? '기본_이미지_URL' // 프로필 이미지 URL이 null일 경우 기본 이미지 URL 사용
+        );
+      } catch (e) {
+        // Firebase 사용자 등록 중 오류 발생 시 처리
+        print(e); // 오류 로깅
+      }
     }
   }
 }
