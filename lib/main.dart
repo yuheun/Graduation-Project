@@ -165,11 +165,11 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text("user_name 님",
+                        Text("  user_name 님",
                             style: TextStyle(fontSize: 25,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w800)),
-                        Text("위치: 서울특별시 00구 00로",
+                        Text("  내 동네: 서울특별시 00구",
                             style: TextStyle(fontSize: 18,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w700)),
@@ -421,4 +421,3 @@ class MenuButton extends StatelessWidget {
     );
   }
 }
-

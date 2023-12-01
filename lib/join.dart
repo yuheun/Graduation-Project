@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'imsi_join.dart';
+import 'login.dart';
 import 'searchTap.dart'; // searchTap.dart 파일
 
 
@@ -42,6 +42,14 @@ void goToAnotherPage(BuildContext context, String pageName) {
         MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
+
+    case "LoginScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+      break;
+
   }
 }
 
@@ -67,7 +75,7 @@ class UserData {
         required this.password,
         required this.email,
         required this.nickname,
-        // this.profileImgUrl,
+        required this.profileImgUrl,
       });
 }
 
@@ -77,7 +85,8 @@ class _JoinScreenState extends State<JoinScreen> {
   UserData(name: '',
       password: '',
       email: '',
-      nickname: '');
+      nickname: '',
+      profileImgUrl: '');
 
 
   final TextEditingController _passwordController = TextEditingController();
@@ -130,6 +139,8 @@ class _JoinScreenState extends State<JoinScreen> {
             ElevatedButton(
               onPressed: () {
                 performSignUp(userData, context);
+                //로그인 화면으로 넘어가기
+                goToAnotherPage(context, "LoginScreen");
               },
               child: const Text('회원가입', style: TextStyle(fontSize: 25,
                 fontFamily: 'HakgyoansimDoldam',

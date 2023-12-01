@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/findPassword.dart';
 import 'package:fortest/main.dart';
-
+import 'loginSuccess.dart';
 import 'alarmTap.dart'; // alarmTap.dart
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'join.dart';
@@ -15,7 +15,7 @@ void main() {
 }
 
 
-void goToAnotherPage(BuildContext context, String pageName){
+void goToAnotherPage(BuildContext context, String pageName, {UserData? userData}){
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
     case "JoinScreen":
@@ -54,9 +54,34 @@ void goToAnotherPage(BuildContext context, String pageName){
         MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
+
+    case "LoginSuccessScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginSuccessScreen(),
+        ),
+      );
+      break;
+
   }
 }
 
+class UserData {
+  String name;
+
+  String password;
+  String email;
+  String nickname;
+  String? profileImgUrl;
+
+  UserData(
+      {required this.name,
+        required this.password,
+        required this.email,
+        required this.nickname,
+        required this.profileImgUrl,
+      });
+}
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({Key? key}) : super(key: key);
@@ -125,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen>{
               width: 200,
               child: TextField(
                 controller: idController,
-                decoration: const InputDecoration(labelText: 'ID',
+                decoration: const InputDecoration(labelText: 'ID(Email)',
                     labelStyle: TextStyle(fontSize: 25,
                       fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w700,)
@@ -154,9 +179,17 @@ class _LoginScreenState extends State<LoginScreen>{
             ElevatedButton(
               onPressed: () {
                 // 로그인 함수 호출
-                // 로그인 함수 만들어야함
                 login();
+                // loginSuccess.dart로 넘어가기
+                if (registeredUser != null) {
+                  goToAnotherPage(
+                    context,
+                    "LoginSuccessScreen",
+                    userData: registeredUser
+                  );
+                }
               },
+
               child: Container(
                 width: 150, height: 50,
                 alignment: Alignment.center,

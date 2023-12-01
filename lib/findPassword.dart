@@ -57,6 +57,23 @@ class FindPasswordScreen extends StatefulWidget{
 }
 
 
+class UserData {
+  String name;
+
+  String password;
+  String email;
+  String nickname;
+  String? profileImgUrl;
+
+  UserData(
+      {required this.name,
+        required this.password,
+        required this.email,
+        required this.nickname,
+        required this.profileImgUrl,
+      });
+}
+
 class _FindPasswordScreenState extends State<FindPasswordScreen>{
   UserData? registeredUser; // Store the registered user data
 
