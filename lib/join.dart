@@ -305,9 +305,6 @@ class _JoinScreenState extends State<JoinScreen> {
     if (userData.name.isEmpty) {
       emptyFields.add('이름');
     }
-    if (userData.id.isEmpty) {
-      emptyFields.add('ID');
-    }
     if (userData.password.isEmpty) {
       emptyFields.add('PW');
     }
