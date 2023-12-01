@@ -35,7 +35,6 @@ class ImsiJoinScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('이름: ${userData.name}', style: const TextStyle(fontSize: 20)),
-            Text('ID: ${userData.id}', style: const TextStyle(fontSize: 20)),
             Text('PW: ${userData.password}', style: const TextStyle(fontSize: 20)),
             Text('이메일: ${userData.email}', style: const TextStyle(fontSize: 20)),
             Text('닉네임: ${userData.nickname}', style: const TextStyle(fontSize: 20)),

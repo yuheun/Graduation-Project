@@ -56,7 +56,7 @@ class JoinScreen extends StatefulWidget {
 
 class UserData {
   String name;
-  String id;
+
   String password;
   String email;
   String nickname;
@@ -64,7 +64,6 @@ class UserData {
 
   UserData(
       {required this.name,
-        required this.id,
         required this.password,
         required this.email,
         required this.nickname,
@@ -76,7 +75,6 @@ class UserData {
 class _JoinScreenState extends State<JoinScreen> {
   UserData userData =
   UserData(name: '',
-      id: '',
       password: '',
       email: '',
       nickname: '');
@@ -124,7 +122,6 @@ class _JoinScreenState extends State<JoinScreen> {
           children: [
             const SizedBox(height: 100),
             buildTextField("이름", "입력해주세요", userData.name),
-            buildTextField("ID", "입력해주세요", userData.id, "중복확인"),
             buildPasswordField("PW", "입력해주세요", userData.password),
             buildPasswordConfirmationField("PW 확인", "입력해주세요"),
             buildTextField("이메일", "입력해주세요", userData.email),
@@ -199,9 +196,6 @@ class _JoinScreenState extends State<JoinScreen> {
                   switch (label) {
                     case "이름":
                       userData.name = text;
-                      break;
-                    case "ID":
-                      userData.id = text;
                       break;
                     case "이메일":
                       userData.email = text;
@@ -310,21 +304,20 @@ class _JoinScreenState extends State<JoinScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Firebase 사용자 등록 함수
-  Future<void> registerUser(String email, String password, String username, String nickname,
-      String? profileImgUrl) async {
+  Future<void> registerUser(String email, String password, String username, String nickname) async {
     // Firebase Authentication을 사용하여 사용자 등록
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
     // profileImgUrl이 null이면 기본 이미지로 경로 연결
-    String finalProfileImgUrl = profileImgUrl ?? '기본_이미지_URL';
+    // String finalProfileImgUrl = profileImgUrl ?? '기본_이미지_URL';
 
     // Firestore에 사용자 정보 저장
     await _firestore.collection('users').doc(userCredential.user!.uid).set({
-      'user_id': userCredential.user!.uid, // Firebase Authentication에서 생성된 UID
       'email': email,
       'username': username,
-      'profile_img': finalProfileImgUrl,
+      'nickname': nickname,
+      // 'profile_img': finalProfileImgUrl,
     });
   }
 
@@ -333,9 +326,6 @@ class _JoinScreenState extends State<JoinScreen> {
 
     if (userData.name.isEmpty) {
       emptyFields.add('이름');
-    }
-    if (userData.id.isEmpty) {
-      emptyFields.add('ID');
     }
     if (userData.password.isEmpty) {
       emptyFields.add('PW');
@@ -392,7 +382,7 @@ class _JoinScreenState extends State<JoinScreen> {
             userData.password,
             userData.name,
             userData.nickname,
-            userData.profileImgUrl ?? '기본_이미지_URL' // 프로필 이미지 URL이 null일 경우 기본 이미지 URL 사용
+            // userData.profileImgUrl ?? '기본_이미지_URL' // 프로필 이미지 URL이 null일 경우 기본 이미지 URL 사용
         );
       } catch (e) {
         // Firebase 사용자 등록 중 오류 발생 시 처리

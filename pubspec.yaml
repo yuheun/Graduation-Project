@@ -22,6 +22,7 @@ dependencies:
   firebase_storage: ^11.5.3
   firebase_in_app_messaging: ^0.7.4+6
   firebase_auth: ^4.15.0
+  firebase_app_check: ^0.2.1+6
 
 dev_dependencies:
   flutter_test:
