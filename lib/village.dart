@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 
-
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     home: VillageScreen(),
   ));
 }
@@ -17,6 +16,14 @@ void main() {
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
+
+    case "HomeScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+      break;
+
     case "CategoryTap":
       Navigator.push(
         context,
@@ -43,11 +50,48 @@ void goToAnotherPage(BuildContext context, String pageName){
 }
 
 
-class VillageScreen extends StatelessWidget {
-  const VillageScreen({super.key});
+class VillageScreen extends StatefulWidget {
+  const VillageScreen({Key? key}) : super(key: key);
+
+  @override
+  _VillageScreenState createState() => _VillageScreenState();
+}
+
+class _VillageScreenState extends State<VillageScreen> {
+  String? selectedDistrict; // Variable to store the selected district
 
   @override
   Widget build(BuildContext context) {
+
+    //자치구 리스트
+    List<String> districts = [
+      '강남구',
+      '강동구',
+      '강북구',
+      '강서구',
+      '관악구',
+      '광진구',
+      '구로구',
+      '금천구',
+      '노원구',
+      '도봉구',
+      '동대문구',
+      '동작구',
+      '마포구',
+      '서대문구',
+      '서초구',
+      '성동구',
+      '성북구',
+      '송파구',
+      '양천구',
+      '영등포구',
+      '용산구',
+      '은평구',
+      '종로구',
+      '중구',
+      '중랑구',
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('내 동네 설정',
@@ -70,10 +114,36 @@ class VillageScreen extends StatelessWidget {
       ),
 
 
-      body: const Center(
-        child: Text(
-          '내 동네 설정',
-          style: TextStyle(fontSize: 24),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 지역구 선택박스버튼
+            for (String district in districts)
+              RadioListTile<String>(
+                title: Text(district),
+                value: district,
+                groupValue: selectedDistrict,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedDistrict = value;
+                  });
+                },
+              ),
+
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (selectedDistrict != null) {
+                  print('Selected District: $selectedDistrict');
+                  goToAnotherPage(context, "HomeScreen");
+                } else {
+                  print('No district selected.');
+                 }
+                },
+              child: const Text('확인'),
+            ),
+          ],
         ),
       ),
 
@@ -109,7 +179,7 @@ class VillageScreen extends StatelessWidget {
         },
       ),
 
-
     );
   }
 }
+

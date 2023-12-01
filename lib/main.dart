@@ -21,13 +21,6 @@ void main() {
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch (pageName) {
-    case "HomeScreen":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-      break;
-
 
     case "AddGoods":
       Navigator.push(
@@ -163,7 +156,7 @@ class HomeScreen extends StatelessWidget {
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w800,)
                           ), // 이름 받아오는 기능 만들어야함
-                      Text(" 위치: 서울특별시 00구 00로",
+                      Text(" 현재 위치: 서울특별시 00구 ",
                           style: TextStyle(fontSize: 18,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w700,)

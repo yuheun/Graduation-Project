@@ -72,7 +72,7 @@ class FindGoodsScreen extends StatelessWidget {
 
       body: const Center(
         child: Text(
-          '분실물 찾기',
+          '분실물 지도에서 찾기\n지도 화면 여기에 넣으면 됨',
           style: TextStyle(fontSize: 24),
         ),
       ),

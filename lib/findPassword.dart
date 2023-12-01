@@ -17,6 +17,13 @@ void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
 
+    case "HomeScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+      break;
+
     case "CategoryTap":
       Navigator.push(
         context,
