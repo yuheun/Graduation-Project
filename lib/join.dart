@@ -382,7 +382,8 @@ class _JoinScreenState extends State<JoinScreen> {
             userData.password,
             userData.name,
             userData.nickname,
-            // userData.profileImgUrl ?? '기본_이미지_URL' // 프로필 이미지 URL이 null일 경우 기본 이미지 URL 사용
+            // userData.profileImgUrl ?? '기본_이미지_URL'
+          // 프로필 이미지 URL이 null일 경우 기본 이미지 URL 사용
         );
       } catch (e) {
         // Firebase 사용자 등록 중 오류 발생 시 처리
