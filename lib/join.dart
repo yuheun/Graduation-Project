@@ -67,7 +67,7 @@ class UserData {
         required this.password,
         required this.email,
         required this.nickname,
-        this.profileImgUrl,
+        // this.profileImgUrl,
       });
 }
 
