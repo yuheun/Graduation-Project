@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen>{
       String logPassword = passwordController.text;
 
       if (registeredUser != null &&
-          logId == registeredUser!.id &&
+          logId == registeredUser!.email &&
           logPassword == registeredUser!.password) {
         // Navigate to the home screen or any other screen upon successful login
         Navigator.pushAndRemoveUntil(
