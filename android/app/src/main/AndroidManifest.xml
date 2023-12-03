@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!--package="com.example.fortest" > -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fortest" >
     <application
         android:label="fortest"
         android:name="${applicationName}"
@@ -23,7 +23,7 @@
               />
             <meta-data
                 android:name="com.naver.maps.map.CLIENT_ID"
-                android:value="gnosf14maf"
+                android:value="afo3a4wxc1"
                 />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

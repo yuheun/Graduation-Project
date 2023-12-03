@@ -15,15 +15,22 @@ import 'village.dart'; // village.dart 파일
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Flutter 바인딩 초기화
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //// Flutter 바인딩 초기화
+  await NaverMapSdk.instance.initialize(
+    clientId: 'gnosf14maf',
+       onAuthFailed: (ex) {
+         print('******** 네이버맵 인증 오류 : $ex ********');
+       });
   await Firebase.initializeApp( // Firebase 초기화
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp()); // 앱 실행
+  runApp(const MaterialApp(
+      home: MyApp(),
+  )); // 앱 실행
 }
-
 
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
