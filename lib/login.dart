@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/findPassword.dart';
 import 'package:fortest/main.dart';
@@ -100,24 +101,30 @@ class _LoginScreenState extends State<LoginScreen>{
     TextEditingController idController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    void login() {
+    Future<void> login() async {
       String logId = idController.text;
       String logPassword = passwordController.text;
 
-      if (registeredUser != null &&
-          logId == registeredUser!.email &&
-          logPassword == registeredUser!.password) {
-        // Navigate to the home screen or any other screen upon successful login
+      try {
+        // Firebase로 로그인 시도
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: logId, password: logPassword);
+
+        // 로그인 성공
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const LoginSuccessScreen()),
               (Route<dynamic> route) => false,
         );
-      } else {
-        // Display an error message or handle unsuccessful login
-        print("Invalid ID or password");
+      } on FirebaseAuthException catch (e) {
+        // Firebase 인증 오류
+        print('로그인 실패: ${e.message}');
+      } catch (e) {
+        // 기타 오류
+        print('로그인 중 오류 발생: $e');
       }
     }
+
 
 
 

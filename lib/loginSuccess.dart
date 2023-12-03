@@ -51,7 +51,7 @@ class UserData {
   String password;
   String email;
   String nickname;
-  String? profileImgUrl;
+  String profileImgUrl;
 
   UserData(
       {required this.name,
@@ -78,7 +78,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
 
     setState(() {
       if (pickedFile != null) {
-        userData.profileImgUrl = File(pickedFile.path) as String?;
+        userData.profileImgUrl = pickedFile.path;
       }
     });
   }
@@ -101,7 +101,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
             userData.profileImgUrl != null
                 ? CircleAvatar(
               radius: 50,
-              backgroundImage: FileImage(userData.profileImgUrl! as File),
+              backgroundImage: FileImage(File(userData.profileImgUrl)),
             )
                 : Container(), // 프로필 사진이 없으면 빈 컨테이너
             SizedBox(height: 20.0),
