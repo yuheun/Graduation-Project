@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'seeMyGul.dart';
@@ -59,10 +61,94 @@ void goToAnotherPage(BuildContext context, String pageName) {
 }
 
 
-class PersonalInfoScreen extends StatelessWidget {
+class UserData {
+  String name;
+
+  String password;
+  String email;
+  String nickname;
+  String? profileImgUrl;
+
+  UserData(
+      {required this.name,
+        required this.password,
+        required this.email,
+        required this.nickname,
+        required this.profileImgUrl,
+      });
+}
+
+
+
+
+class PersonalInfoScreen extends StatefulWidget{
   const PersonalInfoScreen({Key? key}) : super(key:key);
 
-  //const PersonalInfoScreen({super.key});
+  @override
+  _PersonalInfoScreenState createState() => _PersonalInfoScreenState();
+}
+
+class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+
+  UserData userData =
+  UserData(name: '',
+      email: '',
+      nickname: '',
+      profileImgUrl: '',
+      password: '');
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+    if (currentUser != null) {
+      try {
+        // Set a timeout for the data loading process
+        const timeout = Duration(seconds: 10);
+        DocumentSnapshot userDataSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser.uid)
+            .get()
+            .timeout(timeout);
+
+        print("Loaded user data: ${userDataSnapshot.data()}");
+        setState(() {
+          userData = UserData(
+            name: userDataSnapshot['username'],
+            email: currentUser.email ?? '',
+            nickname: userDataSnapshot['nickname'],
+            profileImgUrl: userDataSnapshot['profileImgUrl'],
+            password: '',
+          );
+          isLoading = false;
+        });
+      } catch (e) {
+        // Handle timeout or other errors
+        print("Error loading user data: $e");
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Function to handle logout
+  Future<void> handleLogout() async {
+    await FirebaseAuth.instance.signOut();
+    // Redirect to the login screen after logout
+    goToAnotherPage(context, "LoginScreen");
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +178,7 @@ class PersonalInfoScreen extends StatelessWidget {
               goToAnotherPage(context, "LoginScreen");
             },
             child: Container(
+              width: double.infinity,
               height: 300,
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
@@ -105,23 +192,43 @@ class PersonalInfoScreen extends StatelessWidget {
                 ),
               ),
 
-              child: const Center(
-                child: Text(
-                  '로그인 해주세요 :)',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Show loading indicator while data is being fetched
+                  isLoading
+                      ? CircularProgressIndicator()
+                      : Column(
+                    children: [
+                      // 사용자가 로그인한 경우 프로필 이미지를 표시
+                      if (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
+                        CircleAvatar(
+                          radius: 80,
+                          backgroundImage: NetworkImage(userData.profileImgUrl!),
+                        ),
+                      const SizedBox(height: 20),
+                      // 닉네임이 있는 경우 환영 메시지 표시, 없으면 로그인 안내 텍스트 표시
+                      Text(
+                        userData.nickname != null && userData.nickname.isNotEmpty
+                            ? '${userData.nickname} 님 환영합니다 :)'
+                            : '로그인 해주세요 :)',
+                        style: const TextStyle(
+                          fontSize: 35,
+                          fontFamily: 'HakgyoansimDoldam',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                ],
               ),
-            ),
           ),
 
-
+          ),
           const SizedBox(height: 30),
 
-
+          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
           InkWell(
             onTap: () {
               goToAnotherPage(context, "SeeMyGulScreen");
@@ -132,8 +239,8 @@ class PersonalInfoScreen extends StatelessWidget {
                 Icon(Icons.note, size: 40),
                 SizedBox(width: 20),
                 Text("내 게시글 보기", style: TextStyle(fontSize: 32,
-                      fontFamily: 'HakgyoansimDoldam',
-                      fontWeight: FontWeight.w700,)
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)
                 ),
               ],
             ),
@@ -142,7 +249,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-
+          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
           InkWell(
             onTap: () {
               // '프로필 수정' 버튼을 누를 때 실행할 작업
@@ -163,7 +270,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-
+          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
           InkWell(
             onTap: () {
               // '비밀번호 변경' 버튼을 누를 때 실행할 작업
@@ -184,7 +291,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-
+          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
           InkWell(
             onTap: () {
               // '회원 탈퇴' 버튼을 누를 때 실행할 작업
@@ -201,6 +308,25 @@ class PersonalInfoScreen extends StatelessWidget {
               ],
             ),
           ),
+
+
+          const SizedBox(height: 20),
+
+          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
+          InkWell(
+            onTap: handleLogout,
+            child: const Row(
+              children: [
+                SizedBox(width:10),
+                Icon(Icons.logout, size: 40),
+                SizedBox(width: 20),
+                Text("로그아웃", style: TextStyle(fontSize: 32,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w700,)),
+              ],
+            ),
+          ),
+
         ],
       ),
 
