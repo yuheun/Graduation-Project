@@ -180,7 +180,8 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
               },
               child: Text('홈으로'),
             ),
