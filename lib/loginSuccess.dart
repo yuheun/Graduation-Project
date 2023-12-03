@@ -148,43 +148,45 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
         title: Text('로그인 성공'),
       ),
 
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-          CircleAvatar(
-          radius: 50,
-          backgroundImage: (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
-              ? NetworkImage(userData.profileImgUrl!)
-              : AssetImage('assets/image/default_image.png') as ImageProvider<Object>,
-          ),
-            SizedBox(height: 20.0),
-            // 갤러리에서 사진 고르기 버튼
-            ElevatedButton(
-              onPressed: _pickImageFromGallery,
-              child: Text('갤러리에서 사진 고르기'),
-            ),
-
-            SizedBox(height: 20.0),
-
-            Text(
-              '${userData.nickname ?? "사용자"} 님 환영합니다!',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
+                  ? NetworkImage(userData.profileImgUrl!)
+                  : AssetImage('assets/image/default_image.png') as ImageProvider<Object>,
               ),
-            ),
+              SizedBox(height: 20.0),
+              // 갤러리에서 사진 고르기 버튼
+              ElevatedButton(
+                onPressed: _pickImageFromGallery,
+                child: Text('갤러리에서 사진 고르기'),
+              ),
 
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              },
-              child: Text('홈으로'),
-            ),
-          ],
+              SizedBox(height: 20.0),
+
+              Text(
+                '${userData.nickname ?? "사용자"} 님 환영합니다!',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: Text('홈으로'),
+              ),
+            ],
+          ),
         ),
       ),
 

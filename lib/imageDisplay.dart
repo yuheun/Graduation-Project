@@ -1,5 +1,8 @@
-import 'dart:io';
+// 글 작성하는 화면!
+// 이거 파베로 넘기면 될거 같아
+// 일단 코드 짜두긴 했는데 이게 이렇게 하는게 맞나..
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'imsi_gul.dart';

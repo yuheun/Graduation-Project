@@ -11,7 +11,6 @@ import 'keywords.dart'; // keywords.dart 파일
 import 'personalInfo.dart'; // personalInfo.dart 파일
 import 'searchTap.dart'; // searchTap.dart 파일
 import 'village.dart'; // village.dart 파일
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -46,12 +45,12 @@ void goToAnotherPage(BuildContext context, String pageName) {
       break;
 
 
-    case "FindGoods":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const FindGoodsScreen()),
-      );
-      break;
+    // case "FindGoods":
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => /*const*/ FindGoodsScreen()),
+    //   );
+    //   break;
 
 
     case "PersonalInfo":
@@ -220,7 +219,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      goToAnotherPage(context, "FindGoods");
+                      // goToAnotherPage(context, "FindGoods");
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const FindGoodsScreen()));
                     },
                     style: ButtonStyle(
                       minimumSize:

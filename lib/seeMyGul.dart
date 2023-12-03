@@ -1,8 +1,5 @@
 //
-// 이거는 그냥 내가 확인해보려고 만든건데...
-// 글 리스트가 떠야하는데 안 뜨네...
-// 백엔드 쪽에서 데이터 받아오는거로 바꿔야할 듯...
-// 내 쪽에서 왜 안 뜨지...
+// 글 리스트 받는거 파베랑 연결시켜서 하면 될거 같은데 음음
 //
 
 import 'dart:io';
@@ -85,11 +82,19 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
       ),
 
 
-      body: ListView.builder(
-        itemCount: widget.gulItems!.length,
-        itemBuilder: (context, index) {
-          return _buildGulItem(widget.gulItems[index]);
-        },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: widget.gulItems.length,
+              itemBuilder: (context, index) {
+                return _buildGulItem(widget.gulItems[index]);
+              },
+            ),
+          ],
+        ),
       ),
 
       // 하단 탭바 (카테고리, 검색, 알림)
