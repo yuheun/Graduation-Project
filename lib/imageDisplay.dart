@@ -5,10 +5,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-import 'imsi_gul.dart';
+//import 'imsi_gul.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
+import 'imsi_gul.dart';
 import 'searchTap.dart'; // searchTap.dart 파일
 
 void main() {
@@ -46,24 +50,6 @@ void goToAnotherPage(BuildContext context, String pageName){
 }
 
 
-// 데이터베이스랑 연결
-class DatabaseService {
-  Future<String> getItemFromDatabase() async {
-    // Replace this with actual database retrieval logic
-    // For example, using sqflite or making an HTTP request
-    await Future.delayed(Duration(seconds: 1));
-    return 'Database Item'; // Replace this with the actual value from the database
-  }
-
-  Future<String> getFeaturesFromDatabase() async {
-    // Replace this with actual database retrieval logic
-    // For example, using sqflite or making an HTTP request
-    await Future.delayed(Duration(seconds: 1));
-    return 'Database Features'; // Replace this with the actual value from the database
-  }
-}
-
-
 
 class ImageDisplayScreen extends StatefulWidget {
   final String imagePath;
@@ -73,7 +59,28 @@ class ImageDisplayScreen extends StatefulWidget {
   _ImageDisplayScreenState createState() => _ImageDisplayScreenState();
 }
 
+class UserData {
+  String name;
+  String email;
+  String nickname;
+  String? profileImgUrl;
+
+  UserData(
+      {required this.name,
+        required this.email,
+        required this.nickname,
+        required this.profileImgUrl,
+      });
+}
+
 class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
+
+  UserData userData =
+  UserData(name: '',
+      email: '',
+      nickname: '',
+      profileImgUrl: '');
+
 
   String item = '';
   String selectedCategory = '전자기기'; // To store the selected category value
@@ -82,34 +89,54 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
   String features = '';
 
 
-  // Create an instance of the DatabaseService
-  final DatabaseService databaseService = DatabaseService();
-
   @override
   void initState() {
     super.initState();
-    // Load data from the database when the widget initializes
-    loadDataFromDatabase();
+    loadUserData();
   }
 
-  Future<void> loadDataFromDatabase() async {
-    // Retrieve item and features from the database
-    String itemData = await databaseService.getItemFromDatabase();
-    String featuresData = await databaseService.getFeaturesFromDatabase();
-
-    // Update the state with the retrieved data
-    setState(() {
-      item = itemData;
-      features = featuresData;
-    });
+  Future<void> loadUserData() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+    if (currentUser != null) {
+      DocumentSnapshot userDataSnapshot = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
+      print("Loaded user data: ${userDataSnapshot.data()}");
+      setState(() {
+        userData = UserData(
+          name: userDataSnapshot['username'],
+          email: currentUser.email ?? '',
+          nickname: userDataSnapshot['nickname'],
+          profileImgUrl: userDataSnapshot['profileImgUrl'],
+        );
+      });
+    }
   }
 
+
+  void uploadDataToFirestore() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        // Firestore 'posts' 컬렉션에 데이터 추가
+        await FirebaseFirestore.instance.collection('posts').add({
+          'user_id': currentUser.uid,
+          'image_path': widget.imagePath,
+          'item': item,
+          'category': selectedCategory,
+          'features': features,
+          // 기타 필요한 데이터 추가
+        });
+      }
+    } catch (e) {
+      print('Error uploading data to Firestore: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('이미지 확인',
+        title: const Text('글 작성',
             style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,)
         ),
 
@@ -149,6 +176,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
 
                   ElevatedButton(
                     onPressed: () {
+                      uploadDataToFirestore();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -237,6 +265,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       ),
     );
   }
+
 
   Widget buildInputField(String label, String value) {
     return Container(

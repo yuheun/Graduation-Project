@@ -3,7 +3,7 @@
 //
 
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 
@@ -59,6 +59,38 @@ class SeeMyGulScreen extends StatefulWidget {
 }
 
 class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
+  late List<GulItem> gulItems;
+
+  @override
+  void initState() {
+    super.initState();
+    // initState에서 데이터를 불러옵니다.
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    try {
+      // Firebase Firestore의 'gulItems' 컬렉션에서 데이터 가져오기
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('gulItems').get();
+
+      // QuerySnapshot에서 문서(Document)들을 추출하고 List에 저장
+      gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
+        Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+        return GulItem(
+          item: data['item'],
+          selectedCategory: data['selectedCategory'],
+          features: data['features'],
+          imagePath: data['imagePath'],
+        );
+      }).toList();
+
+      // setState 호출하여 위젯을 다시 빌드하도록 알림
+      setState(() {});
+    } catch (e) {
+      print('Error loading data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,33 +165,62 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
   Widget _buildGulItem(GulItem gulItem) {
     return Card(
       margin: EdgeInsets.all(8),
-      child: Column(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Image.file(
-            gulItem.imagePath as File,
-            width: 150,
-            height: 150,
+          Image.network(
+            gulItem.imagePath,
+            width: double.infinity,
+            height: 30,
+            fit: BoxFit.cover,
           ),
-          SizedBox(height: 10),
-          Text('종류: ${gulItem.item}!',
-              style: TextStyle(fontSize: 15,
-            fontFamily: 'HakgyoansimDoldam',
-            fontWeight: FontWeight.w500,)
-          ),
-          Text('대분류: ${gulItem.selectedCategory}!',
-              style: TextStyle(fontSize: 15,
-                fontFamily: 'HakgyoansimDoldam',
-                fontWeight: FontWeight.w500,)
-          ),
-          Text('특징: ${gulItem.features}!',
-              style: TextStyle(fontSize: 15,
-                fontFamily: 'HakgyoansimDoldam',
-                fontWeight: FontWeight.w500,)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                '종류: ${gulItem.item}!',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '대분류: ${gulItem.selectedCategory}!',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '특징: ${_truncateString(gulItem.features, 10)}!',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'HakgyoansimDoldam',
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis, // 10자 이후 부분은 ...으로
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+
+  String _truncateString(String text, int maxLength) {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.substring(0, maxLength - 3) + '...';
+    }
+  }
+
+
 }
 
 class GulItem {
