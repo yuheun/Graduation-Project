@@ -181,7 +181,6 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-
               },
               child: Text('홈으로'),
             ),
