@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fortest/alarmTap.dart';
 import 'package:fortest/main.dart';
 import 'package:fortest/searchTap.dart';
-
+import 'package:fortest/listAccessory.dart';
+import 'package:fortest/listElectronics.dart';
+import 'package:fortest/listEtc.dart';
 
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -27,6 +29,27 @@ void goToAnotherPage(BuildContext context, String pageName) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
+      );
+      break;
+
+    case "ElectronicTap":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ListElectronics()),
+      );
+      break;
+
+    case "AccessoryTap":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ListAccessory()),
+      );
+      break;
+
+    case "EtcTap":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ListEtc()),
       );
       break;
   }
@@ -84,12 +107,109 @@ class _CategoryTapScreenState extends State<CategoryTapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = const Center(
-          child: Text('카테고리', style: TextStyle(fontSize: 24)),
-        ); // 카테고리 탭 화면
+        currentScreen = Center(
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  goToAnotherPage(context, "ElectronicTap");
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 130, 155, 255),
+                    ),
+                  minimumSize:
+                  MaterialStateProperty.all(Size(screenWidth*0.7, screenHeight*0.23)),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.fromLTRB(15, 0, 10, 0),
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Make the button rectangular
+                    ),
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.phone_android,size:100),
+                    SizedBox(width: 16.0),
+                    Text('전자기기\nElectronics',
+                        style: TextStyle(fontSize: 35)),
+                  ],
+                ),
+              ),
+
+
+              ElevatedButton(
+                onPressed: () {
+                  goToAnotherPage(context, "AccessoryTap");
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 130, 155, 255),
+                    ),
+                  minimumSize:
+                  MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.fromLTRB(15, 0, 10, 0),
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Make the button rectangular
+                    ),
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.redeem,size:100),
+                    SizedBox(width: 16.0),
+                    Text('악세사리\nAccessories',
+                        style: TextStyle(fontSize: 35)),
+                  ],
+                ),
+              ),
+
+
+              ElevatedButton(
+                onPressed: () {
+                  goToAnotherPage(context, "EtcTap");
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 130, 155, 255),
+                    ),
+                  minimumSize:
+                  MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.fromLTRB(15, 0, 10, 0),
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Make the button rectangular
+                    ),
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.star_outline,size:100),
+                    SizedBox(width: 20.0),
+                    Text('기타\nAnything Else',
+                        style: TextStyle(fontSize: 35)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ); //// 카테고리 탭 화면
         break;
       case 1:
         currentScreen = const Center(

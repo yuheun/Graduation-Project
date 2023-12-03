@@ -30,6 +30,7 @@ Future<void> main() async {
   runApp(const MaterialApp(
       home: MyApp(),
   )); // 앱 실행
+
 }
 
 void goToAnotherPage(BuildContext context, String pageName) {
