@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 import 'addGoods.dart'; // addGoods.dart 파일
 import 'alarmTap.dart'; // alarmTap.dart 파일
@@ -22,8 +23,6 @@ void main() async {
   );
   runApp(const MyApp()); // 앱 실행
 }
-
-
 
 
 void goToAnotherPage(BuildContext context, String pageName) {
@@ -118,6 +117,24 @@ void goToAnotherPage(BuildContext context, String pageName) {
   }
 }
 
+class UserData {
+  String name;
+
+  String password;
+  String email;
+  String nickname;
+  String? profileImgUrl;
+
+  UserData(
+      {required this.name,
+        required this.password,
+        required this.email,
+        required this.nickname,
+        required this.profileImgUrl,
+      });
+}
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -129,8 +146,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>{
+
+  UserData userData =
+  UserData(name: '',
+      email: '',
+      nickname: '',
+      profileImgUrl: '',
+      password: '');
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
+    if (currentUser != null) {
+      DocumentSnapshot userDataSnapshot = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
+      print("Loaded user data: ${userDataSnapshot.data()}");
+      setState(() {
+        userData = UserData(
+          name: userDataSnapshot['username'],
+          email: currentUser.email ?? '',
+          nickname: userDataSnapshot['nickname'],
+          profileImgUrl: userDataSnapshot['profileImgUrl'],
+          password: '',
+        );
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,8 +218,8 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("  user_name 님",
+                      children: [
+                        Text("  ${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
                             style: TextStyle(fontSize: 25,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w800)),
