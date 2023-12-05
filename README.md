@@ -16,6 +16,9 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
+
 ### ----Written by berry1015----
-To use tflite model for computervision, you need to get the model through me
+
+To use tflite model for computervision, you need to get the model through me.
+
 The tflite model file was too large to upload here...
