@@ -17,7 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 
 
-### ----Written by berry1015----
+
+### -------------Written by berry1015-------------
 
 To use tflite model for computervision, you need to get the model through me.
 
