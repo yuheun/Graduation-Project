@@ -1,3 +1,7 @@
+//
+// 카테고리탭에서 버튼 누르면 넘어가는 화면(전자기기)
+//
+
 import 'package:flutter/material.dart';
 import 'package:fortest/searchTap.dart';
 import 'package:fortest/main.dart';

@@ -3,9 +3,8 @@ import 'package:fortest/searchTap.dart';
 import 'package:fortest/main.dart';
 import 'alarmTap.dart';
 import 'categoryTap.dart';
-import 'listAccessory.dart';
-import 'listEtc.dart';
-import 'listElectronics.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -33,34 +32,47 @@ void goToAnotherPage(BuildContext context, String pageName){
       );
       break;
 
-
-    case "ElectronicTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListElectronics()),
-      );
-      break;
-
-    case "AccessoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListAccessory()),
-      );
-      break;
-
-    case "EtcTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListEtc()),
-      );
-      break;
   }
 }
 
-class NextScreen extends StatelessWidget {
+class NextScreen extends StatefulWidget {
   final String markerText;
 
   const NextScreen({Key? key, required this.markerText}) : super(key: key);
+
+  @override
+  _NextScreenState createState() => _NextScreenState();
+}
+
+class _NextScreenState extends State<NextScreen> {
+  TextEditingController searchController = TextEditingController();
+  List<GulItem> items = [];
+  List<GulItem> filteredItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchItems(); // Fetch data when the screen is initialized
+  }
+
+  Future<void> fetchItems() async {
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await FirebaseFirestore.instance.collection('your_collection_name').get();
+
+    setState(() {
+      items = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return GulItem(
+          item: data['item'] ?? '',
+          selectedCategory: data['selectedCategory'] ?? '',
+          features: data['features'] ?? '',
+          imagePath: data['imagePath'] ?? '',
+        );
+      }).toList();
+      filteredItems = List.from(items);
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +82,7 @@ class NextScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(markerText),
+        title: Text(widget.markerText),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -87,88 +99,54 @@ class NextScreen extends StatelessWidget {
 
 
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ElevatedButton(
-            onPressed: () {
-              goToAnotherPage(context, "ElectronicTap");
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                const Color.fromARGB(255, 130, 155, 255),
-              ),
-              minimumSize: MaterialStateProperty.all(Size(screenWidth * 0.7, screenHeight * 0.23)),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.fromLTRB(15, 0, 10, 0),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero, // Make the button rectangular
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 350, // Adjust the width according to your preference
+              child: TextField(
+                controller: searchController,
+                onChanged: (value) {
+                  setState(() {
+                    filteredItems = items
+                        .where((item) =>
+                        item.item.toLowerCase().contains(value.toLowerCase()))
+                        .toList();
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '검색:',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // No need to duplicate the search logic here since it's already in onChanged
+                    },
+                  ),
                 ),
               ),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.phone_android, size: 100),
-                SizedBox(width: 16.0),
-                Text('전자기기\nElectronics', style: TextStyle(fontSize: 35)),
-              ],
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              goToAnotherPage(context, "AccessoryTap");
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                const Color.fromARGB(255, 130, 155, 255),
-              ),
-              minimumSize: MaterialStateProperty.all(Size(screenWidth * 0.4, screenHeight * 0.23)),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.fromLTRB(15, 0, 10, 0),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero, // Make the button rectangular
-                ),
-              ),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.redeem, size: 100),
-                SizedBox(width: 16.0),
-                Text('악세사리\nAccessories', style: TextStyle(fontSize: 35)),
-              ],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              goToAnotherPage(context, "EtcTap");
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                const Color.fromARGB(255, 130, 155, 255),
-              ),
-              minimumSize: MaterialStateProperty.all(Size(screenWidth * 0.4, screenHeight * 0.23)),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.fromLTRB(15, 0, 10, 0),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero, // Make the button rectangular
-                ),
-              ),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.star_outline, size: 100),
-                SizedBox(width: 20.0),
-                Text('기타\nAnything Else', style: TextStyle(fontSize: 35)),
-              ],
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredItems.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    leading: Image.network(filteredItems[index].imagePath),
+                    title: Text(
+                      '${filteredItems[index].features} + ${filteredItems[index].item}',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
+
       ),
+
 
       // 하단 탭바 (카테고리, 검색, 알림)
       bottomNavigationBar: BottomNavigationBar(
@@ -204,4 +182,18 @@ class NextScreen extends StatelessWidget {
 
     );
   }
+}
+
+class GulItem {
+  final String item;
+  final String selectedCategory;
+  final String features;
+  final String imagePath;
+
+  GulItem({
+    required this.item,
+    required this.selectedCategory,
+    required this.features,
+    required this.imagePath,
+  });
 }

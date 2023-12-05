@@ -120,7 +120,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
         // Firestore 'posts' 컬렉션에 데이터 추가
         await FirebaseFirestore.instance.collection('posts').add({
           'user_id': currentUser.uid,
-          'image_path': widget.imagePath,
+          'image_url': widget.imagePath,
           'item': item,
           'category': selectedCategory,
           'features': features,
