@@ -24,3 +24,4 @@ To use tflite model for computervision, we have to upload model in backend...
 
 It is too big to use in android studio.
 
+Also we have to make database for 'selectedDistrict'(지역구 설정), 'GulItem'(글목록) ,, 
