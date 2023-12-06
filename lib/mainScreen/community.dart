@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {

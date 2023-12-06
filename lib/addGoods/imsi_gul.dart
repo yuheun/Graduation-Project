@@ -1,17 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
+import 'seeMyGul/seeMyGul.dart';
+
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
-
-
-void main() {
-  runApp(const MaterialApp(
-    home: KeywordsScreen(),
-  ));
-}
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
@@ -41,17 +38,25 @@ void goToAnotherPage(BuildContext context, String pageName){
 }
 
 
-class KeywordsScreen extends StatelessWidget {
-  const KeywordsScreen({super.key});
+class ImsiGulScreen extends StatelessWidget {
+  final String imagePath;
+  final String item;
+  final String selectedCategory;
+  final String features;
+
+  const ImsiGulScreen({
+    required this.imagePath,
+    required this.item,
+    required this.selectedCategory,
+    required this.features,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('알림받는 키워드',
-            style: TextStyle(fontSize: 25,
-              fontFamily: 'HakgyoansimDoldam',
-              fontWeight: FontWeight.w700,)
+        title: const Text('작성한 글 확인',
+            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,)
         ),
         actions: <Widget>[
           IconButton(
@@ -67,14 +72,53 @@ class KeywordsScreen extends StatelessWidget {
         ],
       ),
 
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.file(
+            File(imagePath),
+            width: 400,
+            height: 400,
+          ),
 
-      body: const Center(
-        child: Text(
-          '알림받는 키워드',
-          style: TextStyle(fontSize: 24),
-        ),
+          SizedBox(height: 10),
+
+          Text('종류: $item', style: TextStyle(fontSize: 20,
+            fontFamily: 'HakgyoansimDoldam',
+            fontWeight: FontWeight.w700,)
+          ),
+          Text('대분류: $selectedCategory', style: TextStyle(fontSize: 20,
+            fontFamily: 'HakgyoansimDoldam',
+            fontWeight: FontWeight.w700,)
+          ),
+          Text('특징: $features', style: TextStyle(fontSize: 20,
+            fontFamily: 'HakgyoansimDoldam',
+            fontWeight: FontWeight.w700,)
+          ),
+
+          SizedBox(height:10),
+
+          ElevatedButton(
+            onPressed: () {
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SeeMyGulScreen(
+                    // Pass the data to SeeMyGulScreen
+                    imagePath: imagePath,
+                    item: item,
+                    selectedCategory: selectedCategory,
+                    features: features, gulItems: [],
+                  ),
+                ),
+              );
+            },
+            child: Text('내 게시글 보기'),
+          ),
+
+        ],
       ),
-
 
       // 하단 탭바 (카테고리, 검색, 알림)
       bottomNavigationBar: BottomNavigationBar(
@@ -105,9 +149,9 @@ class KeywordsScreen extends StatelessWidget {
               break;
           }
         },
-
-
       ),
+
+
     );
   }
 }

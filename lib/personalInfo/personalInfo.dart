@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-import 'seeMyGul.dart';
+import '../addGoods/seeMyGul/seeMyGul.dart';
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'login.dart'; // login.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import 'login/login.dart'; // login.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {

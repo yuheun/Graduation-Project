@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fortest/findPassword.dart';
+import 'package:fortest/personalInfo/findPassword.dart';
 import 'package:fortest/main.dart';
 import 'loginSuccess.dart';
-import 'alarmTap.dart'; // alarmTap.dart
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'join.dart';
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../../navigationBar/alarmTap.dart'; // alarmTap.dart
+import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../join.dart';
+import '../../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {

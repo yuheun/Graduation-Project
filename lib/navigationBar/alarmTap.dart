@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fortest/alarmTap.dart';
-import 'package:fortest/categoryTap.dart';
+import 'package:fortest/navigationBar/categoryTap.dart';
 import 'package:fortest/main.dart';
+import 'package:fortest/navigationBar/searchTap.dart';
 
 
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch (pageName) {
-
     case "CategoryTap":
       Navigator.push(
         context,
@@ -34,25 +33,23 @@ void goToAnotherPage(BuildContext context, String pageName) {
 }
 
 
-
-
 void main() {
   runApp(const MaterialApp(
-    home: SearchTapScreen(),
+    home: AlarmTapScreen(),
   ));
 }
 
 
-class SearchTapScreen extends StatefulWidget {
-  const SearchTapScreen({super.key});
+class AlarmTapScreen extends StatefulWidget {
+  const AlarmTapScreen({super.key});
 
   @override
-  _SearchTapScreenState createState() => _SearchTapScreenState();
+  _AlarmTapScreenState createState() => _AlarmTapScreenState();
 }
 
 
-class _SearchTapScreenState extends State<SearchTapScreen> {
-  int _currentIndex = 1; // 현재 활성화된 탭 인덱스
+class _AlarmTapScreenState extends State<AlarmTapScreen> {
+  int _currentIndex = 2; // 현재 활성화된 탭 인덱스
 
 
   // 각 탭에 해당하는 제목
@@ -109,6 +106,8 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
     }
 
 
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_tabTitles[_currentIndex],
@@ -119,7 +118,7 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
-            onPressed: (){
+            onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -130,7 +129,8 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
         ],
       ),
 
-      body: currentScreen, // 현재 선택된 탭에 대한 화면 표시
+
+      body: currentScreen,  // 현재 선택된 탭에 대한 화면 표시
 
 
       bottomNavigationBar: BottomNavigationBar(

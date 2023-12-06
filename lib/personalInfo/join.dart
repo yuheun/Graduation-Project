@@ -3,11 +3,11 @@ import 'package:fortest/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'imsi_join.dart';
-import 'login.dart';
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../imsi_join.dart';
+import 'login/login.dart';
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {

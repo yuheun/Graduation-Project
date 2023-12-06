@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'addGoods.dart'; // addGoods.dart 파일
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'community.dart'; // community.dart 파일
-import 'findGoods.dart'; // findGoods.dart 파일
-import 'goodsList.dart'; // goodsList.dart 파일
-import 'keywords.dart'; // keywords.dart 파일
-import 'personalInfo.dart'; // personalInfo.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
-import 'village.dart'; // village.dart 파일
+import 'addGoods/addGoods.dart'; // addGoods.dart 파일
+import 'navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import 'navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import 'mainScreen/community.dart'; // community.dart 파일
+import 'findGoods/findGoods.dart'; // findGoods.dart 파일
+import 'mainScreen/goodsList.dart'; // goodsList.dart 파일
+import 'mainScreen/keywords.dart'; // keywords.dart 파일
+import 'personalInfo/personalInfo.dart'; // personalInfo.dart 파일
+import 'navigationBar/searchTap.dart'; // searchTap.dart 파일
+import 'mainScreen/village.dart'; // village.dart 파일
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 

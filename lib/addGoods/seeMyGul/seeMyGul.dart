@@ -7,10 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'GulDetailScreen.dart';
-import 'gulItem.dart';
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'searchTap.dart'; //
+import '../../mainScreen/gulItem.dart';
+import '../../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../../navigationBar/searchTap.dart'; //
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동

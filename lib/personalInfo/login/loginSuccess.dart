@@ -7,10 +7,10 @@ import 'dart:io';
 import 'package:fortest/main.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-import 'alarmTap.dart'; // alarmTap.dart
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'join.dart';
-import 'searchTap.dart';
+import '../../navigationBar/alarmTap.dart'; // alarmTap.dart
+import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../join.dart';
+import '../../navigationBar/searchTap.dart';
 
 
 

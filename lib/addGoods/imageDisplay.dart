@@ -12,10 +12,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import 'imsi_gul.dart';
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 void main() {
   runApp(const MaterialApp(

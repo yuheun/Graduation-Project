@@ -3,10 +3,10 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:fortest/searchTap.dart';
+import 'package:fortest/navigationBar/searchTap.dart';
 import 'package:fortest/main.dart';
-import 'alarmTap.dart';
-import 'categoryTap.dart';
+import '../alarmTap.dart';
+import '../categoryTap.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동

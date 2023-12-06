@@ -7,9 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
 import 'imageDisplay.dart';
 
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 // 이 파일에 모델 불러와서 처리하게 하면 될 듯...
 // 모델 용량이 커서 안 된다 이거.....

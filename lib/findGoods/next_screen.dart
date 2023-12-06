@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fortest/searchTap.dart';
+import 'package:fortest/navigationBar/searchTap.dart';
 import 'package:fortest/main.dart';
-import 'alarmTap.dart';
-import 'categoryTap.dart';
+import '../navigationBar/alarmTap.dart';
+import '../navigationBar/categoryTap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fortest/mainScreen/gulItem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
@@ -182,18 +183,4 @@ class _NextScreenState extends State<NextScreen> {
 
     );
   }
-}
-
-class GulItem {
-  final String item;
-  final String selectedCategory;
-  final String features;
-  final String imagePath;
-
-  GulItem({
-    required this.item,
-    required this.selectedCategory,
-    required this.features,
-    required this.imagePath,
-  });
 }

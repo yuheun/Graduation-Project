@@ -3,11 +3,11 @@ import 'package:fortest/main.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'GulDetailScreen.dart';
+import '../addGoods/seeMyGul/GulDetailScreen.dart';
 import 'gulItem.dart';
-import 'alarmTap.dart'; // alarmTap.dart 파일
-import 'categoryTap.dart'; // categoryTap.dart 파일
-import 'searchTap.dart'; // searchTap.dart 파일
+import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 void main() {
   runApp(const MaterialApp(
