@@ -89,6 +89,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
             .collection('gulItems')
             .where('district', isEqualTo: selectedDistrict) // Add this line to filter by selectedDistrict
             .get();
+        //이거 그 해당하는 지역구의 목록만 불러오는 함수인데 이거 이렇게 하는게 맞는지 모르겠다..
 
         // QuerySnapshot에서 문서(Document)들을 추출하고 List에 저장
         gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
