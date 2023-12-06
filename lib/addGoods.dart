@@ -11,6 +11,12 @@ import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'searchTap.dart'; // searchTap.dart 파일
 
+// 이 파일에 모델 불러와서 처리하게 하면 될 듯...
+// 모델 용량이 커서 안 된다 이거.....
+// 백엔드 쪽에서 모델 돌아가게 해서 여기서 사진 업로드되면
+// imageDisplay.dart로 값들 넘어가서 각 변수에 해당하는 값이
+// 각 변수에 해당하는 칸에 출력되게 해야할듯
+
 void main() {
   runApp(const MaterialApp(
     home: AddGoodsScreen(),
@@ -54,41 +60,16 @@ class AddGoodsScreen extends StatefulWidget {
 }
 
 class _AddGoodsScreenState extends State<AddGoodsScreen>{
-  // PlatformFile? _image;
-  //
-  // Future<void> _pickIMGFile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['png', 'jpg'],
-  //   );
-  //
-  //   if (result != null && result.files.isNotEmpty) {
-  //     PlatformFile imageFile = result.files.first;
-  //     setState(() {
-  //       _image = imageFile;
-  //     });
-  //
-  //     String fileName = imageFile.name;
-  //     Uint8List fileBytes = imageFile.bytes!;
-  //     debugPrint(fileName);
-  //
-  //     // Perform actions with the file as needed
-  //     /*    do jobs    */
-  //  }
   XFile? _image;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> _pickIMGFile(ImageSource source) async {
     final picker = ImagePicker();
     XFile? image = await picker.pickImage(source: source);
-
-    // if (image != null) {
-    //   setState(() {
-    //     _image = image;
-    //   });
-    //
-    //   String fileName = image.name;
-    //   Uint8List fileBytes = await image.readAsBytes();
-    //   debugPrint(fileName);
 
     if (image != null) {
       Navigator.push(
@@ -96,7 +77,6 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
         MaterialPageRoute(builder: (context) => ImageDisplayScreen(imagePath: image.path)),
       );
     }
-
   }
 
   @override
@@ -135,20 +115,6 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // _image == null
-            //   ? const Text('이미지를 선택하세요.')
-            //   : Image.memory(
-            //     _image!.bytes!,
-            //     width: 400,
-            //     height: 400,
-            // ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     _pickIMGFile();
-            //   },
-            //   child: const Text('폴더에서 이미지 선택'),
-            // ),
-
             _image == null
                 ? const Text('업로드할 방식을 선택하세요',
                 style: TextStyle(fontSize: 28, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,))
@@ -251,4 +217,6 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
 
     );
   }
+
+
 }

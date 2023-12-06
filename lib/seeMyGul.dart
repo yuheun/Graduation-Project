@@ -6,7 +6,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-
+import 'GulDetailScreen.dart';
+import 'gulItem.dart';
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'searchTap.dart'; //
@@ -163,54 +164,66 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
   }
 
   Widget _buildGulItem(GulItem gulItem) {
-    return Card(
-      margin: EdgeInsets.all(8),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.network(
-            gulItem.imagePath,
-            width: double.infinity,
-            height: 30,
-            fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the GulDetailScreen and pass the selected GulItem
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GulDetailScreen(gulItem: gulItem),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '종류: ${gulItem.item}!',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w500,
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.all(8),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.network(
+              gulItem.imagePath,
+              width: double.infinity,
+              height: 30,
+              fit: BoxFit.cover,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '종류: ${gulItem.item}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              SizedBox(height: 3),
-              Text(
-                '대분류: ${gulItem.selectedCategory}!',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w500,
+                SizedBox(height: 3),
+                Text(
+                  '대분류: ${gulItem.selectedCategory}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              SizedBox(height: 3),
-              Text(
-                '특징: ${_truncateString(gulItem.features, 10)}!',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w500,
+                SizedBox(height: 3),
+                Text(
+                  '특징: ${_truncateString(gulItem.features, 10)}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis, // 10자 이후 부분은 ...으로
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   String _truncateString(String text, int maxLength) {
     if (text.length <= maxLength) {
@@ -221,19 +234,5 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
   }
 
 
-}
-
-class GulItem {
-  final String item;
-  final String selectedCategory;
-  final String features;
-  final String imagePath;
-
-  GulItem({
-    required this.item,
-    required this.selectedCategory,
-    required this.features,
-    required this.imagePath,
-  });
 }
 

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+import 'GulDetailScreen.dart';
+import 'gulItem.dart';
 import 'alarmTap.dart'; // alarmTap.dart 파일
 import 'categoryTap.dart'; // categoryTap.dart 파일
 import 'searchTap.dart'; // searchTap.dart 파일
+
 void main() {
   runApp(const MaterialApp(
-    home: GoodsListScreen(),
+    home: GoodsListScreen(imagePath: '', item: '', selectedCategory: '', features: '', gulItems: [],),
   ));
 }
 
@@ -41,8 +45,73 @@ void goToAnotherPage(BuildContext context, String pageName){
 }
 
 
-class GoodsListScreen extends StatelessWidget {
-  const GoodsListScreen({super.key});
+class GoodsListScreen extends StatefulWidget {
+  //const GoodsListScreen({Key? key}): super(key:key);
+
+  final List<GulItem> gulItems;
+  final String imagePath;
+  final String item;
+  final String selectedCategory;
+  final String features;
+
+  const GoodsListScreen({
+    required this.imagePath,
+    required this.item,
+    required this.selectedCategory,
+    required this.features,
+    required this.gulItems,
+  });
+
+  @override
+  _GoodsListScreenState createState() => _GoodsListScreenState();
+
+}
+
+class _GoodsListScreenState extends State<GoodsListScreen>{
+
+  late List<GulItem> gulItems;
+
+  // 지역구 값
+  String? selectedDistrict;
+
+  @override
+  void initState() {
+    super.initState();
+    // Call loadData with the selected district
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    try {
+      if (selectedDistrict != null) {
+        // Firebase Firestore의 'gulItems' 컬렉션에서 데이터 가져오기
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('gulItems')
+            .where('district', isEqualTo: selectedDistrict) // Add this line to filter by selectedDistrict
+            .get();
+
+        // QuerySnapshot에서 문서(Document)들을 추출하고 List에 저장
+        gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+          return GulItem(
+            item: data['item'],
+            selectedCategory: data['selectedCategory'],
+            features: data['features'],
+            imagePath: data['imagePath'],
+          );
+        }).toList();
+
+        // setState 호출하여 위젯을 다시 빌드하도록 알림
+        setState(() {});
+      } else {
+        print('No district selected.');
+      }
+    } catch (e) {
+      print('Error loading data: $e');
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +137,18 @@ class GoodsListScreen extends StatelessWidget {
       ),
 
 
-      body: const Center(
-        child: Text(
-          '우리 동네 분실물 목록',
-          style: TextStyle(fontSize: 24),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: widget.gulItems.length,
+              itemBuilder: (context, index) {
+                return _buildGulItem(widget.gulItems[index]);
+              },
+            ),
+          ],
         ),
       ),
 
@@ -108,4 +185,76 @@ class GoodsListScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildGulItem(GulItem gulItem) {
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the GulDetailScreen and pass the selected GulItem
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GulDetailScreen(gulItem: gulItem),
+          ),
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.all(8),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.network(
+              gulItem.imagePath,
+              width: double.infinity,
+              height: 30,
+              fit: BoxFit.cover,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '종류: ${gulItem.item}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 3),
+                Text(
+                  '대분류: ${gulItem.selectedCategory}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 3),
+                Text(
+                  '특징: ${_truncateString(gulItem.features, 10)}!',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _truncateString(String text, int maxLength) {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.substring(0, maxLength - 3) + '...';
+    }
+  }
+
 }
+
+

@@ -71,7 +71,7 @@ void goToAnotherPage(BuildContext context, String pageName) {
     case "GoodsList":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const GoodsListScreen()),
+        MaterialPageRoute(builder: (context) => /*const*/ GoodsListScreen(imagePath: '', item: '', selectedCategory: '', features: '', gulItems: [],)),
       );
       break;
 
@@ -155,7 +155,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String? selectedDistrict;
+
+  const HomeScreen({Key? key, this.selectedDistrict}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -231,7 +233,8 @@ class _HomeScreenState extends State<HomeScreen>{
                             style: TextStyle(fontSize: 25,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w800)),
-                        Text("  내 동네: 서울특별시 00구",
+                        Text("  내 동네: ${widget.selectedDistrict != null ?
+                        '서울특별시 ' + widget.selectedDistrict! : '지역구를 선택하세요'}",
                             style: TextStyle(fontSize: 18,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w700)),

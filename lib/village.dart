@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 
@@ -13,15 +15,21 @@ void main() {
 }
 
 
-void goToAnotherPage(BuildContext context, String pageName){
+Future<void> goToAnotherPage(BuildContext context, String pageName, {String? selectedDistrict}) async {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
 
     case "HomeScreen":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => HomeScreen(selectedDistrict: selectedDistrict)),
       );
+      // Send the selected district to Firebase
+      // Replace the code below with your Firebase logic
+      await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).update({
+        'selectedDistrict': selectedDistrict,
+      });
+
       break;
 
     case "CategoryTap":
@@ -136,7 +144,7 @@ class _VillageScreenState extends State<VillageScreen> {
               onPressed: () {
                 if (selectedDistrict != null) {
                   print('Selected District: $selectedDistrict');
-                  goToAnotherPage(context, "HomeScreen");
+                  goToAnotherPage(context, "HomeScreen", selectedDistrict: selectedDistrict);
                 } else {
                   print('No district selected.');
                  }

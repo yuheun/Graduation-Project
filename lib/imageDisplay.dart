@@ -1,11 +1,13 @@
 // 글 작성하는 화면!
-// 이거 파베로 넘기면 될거 같아
+// 이거 파베로 넘기면 될거 같음
 // 일단 코드 짜두긴 했는데 이게 이렇게 하는게 맞나..
 
+
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-//import 'imsi_gul.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -49,8 +51,6 @@ void goToAnotherPage(BuildContext context, String pageName){
   }
 }
 
-
-
 class ImageDisplayScreen extends StatefulWidget {
   final String imagePath;
   const ImageDisplayScreen({required this.imagePath});
@@ -72,6 +72,7 @@ class UserData {
         required this.profileImgUrl,
       });
 }
+
 
 class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
 
