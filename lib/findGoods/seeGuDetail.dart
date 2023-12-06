@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../mainScreen/gulItem.dart';
-import '../../mainScreen/goodsList.dart';
-import '../../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import '../../main.dart';
-import '../../navigationBar/searchTap.dart'; //
+import 'package:fortest/navigationBar/searchTap.dart';
+import 'package:fortest/main.dart';
+import '../navigationBar/alarmTap.dart';
+import '../navigationBar/categoryTap.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fortest/mainScreen/gulItem.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -31,19 +31,29 @@ void goToAnotherPage(BuildContext context, String pageName){
         MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
+
   }
 }
 
-class GulDetailScreen extends StatelessWidget {
+
+class seeGuDetailScreen extends StatelessWidget{
+
+  final List<GulItem> items;
+  final List<GulItem> filteredItems;
   final GulItem gulItem;
 
-  const GulDetailScreen({required this.gulItem});
+  seeGuDetailScreen({
+    required this.items,
+    required this.filteredItems,
+    required this.gulItem,
+  });
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('글 상세 정보'),
+        title: Text('지역구 특정글 상세 정보'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

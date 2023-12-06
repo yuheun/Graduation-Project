@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fortest/findGoods/seeGuDetail.dart';
 import 'package:fortest/navigationBar/searchTap.dart';
 import 'package:fortest/main.dart';
 import '../navigationBar/alarmTap.dart';
@@ -75,6 +76,17 @@ class _NextScreenState extends State<NextScreen> {
 
   }
 
+  void navigateToDetailScreen(GulItem selectedGulItem) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => seeGuDetailScreen(gulItem: selectedGulItem, items: [], filteredItems: [],),
+      ),
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -133,17 +145,24 @@ class _NextScreenState extends State<NextScreen> {
             child: ListView.builder(
               itemCount: filteredItems.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: Image.network(filteredItems[index].imagePath),
-                    title: Text(
-                      '${filteredItems[index].features} + ${filteredItems[index].item}',
+                return GestureDetector(
+                  onTap: () {
+                    // 클릭한 항목의 데이터를 seeGuDetailScreen으로 전달
+                    navigateToDetailScreen(filteredItems[index]);
+                  },
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.network(filteredItems[index].imagePath),
+                      title: Text(
+                        '${filteredItems[index].features} + ${filteredItems[index].item}',
+                      ),
                     ),
                   ),
                 );
               },
             ),
           ),
+
         ],
 
       ),
