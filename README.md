@@ -20,6 +20,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ### -------------Written by berry1015-------------
 
-To use tflite model for computervision, you need to get the model through me.
+To use tflite model for computervision, we have to upload model in backend...
 
-The tflite model file was too large to upload here...
+It is too big to use in android studio.
+
+Also we have to make database for 'selectedDistrict'(지역구 설정), 'GulItem'(글목록) ,, 
