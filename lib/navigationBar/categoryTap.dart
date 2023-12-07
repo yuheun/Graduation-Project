@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/navigationBar/alarmTap.dart';
 import 'package:fortest/main.dart';
+import 'package:fortest/mainScreen/gulItem.dart';
 import 'package:fortest/navigationBar/searchTap.dart';
-import 'package:fortest/navigationBar/category/listAccessory.dart';
-import 'package:fortest/navigationBar/category/listElectronics.dart';
-import 'package:fortest/navigationBar/category/listEtc.dart';
 
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -32,36 +31,14 @@ void goToAnotherPage(BuildContext context, String pageName) {
       );
       break;
 
-    case "ElectronicTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListElectronics()),
-      );
-      break;
-
-    case "AccessoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListAccessory()),
-      );
-      break;
-
-    case "EtcTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ListEtc()),
-      );
-      break;
   }
 }
-
 
 void main() {
   runApp(const MaterialApp(
     home: CategoryTapScreen(),
   ));
 }
-
 
 class CategoryTapScreen extends StatefulWidget {
   const CategoryTapScreen({super.key});
@@ -74,14 +51,11 @@ class CategoryTapScreen extends StatefulWidget {
 class _CategoryTapScreenState extends State<CategoryTapScreen> {
   int _currentIndex = 0; // 현재 활성화된 탭 인덱스
 
-
   // 각 탭에 해당하는 제목
   final List<String> _tabTitles = ["카테고리", "검색", "알림"];
 
-
   void _onTabTapped(int index) {
     String pageName;
-
 
     switch (index) {
       case 0:
@@ -98,7 +72,6 @@ class _CategoryTapScreenState extends State<CategoryTapScreen> {
     }
     goToAnotherPage(context, pageName);
 
-
     setState(() {
       _currentIndex = index; // 탭 변경 시 _currentIndex 업데이트
     });
@@ -107,119 +80,17 @@ class _CategoryTapScreenState extends State<CategoryTapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
 
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = Center(
-
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  goToAnotherPage(context, "ElectronicTap");
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 130, 155, 255),
-                    ),
-                  minimumSize:
-                  MaterialStateProperty.all(Size(screenWidth*0.7, screenHeight*0.23)),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.fromLTRB(15, 0, 10, 0),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero, // Make the button rectangular
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.phone_android,size:100),
-                    SizedBox(width: 16.0),
-                    Text('전자기기\nElectronics',
-                        style: TextStyle(fontSize: 35)),
-                  ],
-                ),
-              ),
-
-
-              ElevatedButton(
-                onPressed: () {
-                  goToAnotherPage(context, "AccessoryTap");
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 130, 155, 255),
-                    ),
-                  minimumSize:
-                  MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.fromLTRB(15, 0, 10, 0),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero, // Make the button rectangular
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.redeem,size:100),
-                    SizedBox(width: 16.0),
-                    Text('악세사리\nAccessories',
-                        style: TextStyle(fontSize: 35)),
-                  ],
-                ),
-              ),
-
-
-              ElevatedButton(
-                onPressed: () {
-                  goToAnotherPage(context, "EtcTap");
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 130, 155, 255),
-                    ),
-                  minimumSize:
-                  MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.fromLTRB(15, 0, 10, 0),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero, // Make the button rectangular
-                    ),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.star_outline,size:100),
-                    SizedBox(width: 20.0),
-                    Text('기타\nAnything Else',
-                        style: TextStyle(fontSize: 35)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ); //// 카테고리 탭 화면
+        currentScreen = CategoryTabScreenContent(); // Show the CategoryTabScreen
         break;
       case 1:
-        currentScreen = const Center(
-          child: Text('검색', style: TextStyle(fontSize: 24)),
-        ); // 검색 탭 화면
+        currentScreen = SearchTapScreenContent();
         break;
       case 2:
-        currentScreen = const Center(
-          child: Text('알림', style: TextStyle(fontSize: 24)),
-        ); // 알림 탭 화면
+        currentScreen = AlarmTapScreenContent();// 알림 탭 화면
         break;
       default:
         currentScreen = Container(); // 예외 처리 - 이 부분을 다른 화면으로 대체하거나 적절히 처리
@@ -276,3 +147,114 @@ class _CategoryTapScreenState extends State<CategoryTapScreen> {
     );
   }
 }
+
+class CategoryTabScreenContent extends StatefulWidget {
+  @override
+  _CategoryTabScreenContentState createState() =>
+      _CategoryTabScreenContentState();
+}
+
+class _CategoryTabScreenContentState extends State<CategoryTabScreenContent> {
+  late List<GulItem> gulItems;
+  @override
+  void initState() {
+    super.initState();
+    gulItems = [];
+    fetchGulItems('전자기기'); // Fetch items for the initial category
+  }
+
+  void fetchGulItems(String category) {
+    FirebaseFirestore.instance
+        .collection('gulItems')
+        .where('selectedCategory', isEqualTo: category)
+        .get()
+        .then((querySnapshot) {
+      setState(() {
+        gulItems = querySnapshot.docs
+            .map((doc) => GulItem(
+          item: doc['item'],
+          selectedCategory: doc['selectedCategory'],
+          features: doc['features'],
+          imagePath: doc['imagePath'],
+        ))
+            .toList();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          // Category Buttons (전자기기, 악세사리, 기타)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  fetchGulItems('전자기기');
+                },
+                child: Text('전자기기'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  fetchGulItems('악세사리');
+                },
+                child: Text('악세사리'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  fetchGulItems('기타');
+                },
+                child: Text('기타'),
+              ),
+            ],
+          ),
+
+          // ListView for each category
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Number of columns
+                crossAxisSpacing: 8.0, // Space between columns
+                mainAxisSpacing: 8.0, // Space between rows
+              ),
+              itemCount: gulItems.length,
+              itemBuilder: (context, index) {
+                GulItem currentItem = gulItems[index];
+
+                return GestureDetector(
+                  onTap: () {
+                    // Handle item tap
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        child: Image.network(
+                          currentItem.imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${currentItem.features} ${currentItem.item}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

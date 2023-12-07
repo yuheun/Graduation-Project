@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fortest/navigationBar/alarmTap.dart';
 import 'package:fortest/navigationBar/categoryTap.dart';
 import 'package:fortest/main.dart';
+import '../findGoods/seeGuDetail.dart';
+import '../mainScreen/gulItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 void goToAnotherPage(BuildContext context, String pageName) {
@@ -33,15 +36,11 @@ void goToAnotherPage(BuildContext context, String pageName) {
   }
 }
 
-
-
-
 void main() {
   runApp(const MaterialApp(
     home: SearchTapScreen(),
   ));
 }
-
 
 class SearchTapScreen extends StatefulWidget {
   const SearchTapScreen({super.key});
@@ -61,7 +60,6 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
 
   void _onTabTapped(int index) {
     String pageName;
-
 
     switch (index) {
       case 0:
@@ -90,19 +88,13 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = const Center(
-          child: Text('카테고리', style: TextStyle(fontSize: 24)),
-        ); // 카테고리 탭 화면
+        currentScreen = CategoryTabScreenContent(); // Show the CategoryTabScreen
         break;
       case 1:
-        currentScreen = const Center(
-          child: Text('검색', style: TextStyle(fontSize: 24)),
-        ); // 검색 탭 화면
+        currentScreen = SearchTapScreenContent();
         break;
       case 2:
-        currentScreen = const Center(
-          child: Text('알림', style: TextStyle(fontSize: 24)),
-        ); // 알림 탭 화면
+        currentScreen = AlarmTapScreenContent();
         break;
       default:
         currentScreen = Container(); // 예외 처리 - 이 부분을 다른 화면으로 대체하거나 적절히 처리
@@ -158,3 +150,113 @@ class _SearchTapScreenState extends State<SearchTapScreen> {
     );
   }
 }
+
+class SearchTapScreenContent extends StatefulWidget {
+  @override
+  _SearchTabScreenContentState createState() =>
+      _SearchTabScreenContentState();
+}
+
+class _SearchTabScreenContentState extends State<SearchTapScreenContent> {
+  late List<GulItem> gulItems;
+  TextEditingController searchController = TextEditingController();
+  List<GulItem> items = [];
+  List<GulItem> filteredItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    gulItems = [];
+    fetchItems();
+  }
+
+  Future<void> fetchItems() async {
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+    await FirebaseFirestore.instance.collection('your_collection_name').get();
+
+    setState(() {
+      items = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return GulItem(
+          item: data['item'] ?? '',
+          selectedCategory: data['selectedCategory'] ?? '',
+          features: data['features'] ?? '',
+          imagePath: data['imagePath'] ?? '',
+        );
+      }).toList();
+      filteredItems = List.from(items);
+    });
+  }
+  void navigateToDetailScreen(GulItem selectedGulItem) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => seeGuDetailScreen(gulItem: selectedGulItem, items: [], filteredItems: [],),
+      ),
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 350, // Adjust the width according to your preference
+              child: TextField(
+                controller: searchController,
+                onChanged: (value) {
+                  setState(() {
+                    filteredItems = items
+                        .where((item) =>
+                        item.item.toLowerCase().contains(value.toLowerCase()))
+                        .toList();
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '검색:',
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // No need to duplicate the search logic here since it's already in onChanged
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredItems.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    // 클릭한 항목의 데이터를 seeGuDetailScreen으로 전달
+                    navigateToDetailScreen(filteredItems[index]);
+                  },
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.network(filteredItems[index].imagePath),
+                      title: Text(
+                        '${filteredItems[index].features} + ${filteredItems[index].item}',
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+
+
+        ],
+      ),
+    );
+  }
+}
+
+

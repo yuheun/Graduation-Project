@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fortest/navigationBar/categoryTap.dart';
 import 'package:fortest/main.dart';
 import 'package:fortest/navigationBar/searchTap.dart';
-
+import '../mainScreen/gulItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -87,19 +88,13 @@ class _AlarmTapScreenState extends State<AlarmTapScreen> {
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = const Center(
-          child: Text('카테고리', style: TextStyle(fontSize: 24)),
-        ); // 카테고리 탭 화면
+        currentScreen =  CategoryTabScreenContent();
         break;
       case 1:
-        currentScreen = const Center(
-          child: Text('검색', style: TextStyle(fontSize: 24)),
-        ); // 검색 탭 화면
+        currentScreen = SearchTapScreenContent();
         break;
       case 2:
-        currentScreen = const Center(
-          child: Text('알림', style: TextStyle(fontSize: 24)),
-        ); // 알림 탭 화면
+        currentScreen = AlarmTapScreenContent();
         break;
       default:
         currentScreen = Container(); // 예외 처리 - 이 부분을 다른 화면으로 대체하거나 적절히 처리
@@ -153,6 +148,33 @@ class _AlarmTapScreenState extends State<AlarmTapScreen> {
             label: "알림",
             backgroundColor: _currentIndex == 2 ? Colors.blue : null,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class AlarmTapScreenContent extends StatefulWidget {
+  @override
+  _AlarmTabScreenContentState createState() =>
+      _AlarmTabScreenContentState();
+}
+
+class _AlarmTabScreenContentState extends State<AlarmTapScreenContent> {
+  late List<GulItem> gulItems;
+
+  @override
+  void initState() {
+    super.initState();
+    gulItems = [];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+
         ],
       ),
     );
