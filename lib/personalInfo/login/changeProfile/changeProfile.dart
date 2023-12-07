@@ -271,7 +271,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
               child: const Row(
                 children: [
                   SizedBox(width:10),
-                  Icon(Icons.note, size: 40),
+                  Icon(Icons.lock, size: 40),
                   SizedBox(width: 20),
                   Text("비밀번호 변경", style: TextStyle(fontSize: 32,
                     fontFamily: 'HakgyoansimDoldam',
@@ -291,7 +291,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
               child: const Row(
                 children: [
                   SizedBox(width:10),
-                  Icon(Icons.person, size: 40),
+                  Icon( Icons.location_on, size: 40),
                   SizedBox(width: 20),
                   Text("지역구 설정", style: TextStyle(fontSize: 32,
                     fontFamily: 'HakgyoansimDoldam',

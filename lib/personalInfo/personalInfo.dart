@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import '../addGoods/seeMyGul/seeMyGul.dart';
-
+import 'withdrawal.dart'; // 회원 탈퇴 파일
 import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import 'login/changeProfile/changeProfile.dart';
@@ -41,6 +41,14 @@ void goToAnotherPage(BuildContext context, String pageName) {
         MaterialPageRoute(builder: (context) => const ChangeProfileScreen()),
       );
       break;
+
+    case "Withdrawal" :
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const WithdrawalScreen()),
+      );
+      break;
+
 
     case "CategoryTap":
       Navigator.push(
@@ -280,8 +288,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
           InkWell(
             onTap: () {
-              // '회원 탈퇴' 버튼을 누를 때 실행할 작업
-              // 예: goToAnotherPage(context, "Withdrawal");
+              goToAnotherPage(context, "Withdrawal");
             },
             child: const Row(
               children: [
