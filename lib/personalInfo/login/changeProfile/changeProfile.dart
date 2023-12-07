@@ -25,6 +25,13 @@ void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch (pageName) {
 
+    case "ChangePasswordScreen":
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ChangePasswordScreen()),
+      );
+      break;
+
     case "VillageScreen":
       Navigator.push(
         context,
