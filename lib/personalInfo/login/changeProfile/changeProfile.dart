@@ -1,19 +1,22 @@
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+import 'changePassword.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-import '../addGoods/seeMyGul/seeMyGul.dart';
-
-import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import 'login/changeProfile/changeProfile.dart';
-import 'login/login.dart'; // login.dart 파일
-import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
+import 'package:fortest/mainScreen/village.dart';
+import '/navigationBar/alarmTap.dart'; // alarmTap.dart 파일
+import '/navigationBar/categoryTap.dart'; // categoryTap.dart 파일
+import '/navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {
   runApp(const MaterialApp(
-    home: PersonalInfoScreen(),
+    home: ChangeProfileScreen(),
   ));
 }
 
@@ -21,24 +24,11 @@ void main() {
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch (pageName) {
-    case "LoginScreen":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-      break;
 
-    case "SeeMyGulScreen":
+    case "VillageScreen":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SeeMyGulScreen(gulItems: [], imagePath: '', item: '', selectedCategory: '', features: '',  )),
-      );
-      break;
-
-    case "ChangeProfile":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ChangeProfileScreen()),
+        MaterialPageRoute(builder: (context) => const VillageScreen()),
       );
       break;
 
@@ -64,7 +54,6 @@ void goToAnotherPage(BuildContext context, String pageName) {
       );
       break;
 
-
   }
 }
 
@@ -88,15 +77,14 @@ class UserData {
 
 
 
-
-class PersonalInfoScreen extends StatefulWidget{
-  const PersonalInfoScreen({Key? key}) : super(key:key);
+class ChangeProfileScreen extends StatefulWidget{
+  const ChangeProfileScreen({Key? key}) : super(key:key);
 
   @override
-  _PersonalInfoScreenState createState() => _PersonalInfoScreenState();
+  _ChangeProfileScreenState createState() => _ChangeProfileScreenState();
 }
 
-class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
 
   UserData userData =
   UserData(name: '',
@@ -105,6 +93,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       profileImgUrl: '',
       password: '');
   bool isLoading = true;
+
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -150,19 +140,54 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     }
   }
 
-  // Function to handle logout
-  Future<void> handleLogout() async {
-    await FirebaseAuth.instance.signOut();
-    // Redirect to the login screen after logout
-    goToAnotherPage(context, "LoginScreen");
-  }
+  Future<void> _pickImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
+
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+
+      // Firebase Storage에 업로드
+      try {
+        // 사용자 ID 가져오기
+        String userId = FirebaseAuth.instance.currentUser!.uid;
+        firebase_storage.Reference ref = firebase_storage.FirebaseStorage
+            .instance
+            .ref('userProfileImages/$userId');
+
+        // 파일 업로드
+        firebase_storage.UploadTask uploadTask = ref.putFile(imageFile);
+
+        // 업로드 완료 대기
+        await uploadTask.whenComplete(() async {
+          // 업로드된 이미지의 URL 가져오기
+          String downloadURL = await ref.getDownloadURL();
+
+          // Firestore에 이미지 URL 업데이트
+          await FirebaseFirestore.instance.collection('users')
+              .doc(userId)
+              .update({
+            'profileImgUrl': downloadURL,
+          });
+
+          // 상태 업데이트
+          // 앱 상태 업데이트
+          setState(() {
+            userData.profileImgUrl = downloadURL;
+          });
+        });
+      } catch (e) {
+        // 오류 처리
+        print(e);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('개인정보',
+        title: const Text('프로필 수정',
             style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
@@ -187,15 +212,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
             },
             child: Container(
               width: double.infinity,
-              height: 300,
+              height: 450,
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    Color.fromARGB(255, 84, 224, 255),
-                    Color.fromARGB(230, 106, 255, 204),
+                    Color.fromARGB(255, 128, 231, 255),
+                    Color.fromARGB(230, 135, 246, 210),
                   ],
                 ),
               ),
@@ -208,112 +233,73 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       ? CircularProgressIndicator()
                       : Column(
                     children: [
-                      // 사용자가 로그인한 경우 프로필 이미지를 표시
-                      if (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
-                        CircleAvatar(
-                          radius: 80,
-                          backgroundImage: NetworkImage(userData.profileImgUrl!),
-                        ),
-                      const SizedBox(height: 20),
-                      // 닉네임이 있는 경우 환영 메시지 표시, 없으면 로그인 안내 텍스트 표시
-                      Text(
-                        userData.nickname != null && userData.nickname.isNotEmpty
-                            ? '${userData.nickname} 님 환영합니다 :)'
-                            : '로그인 해주세요 :)',
-                        style: const TextStyle(
-                          fontSize: 35,
-                          fontFamily: 'HakgyoansimDoldam',
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                      CircleAvatar(
+                        radius: 150,
+                        backgroundImage: (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
+                            ? NetworkImage(userData.profileImgUrl!)
+                            : AssetImage('assets/image/default_image.png') as ImageProvider<Object>,
                       ),
+                      SizedBox(height: 20.0),
+                      // 갤러리에서 사진 고르기 버튼
+                      ElevatedButton(
+                        onPressed: _pickImageFromGallery,
+                        child: Text('사진 고르기', style: TextStyle(fontSize: 23)),
+                      ),
+                      const SizedBox(height: 13),
+
+
                     ],
                   ),
                 ],
               ),
-          ),
+            ),
 
           ),
           const SizedBox(height: 30),
 
-          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
-          InkWell(
-            onTap: () {
-              goToAnotherPage(context, "SeeMyGulScreen");
-            },
-            child: const Row(
-              children: [
-                SizedBox(width:10),
-                Icon(Icons.note, size: 40),
-                SizedBox(width: 20),
-                Text("내 게시글 보기", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w700,)
-                ),
-              ],
+            InkWell(
+              onTap: () {
+                goToAnotherPage(context, "ChangePasswordScreen");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(width:10),
+                  Icon(Icons.note, size: 40),
+                  SizedBox(width: 20),
+                  Text("비밀번호 변경", style: TextStyle(fontSize: 32,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w700,)
+                  ),
+                ],
+              ),
             ),
-          ),
 
 
           const SizedBox(height: 20),
 
-          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
-          InkWell(
-            onTap: () {
-              goToAnotherPage(context, "ChangeProfile");
-            },
-            child: const Row(
-              children: [
-                SizedBox(width:10),
-                Icon(Icons.person, size: 40),
-                SizedBox(width: 20),
-                Text("프로필 수정", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w700,)),
-              ],
+            InkWell(
+              onTap: () {
+                goToAnotherPage(context, "VillageScreen");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(width:10),
+                  Icon(Icons.person, size: 40),
+                  SizedBox(width: 20),
+                  Text("지역구 설정", style: TextStyle(fontSize: 32,
+                    fontFamily: 'HakgyoansimDoldam',
+                    fontWeight: FontWeight.w700,)),
+                ],
+              ),
             ),
-          ),
 
 
           const SizedBox(height: 20),
 
-          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
-          InkWell(
-            onTap: () {
-              // '회원 탈퇴' 버튼을 누를 때 실행할 작업
-              // 예: goToAnotherPage(context, "Withdrawal");
-            },
-            child: const Row(
-              children: [
-                SizedBox(width:10),
-                Icon(Icons.account_circle, size: 40),
-                SizedBox(width: 20),
-                Text("회원 탈퇴", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w700,)),
-              ],
-            ),
-          ),
-
-
-          const SizedBox(height: 20),
-
-          if (FirebaseAuth.instance.currentUser != null) // Only show these buttons when logged in
-          InkWell(
-            onTap: handleLogout,
-            child: const Row(
-              children: [
-                SizedBox(width:10),
-                Icon(Icons.logout, size: 40),
-                SizedBox(width: 20),
-                Text("로그아웃", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
-                  fontWeight: FontWeight.w700,)),
-              ],
-            ),
-          ),
 
         ],
+
+
       ),
 
 

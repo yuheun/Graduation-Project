@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen>{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("분실물 어플",
+        title: const Text("Lost&Found Vision",
             style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700)),
       ),

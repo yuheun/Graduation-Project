@@ -97,6 +97,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
       });
     }
   }
+
   Future<void> _pickImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
