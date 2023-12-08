@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart'; // 알림키워드 유지
 import 'addGoods/addGoods.dart'; // addGoods.dart 파일
 import 'navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import 'navigationBar/categoryTap.dart'; // categoryTap.dart 파일

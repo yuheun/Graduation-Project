@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
@@ -24,6 +25,13 @@ Future<void> goToAnotherPage(BuildContext context, String pageName, {String? sel
         context,
         MaterialPageRoute(builder: (context) => HomeScreen(selectedDistrict: selectedDistrict)),
       );
+
+      // Save the selected district to SharedPreferences
+      if (selectedDistrict != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('selectedDistrict', selectedDistrict);
+      }
+
       // Send the selected district to Firebase
       // Replace the code below with your Firebase logic
       await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).update({
@@ -67,6 +75,20 @@ class VillageScreen extends StatefulWidget {
 
 class _VillageScreenState extends State<VillageScreen> {
   String? selectedDistrict; // Variable to store the selected district
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedDistrict();
+  }
+
+  Future<void> _loadSelectedDistrict() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedDistrict = prefs.getString('selectedDistrict');
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
