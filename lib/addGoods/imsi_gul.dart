@@ -39,16 +39,16 @@ void goToAnotherPage(BuildContext context, String pageName){
 
 
 class ImsiGulScreen extends StatelessWidget {
-  final String image_url;
-  final String subcategory;
-  final String category;
-  final String type;
+  final String imagePath;
+  final String item;
+  final String selectedCategory;
+  final String features;
 
   const ImsiGulScreen({
-    required this.image_url,
-    required this.subcategory,
-    required this.category,
-    required this.type,
+    required this.imagePath,
+    required this.item,
+    required this.selectedCategory,
+    required this.features,
   });
 
   @override
@@ -76,22 +76,22 @@ class ImsiGulScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.file(
-            File(image_url),
+            File(imagePath),
             width: 400,
             height: 400,
           ),
 
           SizedBox(height: 10),
 
-          Text('종류: $subcategory', style: TextStyle(fontSize: 20,
+          Text('종류: $item', style: TextStyle(fontSize: 20,
             fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,)
           ),
-          Text('대분류: $category', style: TextStyle(fontSize: 20,
+          Text('대분류: $selectedCategory', style: TextStyle(fontSize: 20,
             fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,)
           ),
-          Text('특징: $type', style: TextStyle(fontSize: 20,
+          Text('특징: $features', style: TextStyle(fontSize: 20,
             fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,)
           ),
@@ -106,10 +106,11 @@ class ImsiGulScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => SeeMyGulScreen(
                     // Pass the data to SeeMyGulScreen
-                    image_url: image_url,
-                    subcategory: subcategory,
-                    category: category,
-                    type: type, gulItems: [],
+                    image_url: imagePath,
+                    label_id: item,
+                    category: selectedCategory,
+                    yolo_label: features, gulItems: [],
+                    description: '',
                   ),
                 ),
               );

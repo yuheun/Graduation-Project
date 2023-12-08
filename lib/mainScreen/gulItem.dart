@@ -1,16 +1,44 @@
-
-// 파베에서 글작성 변수값 받아올 때 쓸라고 그냥 클래스 선언한거!!
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GulItem {
-  final String subcategory; // ex.휴대폰 (종류)
-  final String category; // ex. 전자기기 (대분류)
-  final String type; // ex. 흰색 (특징)
-  final String image_url; // 사진
+  // 기존의 필드들
+  final String label_id;
+  final String image_url;
+  final String description;
+  final String location;
+
+  // MappingTable에서 가져올 추가 필드
+  String category;
+  String subcategory;
+  String type;
+  String yolo_label;
+
 
   GulItem({
-    required this.subcategory,
-    required this.category,
-    required this.type,
+    required this.label_id,
     required this.image_url,
+    required this.description,
+    required this.location,
+
+    required this.category,
+    required this.subcategory,
+    required this.type,
+    required this.yolo_label
   });
+
+  // Firestore 문서에서 PostItem 객체를 생성하는 팩토리 생성자
+  factory GulItem.fromDocument(DocumentSnapshot doc) {
+    return GulItem(
+      // 기존의 필드들
+      label_id: doc['label_id'],
+      image_url: doc['image_url'],
+      description: doc['description'],
+      location: doc['location'],
+      category: doc['category'] ?? '',
+      subcategory: doc['subcategory'] ?? '',
+      type: doc['type'] ?? '',
+      yolo_label: doc['yolo_label'] ?? '',
+
+    );
+  }
 }

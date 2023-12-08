@@ -37,6 +37,7 @@ void goToAnotherPage(BuildContext context, String pageName){
   }
 }
 
+
 class NextScreen extends StatefulWidget {
   final String markerText;
 
@@ -47,9 +48,10 @@ class NextScreen extends StatefulWidget {
 }
 
 class _NextScreenState extends State<NextScreen> {
+  List<GulItem> postItems = [];
+  List<GulItem> filteredItems = []; // 선택된 location
+  Map<String, GulItem> mappingData = {};
   TextEditingController searchController = TextEditingController();
-  List<GulItem> items = [];
-  List<GulItem> filteredItems = [];
 
   @override
   void initState() {
@@ -58,23 +60,61 @@ class _NextScreenState extends State<NextScreen> {
   }
 
   Future<void> fetchItems() async {
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-    await FirebaseFirestore.instance.collection('your_collection_name').get();
+    print("fetchItems started");
+    print("widget.markerText: ${widget.markerText}"); // markerText 출력
 
-    setState(() {
-      items = querySnapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return GulItem(
-          subcategory: data['subcategory'] ?? '',
-          category: data['category'] ?? '',
-          type: data['type'] ?? '',
-          image_url: data['image_url'] ?? '',
+    // PostItems 컬렉션에서 데이터 가져오기 (화면에 띄울 데이터)
+    final postItemsQuerySnapshot = await FirebaseFirestore.instance
+        .collection('PostItems')
+        .where('location', isEqualTo: widget.markerText)
+        .get();
+
+    print("items fetched: ${postItemsQuerySnapshot.docs}");
+
+    List<GulItem> newFetchedPostItems = [];
+
+    // 'PostItems'의 각 항목에 대하여
+    for (var doc in postItemsQuerySnapshot.docs) {
+      print("PostItem: ${doc.data()}"); // PostItem 데이터 로깅
+
+      var postItemData = doc.data() as Map<String, dynamic>;
+
+      // 'Mapping' 컬렉션에서 추가 데이터 가져오기
+      var mappingDocSnapshot = await FirebaseFirestore.instance
+          .collection('Mapping')
+          .where('label_id', isEqualTo: postItemData['label_id'])
+          .get();
+
+      // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
+      if (mappingDocSnapshot.docs.isNotEmpty) {
+        // 문서가 존재하면 첫 번째 문서의 데이터를 사용
+        var mappingDoc = mappingDocSnapshot.docs.first;
+        print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
+        var mappingData = mappingDoc.data() as Map<String, dynamic>;
+
+        var gulItem = GulItem(
+          label_id: postItemData['label_id'],
+          image_url: postItemData['image_url'],
+          description: postItemData['description'],
+          location: postItemData['location'],
+          category: mappingData['category'] ?? 'Unknown', // 기본값 설정
+          subcategory: mappingData['subcategory'] ?? 'Unknown',
+          type: mappingData['type'] ?? 'Unknown',
+          yolo_label: mappingData['yolo_label'] ?? 'Unknown',
         );
-      }).toList();
-      filteredItems = List.from(items);
-    });
+        newFetchedPostItems.add(gulItem);
+      } else {
+        print("No mapping data found for label_id ${postItemData['label_id']}");
+      }
+    }
 
+    // 상태 업데이트
+    setState(() {
+      postItems = newFetchedPostItems;
+      filteredItems = List.from(newFetchedPostItems);
+    });
   }
+
 
   void navigateToDetailScreen(GulItem selectedGulItem) {
     Navigator.push(
@@ -122,9 +162,9 @@ class _NextScreenState extends State<NextScreen> {
                 controller: searchController,
                 onChanged: (value) {
                   setState(() {
-                    filteredItems = items
-                        .where((item) =>
-                        item.subcategory.toLowerCase().contains(value.toLowerCase()))
+                    filteredItems = postItems
+                        .where((itemModel) =>
+                        itemModel.description.toLowerCase().contains(value.toLowerCase()))
                         .toList();
                   });
                 },
@@ -145,19 +185,19 @@ class _NextScreenState extends State<NextScreen> {
             child: ListView.builder(
               itemCount: filteredItems.length,
               itemBuilder: (context, index) {
+                final GulItem item = filteredItems[index];
+
                 return GestureDetector(
                   onTap: () {
-                    // 클릭한 항목의 데이터를 seeGuDetailScreen으로 전달
-                    navigateToDetailScreen(filteredItems[index]);
+                    navigateToDetailScreen(item);
                   },
                   child: Card(
                     child: ListTile(
-                      leading: Image.network(filteredItems[index].image_url),
-                      title: Text(
-                        '${filteredItems[index].type} ${filteredItems[index].subcategory}',
-                      ),
+                      leading: item.image_url != null ? Image.network(item.image_url) : null,
+                      title: Text('${item.description}'),
+                      subtitle: Text('카테고리: ${item.category}\n서브카테고리: ${item.subcategory}\n타입: ${item.type}'),
                     ),
-                  ),
+                    ),
                 );
               },
             ),

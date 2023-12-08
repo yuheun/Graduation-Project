@@ -43,15 +43,18 @@ void goToAnotherPage(BuildContext context, String pageName){
 class SeeMyGulScreen extends StatefulWidget {
   final List<GulItem> gulItems;
   final String image_url;
-  final String subcategory;
+  final String label_id;
   final String category;
-  final String type;
+  final String yolo_label;
+  final String description;
+
 
   const SeeMyGulScreen({
     required this.image_url,
-    required this.subcategory,
+    required this.label_id,
     required this.category,
-    required this.type,
+    required this.yolo_label,
+    required this.description,
     required this.gulItems,
   });
 
@@ -78,10 +81,15 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
       gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
         return GulItem(
+          label_id: data['item'],
+          category: data['selectedCategory'],
+          yolo_label: data['features'],
+          image_url: data['imagePath'],
+          description: data['description'],
+          location: data['location'],
           subcategory: data['subcategory'],
-          category: data['category'],
           type: data['type'],
-          image_url: data['image_url'],
+
         );
       }).toList();
 
@@ -190,7 +198,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '종류: ${gulItem.subcategory}!',
+                  '종류: ${gulItem.type}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',
@@ -208,7 +216,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '특징: ${_truncateString(gulItem.type, 10)}!',
+                  '특징: ${_truncateString(gulItem.description, 10)}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',

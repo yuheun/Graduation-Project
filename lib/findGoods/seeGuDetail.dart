@@ -81,7 +81,7 @@ class seeGuDetailScreen extends StatelessWidget{
             ),
             Text('종류: ${gulItem.subcategory}'),
             Text('대분류: ${gulItem.category}'),
-            Text('특징: ${gulItem.type}'),
+            Text('특징: ${gulItem.yolo_label}'),
           ],
         ),
       ),

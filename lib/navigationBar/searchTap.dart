@@ -178,10 +178,14 @@ class _SearchTabScreenContentState extends State<SearchTapScreenContent> {
       items = querySnapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return GulItem(
-          subcategory: data['subcategory'] ?? '',
-          category: data['category'] ?? '',
-          type: data['type'] ?? '',
-          image_url: data['image_url'] ?? '',
+          label_id: data['item'] ?? '',
+          category: data['selectedCategory'] ?? '',
+          yolo_label: data['features'] ?? '',
+          image_url: data['imagePath'] ?? '',
+          description: data['description'] ?? '',
+          location: data['loaction'],
+          subcategory: data['subcategory'],
+          type: data['type'],
         );
       }).toList();
       filteredItems = List.from(items);
@@ -212,7 +216,7 @@ class _SearchTabScreenContentState extends State<SearchTapScreenContent> {
                   setState(() {
                     filteredItems = items
                         .where((item) =>
-                        item.subcategory.toLowerCase().contains(value.toLowerCase()))
+                        item.label_id.toLowerCase().contains(value.toLowerCase()))
                         .toList();
                   });
                 },
@@ -242,7 +246,7 @@ class _SearchTabScreenContentState extends State<SearchTapScreenContent> {
                     child: ListTile(
                       leading: Image.network(filteredItems[index].image_url),
                       title: Text(
-                        '${filteredItems[index].type} + ${filteredItems[index].subcategory}',
+                        '${filteredItems[index].type} + ${filteredItems[index].label_id}',
                       ),
                     ),
                   ),
