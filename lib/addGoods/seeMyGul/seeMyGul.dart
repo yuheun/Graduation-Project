@@ -42,16 +42,16 @@ void goToAnotherPage(BuildContext context, String pageName){
 
 class SeeMyGulScreen extends StatefulWidget {
   final List<GulItem> gulItems;
-  final String imagePath;
-  final String item;
-  final String selectedCategory;
-  final String features;
+  final String image_url;
+  final String subcategory;
+  final String category;
+  final String type;
 
   const SeeMyGulScreen({
-    required this.imagePath,
-    required this.item,
-    required this.selectedCategory,
-    required this.features,
+    required this.image_url,
+    required this.subcategory,
+    required this.category,
+    required this.type,
     required this.gulItems,
   });
 
@@ -78,10 +78,10 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
       gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
         return GulItem(
-          item: data['item'],
-          selectedCategory: data['selectedCategory'],
-          features: data['features'],
-          imagePath: data['imagePath'],
+          subcategory: data['subcategory'],
+          category: data['category'],
+          type: data['type'],
+          image_url: data['image_url'],
         );
       }).toList();
 
@@ -180,7 +180,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
           alignment: Alignment.center,
           children: [
             Image.network(
-              gulItem.imagePath,
+              gulItem.image_url,
               width: double.infinity,
               height: 30,
               fit: BoxFit.cover,
@@ -190,7 +190,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '종류: ${gulItem.item}!',
+                  '종류: ${gulItem.subcategory}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',
@@ -199,7 +199,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '대분류: ${gulItem.selectedCategory}!',
+                  '대분류: ${gulItem.category}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',
@@ -208,7 +208,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '특징: ${_truncateString(gulItem.features, 10)}!',
+                  '특징: ${_truncateString(gulItem.type, 10)}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',

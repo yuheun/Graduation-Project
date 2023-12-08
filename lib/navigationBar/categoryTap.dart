@@ -166,16 +166,16 @@ class _CategoryTabScreenContentState extends State<CategoryTabScreenContent> {
   void fetchGulItems(String category) {
     FirebaseFirestore.instance
         .collection('gulItems')
-        .where('selectedCategory', isEqualTo: category)
+        .where('category', isEqualTo: category)
         .get()
         .then((querySnapshot) {
       setState(() {
         gulItems = querySnapshot.docs
             .map((doc) => GulItem(
-          item: doc['item'],
-          selectedCategory: doc['selectedCategory'],
-          features: doc['features'],
-          imagePath: doc['imagePath'],
+          subcategory: doc['subcategory'],
+          category: doc['Category'],
+          type: doc['type'],
+          image_url: doc['image_url'],
         ))
             .toList();
       });
@@ -235,14 +235,14 @@ class _CategoryTabScreenContentState extends State<CategoryTabScreenContent> {
                         width: double.infinity,
                         height: 200,
                         child: Image.network(
-                          currentItem.imagePath,
+                          currentItem.image_url,
                           fit: BoxFit.cover,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '${currentItem.features} ${currentItem.item}',
+                          '${currentItem.type} ${currentItem.subcategory}',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),

@@ -11,7 +11,7 @@ import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 void main() {
   runApp(const MaterialApp(
-    home: GoodsListScreen(imagePath: '', item: '', selectedCategory: '', features: '', gulItems: [],),
+    home: GoodsListScreen(image_url: '', subcategory: '', category: '', type: '', gulItems: [],),
   ));
 }
 
@@ -49,16 +49,16 @@ class GoodsListScreen extends StatefulWidget {
   //const GoodsListScreen({Key? key}): super(key:key);
 
   final List<GulItem> gulItems;
-  final String imagePath;
-  final String item;
-  final String selectedCategory;
-  final String features;
+  final String image_url;
+  final String subcategory;
+  final String category;
+  final String type;
 
   const GoodsListScreen({
-    required this.imagePath,
-    required this.item,
-    required this.selectedCategory,
-    required this.features,
+    required this.image_url,
+    required this.subcategory,
+    required this.category,
+    required this.type,
     required this.gulItems,
   });
 
@@ -95,10 +95,10 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
         gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data() as Map<String, dynamic>;
           return GulItem(
-            item: data['item'],
-            selectedCategory: data['selectedCategory'],
-            features: data['features'],
-            imagePath: data['imagePath'],
+            subcategory: data['subcategory'],
+            category: data['category'],
+            type: data['type'],
+            image_url: data['image_url'],
           );
         }).toList();
 
@@ -204,7 +204,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
           alignment: Alignment.center,
           children: [
             Image.network(
-              gulItem.imagePath,
+              gulItem.image_url,
               width: double.infinity,
               height: 30,
               fit: BoxFit.cover,
@@ -214,7 +214,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '종류: ${gulItem.item}!',
+                  '종류: ${gulItem.subcategory}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',
@@ -223,7 +223,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '대분류: ${gulItem.selectedCategory}!',
+                  '대분류: ${gulItem.category}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',
@@ -232,7 +232,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '특징: ${_truncateString(gulItem.features, 10)}!',
+                  '특징: ${_truncateString(gulItem.type, 10)}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',

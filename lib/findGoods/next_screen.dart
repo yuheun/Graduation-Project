@@ -65,10 +65,10 @@ class _NextScreenState extends State<NextScreen> {
       items = querySnapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return GulItem(
-          item: data['item'] ?? '',
-          selectedCategory: data['selectedCategory'] ?? '',
-          features: data['features'] ?? '',
-          imagePath: data['imagePath'] ?? '',
+          subcategory: data['subcategory'] ?? '',
+          category: data['category'] ?? '',
+          type: data['type'] ?? '',
+          image_url: data['image_url'] ?? '',
         );
       }).toList();
       filteredItems = List.from(items);
@@ -124,7 +124,7 @@ class _NextScreenState extends State<NextScreen> {
                   setState(() {
                     filteredItems = items
                         .where((item) =>
-                        item.item.toLowerCase().contains(value.toLowerCase()))
+                        item.subcategory.toLowerCase().contains(value.toLowerCase()))
                         .toList();
                   });
                 },
@@ -152,9 +152,9 @@ class _NextScreenState extends State<NextScreen> {
                   },
                   child: Card(
                     child: ListTile(
-                      leading: Image.network(filteredItems[index].imagePath),
+                      leading: Image.network(filteredItems[index].image_url),
                       title: Text(
-                        '${filteredItems[index].features} + ${filteredItems[index].item}',
+                        '${filteredItems[index].type} ${filteredItems[index].subcategory}',
                       ),
                     ),
                   ),

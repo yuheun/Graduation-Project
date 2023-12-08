@@ -64,14 +64,14 @@ class GulDetailScreen extends StatelessWidget {
           children: [
             // Display the details of the selected GulItem
             Image.network(
-              gulItem.imagePath,
+              gulItem.image_url,
               width: 400,
               height: 400,
               fit: BoxFit.cover,
             ),
-            Text('종류: ${gulItem.item}'),
-            Text('대분류: ${gulItem.selectedCategory}'),
-            Text('특징: ${gulItem.features}'),
+            Text('종류: ${gulItem.subcategory}'),
+            Text('대분류: ${gulItem.category}'),
+            Text('특징: ${gulItem.type}'),
           ],
         ),
       ),

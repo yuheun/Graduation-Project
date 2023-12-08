@@ -31,7 +31,7 @@ void goToAnotherPage(BuildContext context, String pageName) {
     case "SeeMyGulScreen":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SeeMyGulScreen(gulItems: [], imagePath: '', item: '', selectedCategory: '', features: '',  )),
+        MaterialPageRoute(builder: (context) => SeeMyGulScreen(gulItems: [], image_url: '', subcategory: '', category: '', type: '',  )),
       );
       break;
 
