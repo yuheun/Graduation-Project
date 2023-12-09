@@ -49,3 +49,15 @@ flutter:
         - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamL.ttf
         - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamM.ttf
         - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamB.ttf
+
+    - family: s-core
+      fonts:
+        - asset: assets/font/s-core/SCDream1.otf
+        - asset: assets/font/s-core/SCDream2.otf
+        - asset: assets/font/s-core/SCDream3.otf
+        - asset: assets/font/s-core/SCDream4.otf
+        - asset: assets/font/s-core/SCDream5.otf
+        - asset: assets/font/s-core/SCDream6.otf
+        - asset: assets/font/s-core/SCDream7.otf
+        - asset: assets/font/s-core/SCDream8.otf
+        - asset: assets/font/s-core/SCDream9.otf

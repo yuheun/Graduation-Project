@@ -116,8 +116,63 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return  MaterialApp(
+      home: const MyAppPage(),
+      theme: ThemeData(fontFamily: 's-core'),
+      themeMode: ThemeMode.system,
+    );
+  }
+}
+
+// 하단 바 설정
+class MyAppPage extends StatefulWidget {
+  const MyAppPage({super.key});
+  @override
+  State<MyAppPage> createState() => _MyAppPageState();
+}
+
+class _MyAppPageState extends State<MyAppPage> {
+
+  int _selectedIndex = 0;
+
+  final List<Widget> _navIndex = [
+    const HomeScreen(),
+    AlarmScreen(),
+    const PersonalInfoScreen(),
+  ];
+
+  void _onNavTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      body: _navIndex.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        fixedColor: const Color.fromARGB(255, 78, 103, 169),
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: '알림'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: '개인 정보'
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onNavTapped,
+      ),
     );
   }
 }
@@ -250,8 +305,8 @@ class _HomeScreenState extends State<HomeScreen>{
                     children: [
                       Icon(Icons.playlist_add, size: 130, color: Colors.white),
                       Text("분실물 등록",
-                          style: TextStyle(fontSize: 23, color: Colors.white,
-                              fontWeight: FontWeight.w700)),
+                          style: TextStyle(fontSize: 20, color: Colors.white,
+                              fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ),
@@ -274,8 +329,8 @@ class _HomeScreenState extends State<HomeScreen>{
                     mainAxisSize: MainAxisSize.min, // 버튼 내용 - 최소한의 공간을 사용
                     children: [
                       Icon(Icons.manage_search, size: 130, color: Colors.white),
-                      Text("분실물 찾기", style: TextStyle(fontSize: 25, color: Colors.white,
-                           fontWeight: FontWeight.w700)),
+                      Text("분실물 찾기", style: TextStyle(fontSize: 20, color: Colors.white,
+                           fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ),
@@ -302,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen>{
                 children: [
                   Icon(Icons.view_list, size: 130, color: Colors.white),
                   Text("우리 동네 분실물 목록", style: TextStyle(fontSize: 25, color: Colors.white,
-                       fontWeight: FontWeight.w700)),
+                       fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
@@ -318,11 +373,11 @@ class _HomeScreenState extends State<HomeScreen>{
               child: const Row(
                 children: [
                   SizedBox(width:15),
-                  Icon(Icons.loyalty, size: 50, color: Color.fromARGB(
+                  Icon(Icons.loyalty, size: 30, color: Color.fromARGB(
                       255, 119, 119, 119)),
                   SizedBox(width: 15),
-                  Text("알림받는 키워드", style: TextStyle(fontSize: 30,
-                    fontWeight: FontWeight.w700, color: Color.fromARGB(
+                  Text("알림받는 키워드", style: TextStyle(fontSize: 20,
+                    fontWeight: FontWeight.w500, color: Color.fromARGB(
                           255, 119, 119, 119))
                   ),
                 ],
@@ -339,11 +394,11 @@ class _HomeScreenState extends State<HomeScreen>{
               child: const Row(
                 children: [
                   SizedBox(width:15),
-                  Icon(Icons.apartment, size: 50, color: Color.fromARGB(
+                  Icon(Icons.apartment, size: 30, color: Color.fromARGB(
                       255, 119, 119, 119)),
                   SizedBox(width: 15),
-                  Text("내 동네 설정", style: TextStyle(fontSize: 30,
-                    fontWeight: FontWeight.w700, color: Color.fromARGB(
+                  Text("내 동네 설정", style: TextStyle(fontSize: 20,
+                    fontWeight: FontWeight.w500, color: Color.fromARGB(
                           255, 119, 119, 119))
                   ),
                 ],
@@ -360,11 +415,11 @@ class _HomeScreenState extends State<HomeScreen>{
               child: const Row(
                 children: [
                   SizedBox(width:15),
-                  Icon(Icons.search, size: 50, color: Color.fromARGB(
+                  Icon(Icons.search, size: 30, color: Color.fromARGB(
                       255, 119, 119, 119)),
                   SizedBox(width: 15),
-                  Text("검색하기", style: TextStyle(fontSize: 30,
-                    fontWeight: FontWeight.w700, color: Color.fromARGB(
+                  Text("검색하기", style: TextStyle(fontSize: 20,
+                    fontWeight: FontWeight.w500, color: Color.fromARGB(
                           255, 119, 119, 119))
                   ),
                 ],
