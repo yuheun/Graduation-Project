@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import '../addGoods/seeMyGul/seeMyGul.dart';
 import 'withdrawal.dart'; // 회원 탈퇴 파일
-import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import 'login/changeProfile/changeProfile.dart';
 import 'login/login.dart'; // login.dart 파일
-import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {
@@ -51,33 +48,8 @@ void goToAnotherPage(BuildContext context, String pageName) {
       );
       break;
 
-
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
-      );
-      break;
-
-
   }
 }
-
 
 class UserData {
   String name;
@@ -95,9 +67,6 @@ class UserData {
         required this.profileImgUrl,
       });
 }
-
-
-
 
 class PersonalInfoScreen extends StatefulWidget{
   const PersonalInfoScreen({Key? key}) : super(key:key);
@@ -173,7 +142,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('개인정보',
-            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
+            style: TextStyle(fontSize: 25,
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
@@ -231,8 +200,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             ? '${userData.nickname} 님 환영합니다 :)'
                             : '로그인 해주세요 :)',
                         style: const TextStyle(
-                          fontSize: 35,
-                          fontFamily: 'HakgyoansimDoldam',
+                          fontSize: 30,
                           fontWeight: FontWeight.w600,
                         ),
                         textAlign: TextAlign.center,
@@ -257,7 +225,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 Icon(Icons.note, size: 40),
                 SizedBox(width: 20),
                 Text("내 게시글 보기", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)
                 ),
               ],
@@ -278,7 +245,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 Icon(Icons.person, size: 40),
                 SizedBox(width: 20),
                 Text("프로필 수정", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)),
               ],
             ),
@@ -298,7 +264,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 Icon(Icons.account_circle, size: 40),
                 SizedBox(width: 20),
                 Text("회원 탈퇴", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)),
               ],
             ),
@@ -316,7 +281,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 Icon(Icons.logout, size: 40),
                 SizedBox(width: 20),
                 Text("로그아웃", style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)),
               ],
             ),
@@ -325,36 +289,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         ],
       ),
 
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
     );
   }
 }

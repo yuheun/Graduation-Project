@@ -1,7 +1,5 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'changePassword.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,10 +7,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'package:fortest/mainScreen/village.dart';
-import '/navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '/navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import '/navigationBar/searchTap.dart'; // searchTap.dart 파일
-
 
 void main() {
   runApp(const MaterialApp(
@@ -36,28 +30,6 @@ void goToAnotherPage(BuildContext context, String pageName) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const VillageScreen()),
-      );
-      break;
-
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
 
@@ -195,7 +167,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('프로필 수정',
-            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
+            style: TextStyle(fontSize: 25,
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
@@ -274,7 +246,6 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                   Icon(Icons.lock, size: 40),
                   SizedBox(width: 20),
                   Text("비밀번호 변경", style: TextStyle(fontSize: 32,
-                    fontFamily: 'HakgyoansimDoldam',
                     fontWeight: FontWeight.w700,)
                   ),
                 ],
@@ -294,51 +265,16 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                   Icon( Icons.location_on, size: 40),
                   SizedBox(width: 20),
                   Text("지역구 설정", style: TextStyle(fontSize: 32,
-                    fontFamily: 'HakgyoansimDoldam',
                     fontWeight: FontWeight.w700,)),
                 ],
               ),
             ),
 
-
           const SizedBox(height: 20),
 
-
         ],
-
-
       ),
 
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
     );
   }
 }

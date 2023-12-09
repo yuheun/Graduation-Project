@@ -1,7 +1,3 @@
-//
-//예림이 코드 복붙해서 클래스 이름만 바꿈
-//
-
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:fortest/findGoods/next_screen.dart';

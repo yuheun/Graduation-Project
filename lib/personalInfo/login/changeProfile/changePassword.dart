@@ -1,13 +1,8 @@
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-import 'package:fortest/mainScreen/village.dart';
 import 'package:fortest/personalInfo/login/login.dart';
-import '/navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '/navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import '/navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 void main() {
   runApp(const MaterialApp(
@@ -23,28 +18,6 @@ void goToAnotherPage(BuildContext context, String pageName) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-      break;
-
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
 
@@ -151,7 +124,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('비밀번호 변경',
-            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam',
+            style: TextStyle(fontSize: 25,
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
@@ -172,7 +145,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           children: [
             const SizedBox(height: 100),
             buildPasswordField("현재 비밀번호", "입력해주세요", _currentPasswordController),
+            const SizedBox(height: 10),
             buildPasswordField("새 비밀번호", "입력해주세요", _newPasswordController),
+            const SizedBox(height: 10),
             buildPasswordConfirmationField("새 비밀번호 확인", "입력해주세요"),
             const SizedBox(height: 50),
             ElevatedButton(
@@ -188,43 +163,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 goToAnotherPage(context, "LoginScreen");
               },
               child: const Text('비밀번호 변경', style: TextStyle(fontSize: 25,
-                fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700,)),
             ),
           ],
         ),
       ),
 
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
     );
   }
 
@@ -235,16 +179,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Row(
         children: [
           SizedBox(width: 110, child: Text(label,
-              style: TextStyle(fontSize: 18,
-                fontFamily: 'HakgyoansimDoldam',
+              style: TextStyle(fontSize: 17,
                 fontWeight: FontWeight.w700,)
           )),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                  hintStyle: TextStyle(fontSize: 20,
-                    fontFamily: 'HakgyoansimDoldam',
+                  hintStyle: TextStyle(fontSize: 17,
                     fontWeight: FontWeight.w700,
                   )
               ),
@@ -267,16 +209,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Row(
         children: [
           SizedBox(width: 110, child: Text(label,
-              style: TextStyle(fontSize: 18,
-                fontFamily: 'HakgyoansimDoldam',
+              style: TextStyle(fontSize: 17,
                 fontWeight: FontWeight.w700,)
           )),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                hintStyle: TextStyle(fontSize: 20,
-                  fontFamily: 'HakgyoansimDoldam',
+                hintStyle: TextStyle(fontSize: 17,
                   fontWeight: FontWeight.w700,
                 ),
               ),

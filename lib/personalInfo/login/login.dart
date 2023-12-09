@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fortest/personalInfo/findPassword.dart';
 import 'package:fortest/main.dart';
 import 'loginSuccess.dart';
-import '../../navigationBar/alarmTap.dart'; // alarmTap.dart
-import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import '../join.dart';
-import '../../navigationBar/searchTap.dart'; // searchTap.dart 파일
-
 
 void main() {
   runApp(const MaterialApp(
     home: LoginScreen(),
   ));
 }
-
 
 void goToAnotherPage(BuildContext context, String pageName, {UserData? userData}){
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -30,29 +25,6 @@ void goToAnotherPage(BuildContext context, String pageName, {UserData? userData}
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const FindPasswordScreen()),
-      );
-      break;
-
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
       );
       break;
 
@@ -126,13 +98,9 @@ class _LoginScreenState extends State<LoginScreen>{
     }
 
 
-
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('로그인', style: TextStyle(fontSize: 25,
-          fontFamily: 'HakgyoansimDoldam',
           fontWeight: FontWeight.w600,)),
         actions: <Widget>[
           IconButton(
@@ -149,17 +117,23 @@ class _LoginScreenState extends State<LoginScreen>{
       ),
 
 
-      body: Center(
+      body: SingleChildScrollView(
+        child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 70),
+            Image.asset(
+              'assets/image/logo.png', // Update the path accordingly
+              height: 200, // Set the height of the image
+            ),
+            const SizedBox(height: 30),
             SizedBox(
               width: 200,
               child: TextField(
                 controller: idController,
                 decoration: const InputDecoration(labelText: 'ID(Email)',
                     labelStyle: TextStyle(fontSize: 25,
-                      fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w700,)
                 ),
                 maxLines: 1,
@@ -171,7 +145,6 @@ class _LoginScreenState extends State<LoginScreen>{
                 controller: passwordController,
                 decoration: const InputDecoration(labelText: 'PW',
                     labelStyle: TextStyle(fontSize: 25,
-                      fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w700,)
                 ),
                 maxLines: 1,
@@ -180,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen>{
             ),
 
 
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
 
 
             ElevatedButton(
@@ -198,17 +171,16 @@ class _LoginScreenState extends State<LoginScreen>{
               },
 
               child: Container(
-                width: 150, height: 50,
+                width: 130, height: 50,
                 alignment: Alignment.center,
-                child: const Text('로그인', style: TextStyle(fontSize: 32,
-                  fontFamily: 'HakgyoansimDoldam',
+                child: const Text('로그인', style: TextStyle(fontSize: 30,
                   fontWeight: FontWeight.w700,)
                 ),
               ),
             ),
 
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
 
 
             Row(
@@ -218,8 +190,7 @@ class _LoginScreenState extends State<LoginScreen>{
                   onPressed: () {
                     goToAnotherPage(context, "JoinScreen");
                   },
-                  child: const Text('회원가입', style: TextStyle(fontSize: 25,
-                      fontFamily: 'HakgyoansimDoldam',
+                  child: const Text('회원가입', style: TextStyle(fontSize: 18,
                       fontWeight: FontWeight.w700,
                       decoration: TextDecoration.underline)),
                 ),
@@ -232,49 +203,18 @@ class _LoginScreenState extends State<LoginScreen>{
                   onPressed: () {
                     goToAnotherPage(context, "FindPasswordScreen");
                   },
-                  child: const Text('비밀번호 찾기', style: TextStyle(fontSize: 25,
-                      fontFamily: 'HakgyoansimDoldam',
+                  child: const Text('비밀번호 찾기', style: TextStyle(fontSize: 18,
                       fontWeight: FontWeight.w700,
                       decoration: TextDecoration.underline)),
                 ),
+
               ],
             ),
           ],
         ),
       ),
 
-
-
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
+    )
     );
   }
 

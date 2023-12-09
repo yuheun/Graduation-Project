@@ -41,6 +41,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/image/
+    - assets/image/logo.png
+    - assets/image/logo_onlyimg.png
   fonts:
     - family: HakgyoansimDoldam
       fonts:

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:fortest/findGoods/seeGuDetail.dart';
 import 'package:fortest/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fortest/firebase/gulItem.dart';
+import '../findGoods/seeGuDetail.dart';
 
-class NextScreen extends StatefulWidget {
-  final String markerText;
-
-  const NextScreen({Key? key, required this.markerText}) : super(key: key);
-
-  @override
-  _NextScreenState createState() => _NextScreenState();
+void main() {
+  runApp(const MaterialApp(
+    home: SearchScreen(),
+  ));
 }
 
-class _NextScreenState extends State<NextScreen> {
+class SearchScreen extends StatefulWidget {
+
+  const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   List<GulItem> postItems = [];
   List<GulItem> filteredItems = [];
   Map<String, GulItem> mappingData = {};
@@ -27,12 +32,10 @@ class _NextScreenState extends State<NextScreen> {
 
   Future<void> fetchItems() async {
     print("fetchItems started");
-    print("widget.markerText: ${widget.markerText}"); // markerText 출력
 
     // PostItems 컬렉션에서 데이터 가져오기 (화면에 띄울 데이터)
     final postItemsQuerySnapshot = await FirebaseFirestore.instance
         .collection('PostItems')
-        .where('location', isEqualTo: widget.markerText)
         .get();
 
     print("items fetched: ${postItemsQuerySnapshot.docs}");
@@ -92,7 +95,6 @@ class _NextScreenState extends State<NextScreen> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -101,7 +103,7 @@ class _NextScreenState extends State<NextScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.markerText),
+        title: Text("검색"),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -136,6 +138,7 @@ class _NextScreenState extends State<NextScreen> {
                 },
                 decoration: InputDecoration(
                   labelText: '검색:',
+                  hintText: 'ex) 흰색 아이폰',
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
@@ -163,7 +166,7 @@ class _NextScreenState extends State<NextScreen> {
                       title: Text('${item.yolo_label}'),
                       subtitle: Text('대분류: ${item.category}\n중분류: ${item.subcategory}\n소분류: ${item.type}'),
                     ),
-                    ),
+                  ),
                 );
               },
             ),

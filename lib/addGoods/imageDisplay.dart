@@ -1,21 +1,10 @@
-// 글 작성하는 화면!
-// 이거 파베로 넘기면 될거 같음
-// 일단 코드 짜두긴 했는데 이게 이렇게 하는게 맞나..
-
-
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
-import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import 'imsi_gul.dart';
-import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -23,34 +12,6 @@ void main() {
   runApp(const MaterialApp(
     home: ImageDisplayScreen(imagePath: '',),
   ));
-}
-
-void goToAnotherPage(BuildContext context, String pageName){
-  // 버튼에 따라 그에 해당하는 파일로 이동
-  switch(pageName){
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
-      );
-      break;
-  }
 }
 
 class ImageDisplayScreen extends StatefulWidget {
@@ -183,7 +144,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('글 작성',
-            style: TextStyle(fontSize: 25, fontFamily: 'HakgyoansimDoldam', fontWeight: FontWeight.w600,)
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600,)
         ),
 
         actions: <Widget>[
@@ -280,37 +241,6 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
         ),
       ),
 
-      // 하단 탭바 (카테고리, 검색, 알림)
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
-
     );
   }
 
@@ -320,7 +250,6 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       child: Row(
         children: [
           Text('대분류:', style: TextStyle(fontSize: 20,
-            fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,)),
           SizedBox(width: 8),
           Expanded(
@@ -354,13 +283,11 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       child: Row(
         children: [
           Text('$label:', style: TextStyle(fontSize: 20,
-            fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,)),
           SizedBox(width: 10),
           Expanded(
             child: TextFormField(
               style: TextStyle(fontSize: 20,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),

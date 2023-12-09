@@ -13,7 +13,6 @@ void main() {
 
 class UserData {
   String name;
-
   String password;
   String email;
   String nickname;
@@ -98,7 +97,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
           '회원 탈퇴',
           style: TextStyle(
             fontSize: 25,
-            fontFamily: 'HakgyoansimDoldam',
             fontWeight: FontWeight.w700,
           ),
         ),

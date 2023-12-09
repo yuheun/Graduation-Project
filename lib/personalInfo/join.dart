@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import '../imsi_join.dart';
 import 'login/login.dart';
-import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 
 void main() {
@@ -20,28 +15,6 @@ void main() {
 void goToAnotherPage(BuildContext context, String pageName) {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch (pageName) {
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
-      );
-      break;
 
     case "LoginScreen":
       Navigator.push(
@@ -110,7 +83,6 @@ class _JoinScreenState extends State<JoinScreen> {
       appBar: AppBar(
         title: const Text('회원가입',
             style: TextStyle(fontSize: 25,
-              fontFamily: 'HakgyoansimDoldam',
               fontWeight: FontWeight.w700,)
         ),
         actions: <Widget>[
@@ -126,10 +98,16 @@ class _JoinScreenState extends State<JoinScreen> {
           )
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
+    child: Center(
         child: Column(
           children: [
-            const SizedBox(height: 100),
+            const SizedBox(height: 30),
+            Image.asset(
+              'assets/image/logo.png', // Update the path accordingly
+              height: 200, // Set the height of the image
+            ),
+            const SizedBox(height: 20),
             buildTextField("이름", "입력해주세요", userData.name),
             buildPasswordField("PW", "입력해주세요", userData.password),
             buildPasswordConfirmationField("PW 확인", "입력해주세요"),
@@ -143,42 +121,13 @@ class _JoinScreenState extends State<JoinScreen> {
                 goToAnotherPage(context, "LoginScreen");
               },
               child: const Text('회원가입', style: TextStyle(fontSize: 25,
-                fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700,)),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
-    );
+
+    ));
   }
 
 
@@ -191,14 +140,12 @@ class _JoinScreenState extends State<JoinScreen> {
           SizedBox(
             width: 70,
             child: Text(label, style: TextStyle(fontSize: 18,
-              fontFamily: 'HakgyoansimDoldam',
               fontWeight: FontWeight.w700,)),
           ),
           Flexible(
             child: TextField(
                 decoration: InputDecoration(hintText: hint,
                     hintStyle: TextStyle(fontSize: 20,
-                      fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w700,)
                 ),
                 controller: TextEditingController(text: value),
@@ -223,7 +170,6 @@ class _JoinScreenState extends State<JoinScreen> {
                 // 예: checkDuplication();
               },
               child: Text(actionText, style: TextStyle(fontSize: 15,
-                fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700,),
               ),
             ),
@@ -240,7 +186,6 @@ class _JoinScreenState extends State<JoinScreen> {
         children: [
           SizedBox(width: 70, child: Text(label,
               style: TextStyle(fontSize: 18,
-                fontFamily: 'HakgyoansimDoldam',
                 fontWeight: FontWeight.w700,)
           )),
           Flexible(
@@ -248,7 +193,6 @@ class _JoinScreenState extends State<JoinScreen> {
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
                   hintStyle: TextStyle(fontSize: 20,
-                    fontFamily: 'HakgyoansimDoldam',
                     fontWeight: FontWeight.w700,
                   )
               ),
@@ -274,8 +218,7 @@ class _JoinScreenState extends State<JoinScreen> {
       child: Row(
         children: [
           SizedBox(width: 70, child: Text(label,
-              style: TextStyle(fontSize: 18,
-                fontFamily: 'HakgyoansimDoldam',
+              style: TextStyle(fontSize: 16,
                 fontWeight: FontWeight.w700,)
           )
           ),
@@ -284,7 +227,6 @@ class _JoinScreenState extends State<JoinScreen> {
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
                 hintStyle: TextStyle(fontSize: 20,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -363,12 +305,10 @@ class _JoinScreenState extends State<JoinScreen> {
           return AlertDialog(
             title: const Text('입력 오류',
                 style: TextStyle(fontSize: 30,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)
             ),
             content: Text(message,
                 style: TextStyle(fontSize: 20,
-                  fontFamily: 'HakgyoansimDoldam',
                   fontWeight: FontWeight.w700,)
             ),
             actions: [
@@ -378,7 +318,6 @@ class _JoinScreenState extends State<JoinScreen> {
                 },
                 child: const Text('확인',
                     style: TextStyle(fontSize: 20,
-                      fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w700,)),
               ),
             ],

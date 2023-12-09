@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
-import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
-import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
-import 'join.dart';
-import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 import 'login/login.dart';
 
 void main() {
@@ -11,7 +7,6 @@ void main() {
     home: FindPasswordScreen(),
   ));
 }
-
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동
@@ -24,27 +19,6 @@ void goToAnotherPage(BuildContext context, String pageName){
       );
       break;
 
-    case "CategoryTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoryTapScreen()),
-      );
-      break;
-
-    case "SearchTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchTapScreen()),
-      );
-      break;
-
-
-    case "AlarmTap":
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlarmTapScreen()),
-      );
-      break;
   }
 }
 
@@ -144,35 +118,6 @@ class _FindPasswordScreenState extends State<FindPasswordScreen>{
       ),
 
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "카테고리",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "검색",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "알림",
-          ),
-        ],
-        onTap: (int index) {
-          switch (index) {
-            case 0: // 카테고리 탭
-              goToAnotherPage(context, "CategoryTap");
-              break;
-            case 1: // 검색 탭
-              goToAnotherPage(context, "SearchTap");
-              break;
-            case 2: // 알림 탭
-              goToAnotherPage(context, "AlarmTap");
-              break;
-          }
-        },
-      ),
     );
   }
 
@@ -188,12 +133,10 @@ class _FindPasswordScreenState extends State<FindPasswordScreen>{
         return AlertDialog(
           title: const Text('이메일 전송 완료',
                     style: TextStyle(fontSize: 30,
-                      fontFamily: 'HakgyoansimDoldam',
                       fontWeight: FontWeight.w500,)
           ),
           content: const Text('비밀번호 찾기 이메일이 전송되었습니다.',
                       style: TextStyle(fontSize: 15,
-                        fontFamily: 'HakgyoansimDoldam',
                         fontWeight: FontWeight.w300,)
           ),
           actions: <Widget>[
