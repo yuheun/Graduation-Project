@@ -303,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen>{
                     minimumSize:
                     MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 78, 103, 169)),
+                        const Color.fromARGB(255, 101, 132, 215)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)
@@ -328,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen>{
                     minimumSize:
                     MaterialStateProperty.all(Size(screenWidth*0.4, screenHeight*0.23)),
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 78, 103, 169)),
+                        const Color.fromARGB(255, 139, 157, 206)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)
