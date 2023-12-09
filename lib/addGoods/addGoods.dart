@@ -77,14 +77,14 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
           children: <Widget>[
             _image == null
                 ? const Text('업로드할 방식을 선택하세요',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600,))
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600,))
                 : Image.file(
                     File(_image!.path),
                     width: 400,
                     height: 400,
                   ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 50),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +99,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0), // 버튼 모서리를 조절
                     ),
-                    minimumSize: const Size(180, 180),
+                    minimumSize: const Size(160, 180),
                   ),
                   child: Column(
                     children: [
@@ -111,7 +111,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
                   ),
                 ),
 
-                const SizedBox(width: 15), // 간격 조절
+                const SizedBox(width: 10), // 간격 조절
 
                 ElevatedButton(
                   onPressed: () {
@@ -123,11 +123,11 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0), // 버튼 모서리를 조절
                     ),
-                    minimumSize: const Size(180, 180),
+                    minimumSize: const Size(170, 180),
                   ),
                   child: Column(
                     children: [
-                      const Icon(Icons.camera_alt, size: 120), // 카메라 아이콘
+                      const Icon(Icons.camera_alt, size: 110), // 카메라 아이콘
                       const SizedBox(height: 3), // 간격 조절
                       const Text('카메라로 촬영',
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,)),
