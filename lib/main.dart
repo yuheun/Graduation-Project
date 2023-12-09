@@ -234,14 +234,14 @@ class _HomeScreenState extends State<HomeScreen>{
           children: [
             Image.asset(
               'assets/image/logo_onlyimg.png', // Update the path accordingly
-              height: 50, // Set the height of the image
+              height: 25, // Set the height of the image
             ),
             SizedBox(width: 8.0),
             Flexible(
               child: Text(
                 'Lost&Found Vision',
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -256,28 +256,38 @@ class _HomeScreenState extends State<HomeScreen>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                const SizedBox(width: 15),
+
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: (userData.profileImgUrl != null && userData.profileImgUrl!.isNotEmpty)
+                          ? NetworkImage(userData.profileImgUrl!) as ImageProvider<Object>
+                          : AssetImage('assets/image/default_image.png') as ImageProvider<Object>,
+                    ),
+                  ),
+                ),
+
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("   "+"${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
+                      Text("  "+"${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
                           style: TextStyle(fontSize: 23,
                               fontWeight: FontWeight.w800)),
-                      Text("    내 동네: ${userData.mylocation != null ?
-                      '서울특별시 ' + userData.mylocation! : '지역구를 선택하세요'}",
+                      Text("   내 동네: 서울특별시 ${userData.mylocation != null ?
+                       userData.mylocation! : '지역구를 선택하세요'}",
                           style: TextStyle(fontSize: 16,
                               fontWeight: FontWeight.w700)),
                     ],
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.account_circle,
-                      size: 60, color: Color.fromARGB(255, 78, 103, 169)),
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () {
-                    goToAnotherPage(context, "PersonalInfo");
-                  },
-                ),
+
               ],
             ),
             const Divider(),
@@ -428,18 +438,6 @@ class _HomeScreenState extends State<HomeScreen>{
             
             
           ],
-        ),
-      ),
-
-      // 알림 floating action button
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 78, 103, 169),
-        onPressed: () {
-          goToAnotherPage(context, "Alarm");
-        },
-        child: Icon(
-          Icons.notifications,
-          color: Colors.white,
         ),
       ),
 

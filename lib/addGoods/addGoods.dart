@@ -52,7 +52,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
             onPressed: (){
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const MyAppPage()),
                     (Route<dynamic> route) => false,
               );
             },
@@ -61,16 +61,16 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
       ),
 
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-            colors: [
-              Color.fromARGB(255, 130, 155, 255), // 시작 색상
-              Color.fromARGB(255, 255, 255, 255), // 끝 색상
-            ],
-          ),
-        ),
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.center,
+        //     colors: [
+        //       Color.fromARGB(255, 130, 155, 255), // 시작 색상
+        //       Color.fromARGB(255, 255, 255, 255), // 끝 색상
+        //     ],
+        //   ),
+        // ),
 
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

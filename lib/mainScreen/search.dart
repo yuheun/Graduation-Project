@@ -110,7 +110,7 @@ class _SearchScreenState extends State<SearchScreen> {
             onPressed: (){
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const MyAppPage()),
                     (Route<dynamic> route) => false,
               );
             },

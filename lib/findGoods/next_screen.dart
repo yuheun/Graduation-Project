@@ -108,7 +108,7 @@ class _NextScreenState extends State<NextScreen> {
             onPressed: (){
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const MyAppPage()),
                     (Route<dynamic> route) => false,
               );
             },

@@ -60,7 +60,7 @@ class _KeywordsScreenState extends State<KeywordsScreen> {
             onPressed: (){
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const MyAppPage()),
                     (Route<dynamic> route) => false,
               );
             },

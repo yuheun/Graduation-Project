@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'GulDetailScreen.dart';
-import '../../firebase/gulItem.dart';
+import 'package:fortest/firebase/gulItem.dart';
 
 class SeeMyGulScreen extends StatefulWidget {
   final String user_email; // 현재 사용자의 이메일을 저장하는 변수
@@ -85,7 +85,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const MyAppPage()),
                     (Route<dynamic> route) => false,
               );
             },
