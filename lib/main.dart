@@ -132,6 +132,8 @@ class UserData {
   String email;
   String nickname;
   String? profileImgUrl;
+  String? mylocation;
+
 
   UserData(
       {required this.name,
@@ -139,6 +141,8 @@ class UserData {
         required this.email,
         required this.nickname,
         required this.profileImgUrl,
+        required this.mylocation
+
       });
 }
 
@@ -170,7 +174,8 @@ class _HomeScreenState extends State<HomeScreen>{
       email: '',
       nickname: '',
       profileImgUrl: '',
-      password: '');
+      password: '',
+      mylocation:'',);
 
   @override
   void initState() {
@@ -191,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen>{
           nickname: userDataSnapshot['nickname'],
           profileImgUrl: userDataSnapshot['profileImgUrl'],
           password: '',
+          mylocation: userDataSnapshot['mylocation']
         );
       });
     }
@@ -233,8 +239,8 @@ class _HomeScreenState extends State<HomeScreen>{
                             style: TextStyle(fontSize: 25,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w800)),
-                        Text("  내 동네: ${widget.selectedDistrict != null ?
-                        '서울특별시 ' + widget.selectedDistrict! : '지역구를 선택하세요'}",
+                        Text("  내 동네: ${userData.mylocation != null ?
+                        '서울특별시 ' + userData.mylocation! : '지역구를 선택하세요'}",
                             style: TextStyle(fontSize: 18,
                                 fontFamily: 'HakgyoansimDoldam',
                                 fontWeight: FontWeight.w700)),

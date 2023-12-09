@@ -56,12 +56,14 @@ class UserData {
   String email;
   String nickname;
   String? profileImgUrl;
+  String? mylocation;
 
   UserData(
       {required this.name,
         required this.email,
         required this.nickname,
         required this.profileImgUrl,
+        required this.mylocation,
       });
 }
 
@@ -71,7 +73,8 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
   UserData(name: '',
       email: '',
       nickname: '',
-      profileImgUrl: '');
+      profileImgUrl: '',
+      mylocation: '');
 
   final picker = ImagePicker();
 
@@ -93,6 +96,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
           email: currentUser.email ?? '',
           nickname: userDataSnapshot['nickname'],
           profileImgUrl: userDataSnapshot['profileImgUrl'],
+          mylocation: userDataSnapshot['']
         );
       });
     }

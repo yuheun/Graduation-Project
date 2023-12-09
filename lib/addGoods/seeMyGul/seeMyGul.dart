@@ -100,7 +100,6 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
         }
       }
 
-      // setState 호출하여 위젯을 다시 빌드하도록 알림
       setState(() {
         gulItems = newFetchedPostItems;
       });
