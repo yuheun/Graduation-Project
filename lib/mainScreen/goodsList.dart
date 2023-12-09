@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../addGoods/seeMyGul/GulDetailScreen.dart';
-import 'gulItem.dart';
+import '../firebase/gulItem.dart';
 import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
 
 void main() {
-  runApp(const MaterialApp(
-    home: GoodsListScreen(imagePath: '', item: '', selectedCategory: '', features: '', gulItems: [],),
+  runApp(MaterialApp(
+    home: GoodsListScreen(),
   ));
 }
 
@@ -46,21 +46,6 @@ void goToAnotherPage(BuildContext context, String pageName){
 
 
 class GoodsListScreen extends StatefulWidget {
-  //const GoodsListScreen({Key? key}): super(key:key);
-
-  final List<GulItem> gulItems;
-  final String imagePath;
-  final String item;
-  final String selectedCategory;
-  final String features;
-
-  const GoodsListScreen({
-    required this.imagePath,
-    required this.item,
-    required this.selectedCategory,
-    required this.features,
-    required this.gulItems,
-  });
 
   @override
   _GoodsListScreenState createState() => _GoodsListScreenState();
@@ -69,7 +54,10 @@ class GoodsListScreen extends StatefulWidget {
 
 class _GoodsListScreenState extends State<GoodsListScreen>{
 
-  late List<GulItem> gulItems;
+  List<GulItem> postItems = [];
+  List<GulItem> filteredItems = []; // 선택된 location
+  Map<String, GulItem> mappingData = {};
+  TextEditingController searchController = TextEditingController();
 
   // 지역구 값
   String? selectedDistrict;
@@ -83,31 +71,59 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
 
   Future<void> loadData() async {
     try {
+      print("fetchItems started");
+      print("widget.markerText: $selectedDistrict"); // selectedDistrict 출력
+
       if (selectedDistrict != null) {
-        // Firebase Firestore의 'gulItems' 컬렉션에서 데이터 가져오기
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('gulItems')
-            .where('district', isEqualTo: selectedDistrict) // Add this line to filter by selectedDistrict
+        final postItemsQuerySnapshot = await FirebaseFirestore.instance
+            .collection('PostItems')
+            .where('location', isEqualTo: selectedDistrict)
             .get();
-        //이거 그 해당하는 지역구의 목록만 불러오는 함수인데 이거 이렇게 하는게 맞는지 모르겠다..
 
-        // QuerySnapshot에서 문서(Document)들을 추출하고 List에 저장
-        gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-          return GulItem(
-            label_id: data['item'],
-            category: data['selectedCategory'],
-            yolo_label: data['features'],
-            image_url: data['imagePath'],
-            description: data['description'],
-            location: data['location'],
-            subcategory: data['subcategoty'],
-            type: data['type'],
-          );
-        }).toList();
+        print("items fetched: ${postItemsQuerySnapshot.docs}");
 
-        // setState 호출하여 위젯을 다시 빌드하도록 알림
-        setState(() {});
+        List<GulItem> newFetchedPostItems = [];
+
+        // 'PostItems'의 각 항목에 대하여
+        for (var doc in postItemsQuerySnapshot.docs) {
+          print("PostItem: ${doc.data()}"); // PostItem 데이터 로깅
+
+          var postItemData = doc.data() as Map<String, dynamic>;
+
+          // 'Mapping' 컬렉션에서 추가 데이터 가져오기
+          var mappingDocSnapshot = await FirebaseFirestore.instance
+              .collection('Mapping')
+              .where('label_id', isEqualTo: postItemData['label_id'])
+              .get();
+
+          // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
+          if (mappingDocSnapshot.docs.isNotEmpty) {
+            // 문서가 존재하면 첫 번째 문서의 데이터를 사용
+            var mappingDoc = mappingDocSnapshot.docs.first;
+            print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
+            var mappingData = mappingDoc.data() as Map<String, dynamic>;
+
+            var gulItem = GulItem(
+              label_id: postItemData['label_id'],
+              image_url: postItemData['image_url'],
+              description: postItemData['description'],
+              location: postItemData['location'],
+              category: mappingData['category'] ?? 'Unknown', // 기본값 설정
+              subcategory: mappingData['subcategory'] ?? 'Unknown',
+              type: mappingData['type'] ?? 'Unknown',
+              yolo_label: mappingData['yolo_label'] ?? 'Unknown',
+            );
+            newFetchedPostItems.add(gulItem);
+          } else {
+            print("No mapping data found for label_id ${postItemData['label_id']}");
+          }
+        }
+
+        // 상태 업데이트
+        setState(() {
+          postItems = newFetchedPostItems;
+          filteredItems = List.from(newFetchedPostItems);
+        });
       } else {
         print('No district selected.');
       }
@@ -148,9 +164,9 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.gulItems.length,
+              itemCount: filteredItems.length,
               itemBuilder: (context, index) {
-                return _buildGulItem(widget.gulItems[index]);
+                return _buildGulItem(filteredItems[index]);
               },
             ),
           ],
@@ -236,7 +252,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
                 ),
                 SizedBox(height: 3),
                 Text(
-                  '특징: ${_truncateString(gulItem.description, 10)}!',
+                  '특징: ${_truncateString(gulItem.yolo_label, 10)}!',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'HakgyoansimDoldam',

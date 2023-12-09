@@ -182,10 +182,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ImsiGulScreen(
-                            image_url: widget.imagePath,
-                            subcategory: item,
-                            category: selectedCategory,
-                            type: features,
+                           // 넣을 데이터 추가
                           ),
                         ),
                       );

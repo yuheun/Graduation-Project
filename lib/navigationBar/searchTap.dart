@@ -3,7 +3,7 @@ import 'package:fortest/navigationBar/alarmTap.dart';
 import 'package:fortest/navigationBar/categoryTap.dart';
 import 'package:fortest/main.dart';
 import '../findGoods/seeGuDetail.dart';
-import '../mainScreen/gulItem.dart';
+import '../firebase/gulItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 

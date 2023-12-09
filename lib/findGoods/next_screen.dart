@@ -5,7 +5,7 @@ import 'package:fortest/main.dart';
 import '../navigationBar/alarmTap.dart';
 import '../navigationBar/categoryTap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fortest/mainScreen/gulItem.dart';
+import 'package:fortest/firebase/gulItem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
@@ -49,7 +49,7 @@ class NextScreen extends StatefulWidget {
 
 class _NextScreenState extends State<NextScreen> {
   List<GulItem> postItems = [];
-  List<GulItem> filteredItems = []; // 선택된 location
+  List<GulItem> filteredItems = [];
   Map<String, GulItem> mappingData = {};
   TextEditingController searchController = TextEditingController();
 
@@ -77,7 +77,7 @@ class _NextScreenState extends State<NextScreen> {
     for (var doc in postItemsQuerySnapshot.docs) {
       print("PostItem: ${doc.data()}"); // PostItem 데이터 로깅
 
-      var postItemData = doc.data() as Map<String, dynamic>;
+      var postItemData = doc.data();
 
       // 'Mapping' 컬렉션에서 추가 데이터 가져오기
       var mappingDocSnapshot = await FirebaseFirestore.instance
@@ -90,7 +90,7 @@ class _NextScreenState extends State<NextScreen> {
         // 문서가 존재하면 첫 번째 문서의 데이터를 사용
         var mappingDoc = mappingDocSnapshot.docs.first;
         print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
-        var mappingData = mappingDoc.data() as Map<String, dynamic>;
+        var mappingData = mappingDoc.data();
 
         var gulItem = GulItem(
           label_id: postItemData['label_id'],
@@ -194,8 +194,8 @@ class _NextScreenState extends State<NextScreen> {
                   child: Card(
                     child: ListTile(
                       leading: item.image_url != null ? Image.network(item.image_url) : null,
-                      title: Text('${item.description}'),
-                      subtitle: Text('카테고리: ${item.category}\n서브카테고리: ${item.subcategory}\n타입: ${item.type}'),
+                      title: Text('${item.yolo_label}'),
+                      subtitle: Text('대분류: ${item.category}\n중분류: ${item.subcategory}\n소분류: ${item.type}'),
                     ),
                     ),
                 );

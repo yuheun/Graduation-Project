@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../mainScreen/gulItem.dart';
+import '../../firebase/gulItem.dart';
 import '../../mainScreen/goodsList.dart';
 import '../../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fortest/navigationBar/categoryTap.dart';
 import 'package:fortest/main.dart';
 import 'package:fortest/navigationBar/searchTap.dart';
-import '../mainScreen/gulItem.dart';
+import '../firebase/gulItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void goToAnotherPage(BuildContext context, String pageName) {

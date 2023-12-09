@@ -71,7 +71,7 @@ void goToAnotherPage(BuildContext context, String pageName) {
     case "GoodsList":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => /*const*/ GoodsListScreen(image_url: '', subcategory: '', category: '', type: '', gulItems: [],)),
+        MaterialPageRoute(builder: (context) => GoodsListScreen()),
       );
       break;
 

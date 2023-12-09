@@ -4,7 +4,7 @@ import 'package:fortest/main.dart';
 import '../navigationBar/alarmTap.dart';
 import '../navigationBar/categoryTap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fortest/mainScreen/gulItem.dart';
+import 'package:fortest/firebase/gulItem.dart';
 
 void goToAnotherPage(BuildContext context, String pageName){
   // 버튼에 따라 그에 해당하는 파일로 이동

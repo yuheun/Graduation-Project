@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'GulDetailScreen.dart';
-import '../../mainScreen/gulItem.dart';
+import '../../firebase/gulItem.dart';
 import '../../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import '../../navigationBar/searchTap.dart'; //
@@ -72,6 +72,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
     loadData();
   }
 
+  // ---------------수정 해야함------------------------------- firebase 연결부분
   Future<void> loadData() async {
     try {
       // Firebase Firestore의 'gulItems' 컬렉션에서 데이터 가져오기
