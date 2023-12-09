@@ -176,11 +176,13 @@ class _ImsiGulScreenState extends State<ImsiGulScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    // 현재 로그인한 사용자의 이메일 주소를 가져오기
+                    String userEmail = FirebaseAuth.instance.currentUser?.email ?? '';
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            SeeMyGulScreen(image_url: '', label_id: '', category: '', yolo_label: '', description: '', gulItems: [],
+                            SeeMyGulScreen(user_email: userEmail,
                               // Pass the data to SeeMyGulScreen
 
                             ),

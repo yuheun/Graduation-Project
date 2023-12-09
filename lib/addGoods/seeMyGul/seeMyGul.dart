@@ -41,61 +41,69 @@ void goToAnotherPage(BuildContext context, String pageName){
 }
 
 class SeeMyGulScreen extends StatefulWidget {
-  final List<GulItem> gulItems;
-  final String image_url;
-  final String label_id;
-  final String category;
-  final String yolo_label;
-  final String description;
-
+  final String user_email; // 현재 사용자의 이메일을 저장하는 변수
 
   const SeeMyGulScreen({
-    required this.image_url,
-    required this.label_id,
-    required this.category,
-    required this.yolo_label,
-    required this.description,
-    required this.gulItems,
-  });
+    Key? key,
+    required this.user_email
+  }) : super(key: key);
 
   @override
   _SeeMyGulScreenState createState() => _SeeMyGulScreenState();
 }
 
 class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
-  late List<GulItem> gulItems;
+  late List<GulItem> gulItems = [];
 
   @override
   void initState() {
     super.initState();
-    // initState에서 데이터를 불러옵니다.
     loadData();
   }
 
-  // ---------------수정 해야함------------------------------- firebase 연결부분
   Future<void> loadData() async {
     try {
-      // Firebase Firestore의 'gulItems' 컬렉션에서 데이터 가져오기
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('gulItems').get();
+      var postItemsSnapshot = await FirebaseFirestore.instance
+          .collection('PostItems')
+          .where('email', isEqualTo: widget.user_email)
+          .get();
+      print('user_email: ${widget.user_email}');
 
-      // QuerySnapshot에서 문서(Document)들을 추출하고 List에 저장
-      gulItems = querySnapshot.docs.map((DocumentSnapshot document) {
-        Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-        return GulItem(
-          label_id: data['item'],
-          category: data['selectedCategory'],
-          yolo_label: data['features'],
-          image_url: data['imagePath'],
-          description: data['description'],
-          location: data['location'],
-          subcategory: data['subcategory'],
-          type: data['type'],
+      List<GulItem> newFetchedPostItems = [];
+      for (var doc in postItemsSnapshot.docs) {
+        var postItemData = doc.data();
+        var mappingDocSnapshot = await FirebaseFirestore.instance
+            .collection('Mapping')
+            .where('label_id', isEqualTo: postItemData['label_id'])
+            .get();
 
-        );
-      }).toList();
+        // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
+        if (mappingDocSnapshot.docs.isNotEmpty) {
+          // 문서가 존재하면 첫 번째 문서의 데이터를 사용
+          var mappingDoc = mappingDocSnapshot.docs.first;
+          print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
+          var mappingData = mappingDoc.data();
+
+          var gulItem = GulItem(
+            label_id: postItemData['label_id'],
+            image_url: postItemData['image_url'],
+            description: postItemData['description'],
+            location: postItemData['location'],
+            category: mappingData['category'] ?? 'Unknown', // 기본값 설정
+            subcategory: mappingData['subcategory'] ?? 'Unknown',
+            type: mappingData['type'] ?? 'Unknown',
+            yolo_label: mappingData['yolo_label'] ?? 'Unknown',
+          );
+          newFetchedPostItems.add(gulItem);
+        } else {
+          print("No mapping data found for label_id ${postItemData['label_id']}");
+        }
+      }
 
       // setState 호출하여 위젯을 다시 빌드하도록 알림
-      setState(() {});
+      setState(() {
+        gulItems = newFetchedPostItems;
+      });
     } catch (e) {
       print('Error loading data: $e');
     }
@@ -130,9 +138,9 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.gulItems.length,
+              itemCount: gulItems.length,
               itemBuilder: (context, index) {
-                return _buildGulItem(widget.gulItems[index]);
+                return _buildGulItem(gulItems[index]);
               },
             ),
           ],

@@ -29,9 +29,11 @@ void goToAnotherPage(BuildContext context, String pageName) {
       break;
 
     case "SeeMyGulScreen":
+      String userEmail = FirebaseAuth.instance.currentUser?.email ?? '';
+      // 현재 로그인한 사용자의 이메일
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SeeMyGulScreen(gulItems: [], image_url: '', label_id: '', category: '', yolo_label: '', description: '',  )),
+        MaterialPageRoute(builder: (context) => SeeMyGulScreen(user_email: userEmail)),
       );
       break;
 
