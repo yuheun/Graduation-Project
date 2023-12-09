@@ -16,6 +16,8 @@ import '../navigationBar/alarmTap.dart'; // alarmTap.dart 파일
 import '../navigationBar/categoryTap.dart'; // categoryTap.dart 파일
 import 'imsi_gul.dart';
 import '../navigationBar/searchTap.dart'; // searchTap.dart 파일
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -133,6 +135,49 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
     }
   }
 
+  // 현재위치 불러오기
+  Future<Position> getLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        print('Error! 위치 권한이 거부되었습니다.');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(position);
+
+    return position;
+  }
+
+  //위치 주소변환
+  Future<String?> getAddress() async {
+    var gps = await getLocation();
+
+    double lat = gps.latitude;
+    double lon = gps.longitude;
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      lat,
+      lon,
+    );
+
+    Placemark placemark = placemarks[0];
+
+    if (placemarks != null && placemarks.isNotEmpty) {
+      String address = "${placemark.subLocality} ${placemark.thoroughfare}, ${placemark.locality}, ${placemark.administrativeArea}";
+
+      print("변환된 주소: $address");
+
+      return placemark.subLocality;
+    } else {
+      print("주소를 변환할 수 없습니다.");
+
+      return "주소를 변환할 수 없습니다.";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,6 +219,44 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                   buildInputField('특징', features),
 
                   SizedBox(height: 7),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      const Text(
+                        '현재 위치: ',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      FutureBuilder(builder: (context, snapshot){
+                        if (snapshot.hasData == false){
+                          return const CircularProgressIndicator();
+                        }
+                        else if (snapshot.hasError){
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Error:$snapshot',
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          );
+                        }
+                        else{
+                          String address = snapshot.data as String;
+
+                          return Padding(padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(address,
+                                    style: const TextStyle(fontSize: 20)),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                        future: getAddress(),
+                      )
+                    ],
+                  ),
 
                   ElevatedButton(
                     onPressed: () {
