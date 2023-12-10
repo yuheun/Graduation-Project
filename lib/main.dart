@@ -232,10 +232,21 @@ class _HomeScreenState extends State<HomeScreen>{
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/image/logo_onlyimg.png', // Update the path accordingly
-              height: 25, // Set the height of the image
+            // Image.asset(
+            //   'assets/image/logo_onlyimg.png', // Update the path accordingly
+            //   height: 25, // Set the height of the image
+            // ),
+            ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Color.fromARGB(255, 78, 103, 169),
+                BlendMode.srcIn,
+              ),
+              child: Image.asset(
+                'assets/image/logo_onlyimg.png',
+                height: 28,
+              ),
             ),
+
             SizedBox(width: 8.0),
             Flexible(
               child: Text(
@@ -243,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen>{
                 style: TextStyle(
                   fontSize: 23.0,
                   fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 78, 103, 169)
                 ),
               ),
             ),
@@ -276,15 +288,65 @@ class _HomeScreenState extends State<HomeScreen>{
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+
+                    // children: [
+                    //   Text("  "+"${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
+                    //       style: TextStyle(fontSize: 23,
+                    //           fontWeight: FontWeight.w800,
+                    //       ),
+                    //   ),
+                    //   Text("   내 동네: 서울특별시 ${userData.mylocation != null ?
+                    //    userData.mylocation! : '지역구를 선택하세요'}",
+                    //       style: TextStyle(fontSize: 16,
+                    //           fontWeight: FontWeight.w700)),
+                    // ],
+
                     children: [
-                      Text("  "+"${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
-                          style: TextStyle(fontSize: 23,
-                              fontWeight: FontWeight.w800)),
-                      Text("   내 동네: 서울특별시 ${userData.mylocation != null ?
-                       userData.mylocation! : '지역구를 선택하세요'}",
-                          style: TextStyle(fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      RichText(
+                        text: TextSpan(
+                          text: "  ",
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
+                              style: TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.w800,
+                                color: Color.fromARGB(255, 53, 98, 220),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      RichText(
+                        text: TextSpan(
+                          text: "  내 동네: 서울특별시 ",
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "${userData.mylocation != null ? userData.mylocation! : '지역구를 선택하세요'}",
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w800,
+                                color: Color.fromARGB(255, 53, 98, 220),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Text("  내 동네: 서울특별시 ${userData.mylocation != null ?
+                      // userData.mylocation! : '지역구를 선택하세요'}",
+                      //     style: TextStyle(fontSize: 16,
+                      //         fontWeight: FontWeight.w700)),
                     ],
+
+
                   ),
                 ),
 

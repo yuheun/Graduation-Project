@@ -27,10 +27,25 @@ class _AlarmScreenState extends State<AlarmScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('알림',
-            style: TextStyle(fontSize: 20,
-              fontWeight: FontWeight.w700,)
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.notifications, size: 30,
+                color: Color.fromARGB(255, 78, 103, 169)),
+            SizedBox(width: 8.0),
+            Flexible(
+              child: Text(
+                '알림',
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 78, 103, 169)
+                ),
+              ),
+            ),
+          ],
         ),
+
       ),
 
 

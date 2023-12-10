@@ -141,9 +141,24 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('개인정보',
-            style: TextStyle(fontSize: 25,
-              fontWeight: FontWeight.w700,)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.person_outline, size: 30,
+                color: Color.fromARGB(255, 78, 103, 169)),
+            SizedBox(width: 8.0),
+            Flexible(
+              child: Text(
+                '개인정보',
+                style: TextStyle(
+                    fontSize: 23.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 78, 103, 169)
+                ),
+              ),
+            ),
+          ],
+        ),
 
       ),
 
