@@ -144,7 +144,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('글 작성',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600,)
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,)
         ),
 
         actions: <Widget>[

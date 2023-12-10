@@ -124,7 +124,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('비밀번호 변경',
-            style: TextStyle(fontSize: 25,
+            style: TextStyle(fontSize: 20,
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
@@ -140,10 +140,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         ],
       ),
 
-      body: Center(
+      body:  SingleChildScrollView(
+        child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100),
+            const SizedBox(height: 70),
+            Image.asset(
+              'assets/image/logo.png', // Update the path accordingly
+              height: 200, // Set the height of the image
+            ),
+            const SizedBox(height: 30),
             buildPasswordField("현재 비밀번호", "입력해주세요", _currentPasswordController),
             const SizedBox(height: 10),
             buildPasswordField("새 비밀번호", "입력해주세요", _newPasswordController),
@@ -162,13 +169,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 //로그인 화면으로 넘어가기
                 goToAnotherPage(context, "LoginScreen");
               },
-              child: const Text('비밀번호 변경', style: TextStyle(fontSize: 25,
+              child: const Text('비밀번호 변경', style: TextStyle(fontSize: 23,
                 fontWeight: FontWeight.w700,)),
             ),
+            const SizedBox(height: 100),
           ],
         ),
       ),
 
+    )
     );
   }
 
@@ -179,14 +188,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Row(
         children: [
           SizedBox(width: 110, child: Text(label,
-              style: TextStyle(fontSize: 17,
+              style: TextStyle(fontSize: 15,
                 fontWeight: FontWeight.w700,)
           )),
+          const SizedBox(width: 10),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                  hintStyle: TextStyle(fontSize: 17,
+                  hintStyle: TextStyle(fontSize: 16,
                     fontWeight: FontWeight.w700,
                   )
               ),
@@ -209,14 +219,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Row(
         children: [
           SizedBox(width: 110, child: Text(label,
-              style: TextStyle(fontSize: 17,
+              style: TextStyle(fontSize: 13,
                 fontWeight: FontWeight.w700,)
           )),
+          const SizedBox(width: 10),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                hintStyle: TextStyle(fontSize: 17,
+                hintStyle: TextStyle(fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
               ),

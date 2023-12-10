@@ -100,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen>{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('로그인', style: TextStyle(fontSize: 25,
-          fontWeight: FontWeight.w600,)),
+        title: const Text('로그인', style: TextStyle(fontSize: 20,
+          fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen>{
               child: TextField(
                 controller: idController,
                 decoration: const InputDecoration(labelText: 'ID(Email)',
-                    labelStyle: TextStyle(fontSize: 25,
+                    labelStyle: TextStyle(fontSize: 20,
                       fontWeight: FontWeight.w700,)
                 ),
                 maxLines: 1,
@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen>{
               child: TextField(
                 controller: passwordController,
                 decoration: const InputDecoration(labelText: 'PW',
-                    labelStyle: TextStyle(fontSize: 25,
+                    labelStyle: TextStyle(fontSize: 20,
                       fontWeight: FontWeight.w700,)
                 ),
                 maxLines: 1,
@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen>{
               child: Container(
                 width: 130, height: 50,
                 alignment: Alignment.center,
-                child: const Text('로그인', style: TextStyle(fontSize: 30,
+                child: const Text('로그인', style: TextStyle(fontSize: 25,
                   fontWeight: FontWeight.w700,)
                 ),
               ),

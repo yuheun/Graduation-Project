@@ -101,7 +101,9 @@ class _NextScreenState extends State<NextScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.markerText),
+        title: Text(widget.markerText, style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

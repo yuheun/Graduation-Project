@@ -44,7 +44,7 @@ class _AddGoodsScreenState extends State<AddGoodsScreen>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('분실물 등록',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600,)
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,)
         ),
         actions: <Widget>[
           IconButton(

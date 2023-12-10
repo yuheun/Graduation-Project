@@ -120,7 +120,7 @@ class _JoinScreenState extends State<JoinScreen> {
                 //로그인 화면으로 넘어가기
                 goToAnotherPage(context, "LoginScreen");
               },
-              child: const Text('회원가입', style: TextStyle(fontSize: 25,
+              child: const Text('회원가입', style: TextStyle(fontSize: 23,
                 fontWeight: FontWeight.w700,)),
             ),
           ],
@@ -142,10 +142,11 @@ class _JoinScreenState extends State<JoinScreen> {
             child: Text(label, style: TextStyle(fontSize: 18,
               fontWeight: FontWeight.w700,)),
           ),
+          const SizedBox(width: 10),
           Flexible(
             child: TextField(
                 decoration: InputDecoration(hintText: hint,
-                    hintStyle: TextStyle(fontSize: 20,
+                    hintStyle: TextStyle(fontSize: 18,
                       fontWeight: FontWeight.w700,)
                 ),
                 controller: TextEditingController(text: value),
@@ -188,11 +189,12 @@ class _JoinScreenState extends State<JoinScreen> {
               style: TextStyle(fontSize: 18,
                 fontWeight: FontWeight.w700,)
           )),
+          const SizedBox(width: 10),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                  hintStyle: TextStyle(fontSize: 20,
+                  hintStyle: TextStyle(fontSize: 18,
                     fontWeight: FontWeight.w700,
                   )
               ),
@@ -218,15 +220,16 @@ class _JoinScreenState extends State<JoinScreen> {
       child: Row(
         children: [
           SizedBox(width: 70, child: Text(label,
-              style: TextStyle(fontSize: 16,
+              style: TextStyle(fontSize: 14,
                 fontWeight: FontWeight.w700,)
           )
           ),
+          const SizedBox(width: 10),
           Flexible(
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(hintText: hint,
-                hintStyle: TextStyle(fontSize: 20,
+                hintStyle: TextStyle(fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
               ),

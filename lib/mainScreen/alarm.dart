@@ -28,20 +28,9 @@ class _AlarmScreenState extends State<AlarmScreen>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('알림',
-            style: TextStyle(fontSize: 25)
+            style: TextStyle(fontSize: 20,
+              fontWeight: FontWeight.w700,)
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: (){
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-                    (Route<dynamic> route) => false,
-              );
-            },
-          )
-        ],
       ),
 
 

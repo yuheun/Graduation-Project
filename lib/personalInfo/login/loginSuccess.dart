@@ -58,7 +58,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
           email: currentUser.email ?? '',
           nickname: userDataSnapshot['nickname'],
           profileImgUrl: userDataSnapshot['profileImgUrl'],
-          mylocation: userDataSnapshot['']
+          mylocation: userDataSnapshot['mylocation']
         );
       });
     }
@@ -112,7 +112,10 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('로그인 성공'),
+        title: Text('로그인 성공', style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),),
       ),
 
       body: Center(
@@ -148,7 +151,7 @@ class _LoginSuccessScreenState extends State<LoginSuccessScreen> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyAppPage()));
                 },
                 child: Text('홈으로'),
               ),

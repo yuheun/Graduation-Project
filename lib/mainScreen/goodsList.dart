@@ -104,7 +104,7 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('우리 동네 분실물 목록',
-            style: TextStyle(fontSize: 25,
+            style: TextStyle(fontSize: 20,
               fontWeight: FontWeight.w700,)
         ),
         actions: <Widget>[

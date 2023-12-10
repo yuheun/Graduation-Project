@@ -144,18 +144,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         title: const Text('개인정보',
             style: TextStyle(fontSize: 25,
               fontWeight: FontWeight.w700,)),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const MyAppPage()),
-                    (Route<dynamic> route) => false,
-              );
-            },
-          )
-        ],
+
       ),
 
       body: Column(
@@ -173,8 +162,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    Color.fromARGB(255, 84, 224, 255),
-                    Color.fromARGB(230, 106, 255, 204),
+                    Color.fromARGB(255, 78, 103, 169),
+                    Color.fromARGB(/*255, 101, 132, 215*/255, 139, 157, 206),
                   ],
                 ),
               ),
@@ -197,11 +186,12 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       // 닉네임이 있는 경우 환영 메시지 표시, 없으면 로그인 안내 텍스트 표시
                       Text(
                         userData.nickname != null && userData.nickname.isNotEmpty
-                            ? '${userData.nickname} 님 환영합니다 :)'
+                            ? '${userData.nickname}님 환영합니다 :)'
                             : '로그인 해주세요 :)',
                         style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 255, 255, 255)
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -224,7 +214,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 SizedBox(width:10),
                 Icon(Icons.note, size: 40),
                 SizedBox(width: 20),
-                Text("내 게시글 보기", style: TextStyle(fontSize: 32,
+                Text("내 게시글 보기", style: TextStyle(fontSize: 30,
                   fontWeight: FontWeight.w700,)
                 ),
               ],
@@ -244,7 +234,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 SizedBox(width:10),
                 Icon(Icons.person, size: 40),
                 SizedBox(width: 20),
-                Text("프로필 수정", style: TextStyle(fontSize: 32,
+                Text("프로필 수정", style: TextStyle(fontSize: 30,
                   fontWeight: FontWeight.w700,)),
               ],
             ),
@@ -263,7 +253,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 SizedBox(width:10),
                 Icon(Icons.account_circle, size: 40),
                 SizedBox(width: 20),
-                Text("회원 탈퇴", style: TextStyle(fontSize: 32,
+                Text("회원 탈퇴", style: TextStyle(fontSize: 30,
                   fontWeight: FontWeight.w700,)),
               ],
             ),
@@ -280,7 +270,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 SizedBox(width:10),
                 Icon(Icons.logout, size: 40),
                 SizedBox(width: 20),
-                Text("로그아웃", style: TextStyle(fontSize: 32,
+                Text("로그아웃", style: TextStyle(fontSize: 30,
                   fontWeight: FontWeight.w700,)),
               ],
             ),

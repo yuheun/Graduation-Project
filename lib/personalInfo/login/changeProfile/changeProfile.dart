@@ -167,7 +167,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('프로필 수정',
-            style: TextStyle(fontSize: 25,
+            style: TextStyle(fontSize: 20,
               fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
@@ -195,11 +195,11 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
-                    Color.fromARGB(255, 128, 231, 255),
-                    Color.fromARGB(230, 135, 246, 210),
+                    Color.fromARGB(255, 78, 103, 169),
+                    Color.fromARGB(/*255, 101, 132, 215*/255, 139, 157, 206),
                   ],
                 ),
               ),
@@ -222,7 +222,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       // 갤러리에서 사진 고르기 버튼
                       ElevatedButton(
                         onPressed: _pickImageFromGallery,
-                        child: Text('사진 고르기', style: TextStyle(fontSize: 23)),
+                        child: Text('사진 고르기', style: TextStyle(fontSize: 23, fontWeight: FontWeight.w700,)),
                       ),
                       const SizedBox(height: 13),
 
@@ -242,10 +242,10 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
               },
               child: const Row(
                 children: [
-                  SizedBox(width:10),
+                  SizedBox(width:20),
                   Icon(Icons.lock, size: 40),
                   SizedBox(width: 20),
-                  Text("비밀번호 변경", style: TextStyle(fontSize: 32,
+                  Text("비밀번호 변경", style: TextStyle(fontSize: 27,
                     fontWeight: FontWeight.w700,)
                   ),
                 ],
@@ -261,10 +261,10 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
               },
               child: const Row(
                 children: [
-                  SizedBox(width:10),
+                  SizedBox(width:20),
                   Icon( Icons.location_on, size: 40),
                   SizedBox(width: 20),
-                  Text("지역구 설정", style: TextStyle(fontSize: 32,
+                  Text("지역구 설정", style: TextStyle(fontSize: 27,
                     fontWeight: FontWeight.w700,)),
                 ],
               ),

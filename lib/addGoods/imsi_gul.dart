@@ -83,7 +83,7 @@ class _ImsiGulScreenState extends State<ImsiGulScreen> {
       appBar: AppBar(
         title: const Text('작성한 글 확인',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: FontWeight.w600,)
         ),
         actions: <Widget>[

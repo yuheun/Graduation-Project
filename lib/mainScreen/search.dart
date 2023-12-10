@@ -103,7 +103,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("검색"),
+        title: Text("검색", style: TextStyle(fontSize: 20,
+          fontWeight: FontWeight.w700,)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),

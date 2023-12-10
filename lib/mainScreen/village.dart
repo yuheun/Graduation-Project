@@ -95,7 +95,7 @@ class _VillageScreenState extends State<VillageScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('내 동네 설정',
-            style: TextStyle(fontSize: 25,
+            style: TextStyle(fontSize: 20,
               fontWeight: FontWeight.w700,)
         ),
         actions: <Widget>[

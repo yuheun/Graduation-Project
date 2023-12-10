@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen>{
               child: Text(
                 'Lost&Found Vision',
                 style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 23.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),

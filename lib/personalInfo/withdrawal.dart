@@ -147,6 +147,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                   '내 표시 이름, 아이디, 프로필이 더 이상 Lost&Found Vision에 표시되지 않습니다.',
               style: TextStyle(
                 color: Colors.grey,
+                fontSize: 13
               ),
             ),
 
@@ -160,16 +161,17 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 fontSize: 20,
               ),
             ),
+            const SizedBox(height: 20),
             const Text(
               '계정을 실수로 또는 잘못 탈퇴한 후에도 30일 내에 복구할 수 있습니다.',
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.grey, fontSize: 13
               ),
             ),
 
             const SizedBox(height: 20),
             const Divider(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
             GestureDetector(
               onTap: () {
@@ -186,7 +188,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 child: const Text(
                   '회원 탈퇴',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 23,
                     fontWeight: FontWeight.bold,
                     color: Colors.red, // Text color is white
                   ),
