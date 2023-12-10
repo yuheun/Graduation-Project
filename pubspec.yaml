@@ -44,11 +44,6 @@ flutter:
     - assets/image/logo.png
     - assets/image/logo_onlyimg.png
   fonts:
-    - family: HakgyoansimDoldam
-      fonts:
-        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamL.ttf
-        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamM.ttf
-        - asset: assets/font/HakgyoansimDoldam/HakgyoansimDoldamB.ttf
 
     - family: s-core
       fonts:
