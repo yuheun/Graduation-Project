@@ -4,7 +4,6 @@ import 'package:fortest/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'imageDisplay.dart';
 
-
 void main() {
   runApp(const MaterialApp(
     home: AddGoodsScreen(),

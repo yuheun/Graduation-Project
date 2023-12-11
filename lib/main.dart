@@ -289,18 +289,6 @@ class _HomeScreenState extends State<HomeScreen>{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
 
-                    // children: [
-                    //   Text("  "+"${userData.nickname.isNotEmpty ? userData.nickname : 'OOO'} 님",
-                    //       style: TextStyle(fontSize: 23,
-                    //           fontWeight: FontWeight.w800,
-                    //       ),
-                    //   ),
-                    //   Text("   내 동네: 서울특별시 ${userData.mylocation != null ?
-                    //    userData.mylocation! : '지역구를 선택하세요'}",
-                    //       style: TextStyle(fontSize: 16,
-                    //           fontWeight: FontWeight.w700)),
-                    // ],
-
                     children: [
                       RichText(
                         text: TextSpan(
@@ -312,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen>{
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w800,
-                                color: Color.fromARGB(255, 53, 98, 220),
+                                color: Color.fromARGB(255, 78, 103, 169),
                               ),
                             ),
                           ],
@@ -323,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         text: TextSpan(
                           text: "  내 동네: 서울특별시 ",
                           style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
                           ),
@@ -331,19 +319,15 @@ class _HomeScreenState extends State<HomeScreen>{
                             TextSpan(
                               text: "${userData.mylocation != null ? userData.mylocation! : '지역구를 선택하세요'}",
                               style: TextStyle(
-                                fontSize: 19,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w800,
-                                color: Color.fromARGB(255, 53, 98, 220),
+                                color: Color.fromARGB(255, 78, 103, 169),
                               ),
                             ),
                           ],
                         ),
                       ),
 
-                      // Text("  내 동네: 서울특별시 ${userData.mylocation != null ?
-                      // userData.mylocation! : '지역구를 선택하세요'}",
-                      //     style: TextStyle(fontSize: 16,
-                      //         fontWeight: FontWeight.w700)),
                     ],
 
 

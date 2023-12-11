@@ -264,7 +264,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                   SizedBox(width:20),
                   Icon( Icons.location_on, size: 40),
                   SizedBox(width: 20),
-                  Text("지역구 설정", style: TextStyle(fontSize: 27,
+                  Text("내 동네 설정", style: TextStyle(fontSize: 27,
                     fontWeight: FontWeight.w700,)),
                 ],
               ),

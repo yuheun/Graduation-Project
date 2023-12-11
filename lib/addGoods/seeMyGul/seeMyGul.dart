@@ -124,45 +124,55 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
         );
       },
       child: Card(
-        margin: EdgeInsets.all(8),
-        child: Stack(
-          alignment: Alignment.center,
+        margin: EdgeInsets.all(15),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              gulItem.image_url,
-              width: double.infinity,
-              height: 30,
-              fit: BoxFit.cover,
+            // Image
+            Container(
+              width: 100,
+              height: 100,
+              child: Image.network(
+                gulItem.image_url,
+                fit: BoxFit.cover,
+              ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  '종류: ${gulItem.type}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+            // Text
+            Expanded(
+              child: Padding(
+                //padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 3),
+                    Text(
+                      '종류: ${gulItem.type}',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      '대분류: ${gulItem.category}',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      '특징: ${_truncateString(gulItem.description, 8)}',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 3),
-                Text(
-                  '대분류: ${gulItem.category}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 3),
-                Text(
-                  '특징: ${_truncateString(gulItem.description, 10)}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+              ),
             ),
           ],
         ),
@@ -170,7 +180,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
     );
   }
 
-
+  // 특징 부분 값이 너무 길면 나머지는 ... 으로 대체
   String _truncateString(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
