@@ -140,7 +140,8 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
             // Text
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                //padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -162,7 +163,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                     ),
                     SizedBox(height: 3),
                     Text(
-                      '특징: ${_truncateString(gulItem.description, 7)}',
+                      '특징: ${_truncateString(gulItem.description, 8)}',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -179,7 +180,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
     );
   }
 
-
+  // 특징 부분 값이 너무 길면 나머지는 ... 으로 대체
   String _truncateString(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
