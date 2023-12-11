@@ -179,7 +179,6 @@ class _MyAppPageState extends State<MyAppPage> {
 
 class HomeScreen extends StatefulWidget {
   final String? selectedDistrict;
-
   const HomeScreen({Key? key, this.selectedDistrict}) : super(key: key);
 
   @override
@@ -224,6 +223,7 @@ class _HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
+
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -261,6 +261,10 @@ class _HomeScreenState extends State<HomeScreen>{
 
           ],
         ),
+
+        //뒤로가기 버튼 없애기
+        automaticallyImplyLeading: false,
+
       ),
       body: SingleChildScrollView( // 스크롤 하게 만듦
         child: Column(

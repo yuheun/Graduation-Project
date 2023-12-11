@@ -10,7 +10,7 @@ void main() {
   ));
 }
 
-Future<void> goToAnotherPage(BuildContext context, String pageName, {String? myloaction}) async {
+Future<void> goToAnotherPage(BuildContext context, String pageName, {String? mylocation}) async {
   // 버튼에 따라 그에 해당하는 파일로 이동
   switch(pageName){
 
@@ -21,13 +21,13 @@ Future<void> goToAnotherPage(BuildContext context, String pageName, {String? myl
       );
 
       // Save the selected district to SharedPreferences
-      if (myloaction != null) {
+      if (mylocation != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('selectedDistrict', myloaction);
+        prefs.setString('selectedDistrict', mylocation);
       }
 
       await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).update({
-        'mylocation': myloaction,
+        'mylocation': mylocation,
       });
 
       break;
@@ -45,6 +45,8 @@ class VillageScreen extends StatefulWidget {
 
 class _VillageScreenState extends State<VillageScreen> {
   String? selectedDistrict; // Variable to store the selected district
+  ////////////// 지역 값만 받아오게 함
+  String? getSelectedDistrict() => selectedDistrict; // Getter method
 
   @override
   void initState() {
@@ -135,13 +137,16 @@ class _VillageScreenState extends State<VillageScreen> {
               onPressed: () {
                 if (selectedDistrict != null) {
                   print('Selected District: $selectedDistrict');
-                  goToAnotherPage(context, "HomeScreen", myloaction: selectedDistrict);
+                  goToAnotherPage(context, "HomeScreen", mylocation: selectedDistrict);
+
                 } else {
                   print('No district selected.');
                  }
                 },
               child: const Text('확인'),
             ),
+
+
           ],
         ),
       ),
