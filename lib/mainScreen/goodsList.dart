@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fortest/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,11 +20,8 @@ class GoodsListScreen extends StatefulWidget {
 
 class _GoodsListScreenState extends State<GoodsListScreen>{
 
-  List<GulItem> postItems = [];
-  List<GulItem> filteredItems = []; // 선택된 location
-  Map<String, GulItem> mappingData = {};
   TextEditingController searchController = TextEditingController();
-
+  List<GulItem> userPostItems = [];
   // 지역구 값
   String? selectedDistrict;
 
@@ -35,37 +33,45 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
   }
 
   Future<void> loadData() async {
-    try {
-      print("fetchItems started");
-      print("widget.markerText: $selectedDistrict"); // selectedDistrict 출력
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      // 현재 사용자의 위치 정보를 파이어베이스 Users collection에서 찾음
+      var userDoc = await FirebaseFirestore.instance.collection('users').doc(
+          currentUser.uid).get();
+      var userLocation = userDoc['mylocation'];
+      print("user's location: ${userLocation}");
 
-      if (selectedDistrict != null) {
-        final postItemsQuerySnapshot = await FirebaseFirestore.instance
+      if (userLocation != null) {
+        // PostItems 컬렉션에서 사용자의 위치와 일치하는 문서
+        var postItemsQuerySnapshot = await FirebaseFirestore.instance
             .collection('PostItems')
-            .where('location', isEqualTo: selectedDistrict)
+            .where('location', isEqualTo: userLocation)
             .get();
+
 
         print("items fetched: ${postItemsQuerySnapshot.docs}");
 
-        List<GulItem> newFetchedPostItems = [];
+        var fetchedUserPostItems = <GulItem>[];
 
         // 'PostItems'의 각 항목에 대하여
         for (var doc in postItemsQuerySnapshot.docs) {
           print("PostItem: ${doc.data()}"); // PostItem 데이터 로깅
 
-          var postItemData = doc.data() as Map<String, dynamic>;
+          var postItemData = doc.data();
 
           // 'Mapping' 컬렉션에서 추가 데이터 가져오기
-          var mappingDocSnapshot = await FirebaseFirestore.instance
+          var mappingSnapshot = await FirebaseFirestore.instance
               .collection('Mapping')
               .where('label_id', isEqualTo: postItemData['label_id'])
               .get();
 
           // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
-          if (mappingDocSnapshot.docs.isNotEmpty) {
+          if (mappingSnapshot.docs.isNotEmpty) {
             // 문서가 존재하면 첫 번째 문서의 데이터를 사용
-            var mappingDoc = mappingDocSnapshot.docs.first;
-            print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
+            var mappingDoc = mappingSnapshot.docs.first;
+            print(
+                "Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc
+                    .data()}");
             var mappingData = mappingDoc.data() as Map<String, dynamic>;
 
             var gulItem = GulItem(
@@ -73,30 +79,28 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
               image_url: postItemData['image_url'],
               description: postItemData['description'],
               location: postItemData['location'],
-              category: mappingData['category'] ?? 'Unknown', // 기본값 설정
+              category: mappingData['category'] ?? 'Unknown',
+              // 기본값 설정
               subcategory: mappingData['subcategory'] ?? 'Unknown',
               type: mappingData['type'] ?? 'Unknown',
               yolo_label: mappingData['yolo_label'] ?? 'Unknown',
             );
-            newFetchedPostItems.add(gulItem);
+            fetchedUserPostItems.add(gulItem);
           } else {
-            print("No mapping data found for label_id ${postItemData['label_id']}");
+            print(
+                "No mapping data found for label_id ${postItemData['label_id']}");
           }
         }
 
         // 상태 업데이트
         setState(() {
-          postItems = newFetchedPostItems;
-          filteredItems = List.from(newFetchedPostItems);
+          userPostItems = fetchedUserPostItems;
         });
       } else {
         print('No district selected.');
       }
-    } catch (e) {
-      print('Error loading data: $e');
     }
   }
-
 
 
   @override
@@ -128,9 +132,9 @@ class _GoodsListScreenState extends State<GoodsListScreen>{
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: filteredItems.length,
+              itemCount: userPostItems.length,
               itemBuilder: (context, index) {
-                return _buildGulItem(filteredItems[index]);
+                return _buildGulItem(userPostItems[index]);
               },
             ),
           ],

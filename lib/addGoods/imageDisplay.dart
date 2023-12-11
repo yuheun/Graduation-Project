@@ -203,6 +203,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                         else{
                           String address = snapshot.data as String;
 
+                          // 이 값 PostItems firebase에 저장해야댐 ----------------------------
+
                           return Padding(padding: const EdgeInsets.all(8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
