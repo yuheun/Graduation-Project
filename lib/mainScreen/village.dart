@@ -17,7 +17,7 @@ Future<void> goToAnotherPage(BuildContext context, String pageName, {String? myl
     case "HomeScreen":
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen(selectedDistrict: myloaction)),
+        MaterialPageRoute(builder: (context) => MyAppPage()),
       );
 
       // Save the selected district to SharedPreferences
