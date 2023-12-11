@@ -125,44 +125,52 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
       },
       child: Card(
         margin: EdgeInsets.all(8),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              gulItem.image_url,
-              width: double.infinity,
+            // Image
+            Container(
+              width: 30,
               height: 30,
-              fit: BoxFit.cover,
+              child: Image.network(
+                gulItem.image_url,
+                fit: BoxFit.cover,
+              ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  '종류: ${gulItem.type}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+            // Text
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '종류: ${gulItem.type}!',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      '대분류: ${gulItem.category}!',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      '특징: ${_truncateString(gulItem.description, 7)}!',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 3),
-                Text(
-                  '대분류: ${gulItem.category}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 3),
-                Text(
-                  '특징: ${_truncateString(gulItem.description, 10)}!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+              ),
             ),
           ],
         ),

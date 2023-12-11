@@ -7,6 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'imsi_gul.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+///////////////
+import 'package:tflite_flutter/tflite_flutter.dart';
+import 'dart:typed_data';
+//////////////
+import 'package:palette_generator/palette_generator.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -45,7 +50,6 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       nickname: '',
       profileImgUrl: '');
 
-
   String item = '';
   String selectedCategory = '전자기기'; // To store the selected category value
   // Define the available categories
@@ -57,7 +61,95 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
   void initState() {
     super.initState();
     loadUserData();
+    ////////////////색상이라도 뽑아내야할거 같아서..////////////////
+    extractDominantColor();
   }
+
+
+
+
+  //////////////////색상이라도 뽑아내야할거 같아서..//////////////
+  Color dominantColor = Colors.white;
+  String colorCategory = '';
+
+  Future<void> extractDominantColor() async {
+    try {
+      Image image = Image.file(File(widget.imagePath));
+      PaletteGenerator paletteGenerator =
+      await PaletteGenerator.fromImageProvider(image.image);
+
+      dominantColor = paletteGenerator.dominantColor?.color ?? Colors.white;
+
+      print('Dominant Color: $dominantColor');
+
+      // 분류된 색상 출력
+      String colorCategory = classifyColor(dominantColor);
+      print('Color Category: $colorCategory');
+
+      setState(() {
+        // features 값 업데이트
+        //features = 'Dominant Color: ${dominantColor.toString()}, Category: $colorCategory';
+        features = '$colorCategory';
+      });
+
+    } catch (e) {
+      print('Error extracting dominant color: $e');
+    }
+  }
+
+  String classifyColor(Color color) {
+    Map<String, List<int>> colorMapping = {
+      "빨간색": [255, 0, 0],
+      "주황색": [255, 165, 0],
+      "노란색": [255, 255, 0],
+      "초록색": [0, 128, 0],
+      "파란색": [0, 0, 255],
+      "보라색": [128, 0, 128],
+      "흰색": [255, 255, 255],
+      "검은색": [0, 0, 0],
+      // 더 추가함
+      "갈색": [139, 69, 19],
+      "분홍색": [255, 182, 193],
+      "회색": [128, 128, 128],
+      "하늘색": [135, 206, 250],
+      "청록색": [0, 255, 255],
+      "남색": [0, 0, 128],
+      "연보라색": [230, 230, 250],
+      "연녹색": [50, 205, 50],
+    };
+
+    // 입력된 RGB 값과 가장 가까운 색상 찾기
+    String closestColor = findClosestColor(color, colorMapping);
+    return closestColor;
+  }
+
+  String findClosestColor(Color targetColor, Map<String, List<int>> colorMapping) {
+    int minDistance = double.maxFinite.toInt();
+    String closestColor = '알 수 없는 색상';
+
+    // 각 미리 정의된 색상과의 거리 계산
+    colorMapping.forEach((String colorName, List<int> rgbValues) {
+      int distance = calculateDistance(targetColor, Color.fromARGB(255, rgbValues[0], rgbValues[1], rgbValues[2]));
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestColor = colorName;
+      }
+    });
+
+    return closestColor;
+  }
+
+  int calculateDistance(Color color1, Color color2) {
+    // 각 색상의 RGB 값 차이의 제곱을 계산하여 거리 측정
+    int redDiff = color1.red - color2.red;
+    int greenDiff = color1.green - color2.green;
+    int blueDiff = color1.blue - color2.blue;
+    return (redDiff * redDiff) + (greenDiff * greenDiff) + (blueDiff * blueDiff);
+  }
+
+  /////////////////// 색 인식 함수 끝 /////////////////
+
+
 
   Future<void> loadUserData() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -141,6 +233,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('글 작성',
@@ -176,8 +269,12 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
               child: Column(
                 children: [
                   buildInputField('종류', item),
+                  //Text('종류: $item', style: TextStyle(fontSize: 20),),
                   buildCategoryDropdown(), // Added the category dropdown
-                  buildInputField('특징', features),
+                  //buildInputField('특징', features),
+                  const SizedBox(height:8),
+                  //임시로 그냥 색상 출력...
+                  Text('특징: $features', style: TextStyle(fontSize: 20),),
 
                   SizedBox(height: 7),
 
@@ -216,6 +313,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                       },
                         future: getAddress(),
                       )
+
+
                     ],
                   ),
 
@@ -237,6 +336,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                 ],
               ),
             ),
+
+
           ],
         ),
       ),
@@ -269,6 +370,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
               ),
+
+
             ),
           ),
         ],
@@ -292,6 +395,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
               ),
+
+
               onChanged: (newValue) {
                 setState(() {
                   switch (label) {
@@ -313,6 +418,8 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
       ),
     );
   }
+
+
 
 }
 
