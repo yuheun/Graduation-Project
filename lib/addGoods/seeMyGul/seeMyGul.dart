@@ -124,14 +124,14 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
         );
       },
       child: Card(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image
             Container(
-              width: 30,
-              height: 30,
+              width: 100,
+              height: 100,
               child: Image.network(
                 gulItem.image_url,
                 fit: BoxFit.cover,
@@ -144,26 +144,27 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 3),
                     Text(
-                      '종류: ${gulItem.type}!',
+                      '종류: ${gulItem.type}',
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     SizedBox(height: 3),
                     Text(
-                      '대분류: ${gulItem.category}!',
+                      '대분류: ${gulItem.category}',
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     SizedBox(height: 3),
                     Text(
-                      '특징: ${_truncateString(gulItem.description, 7)}!',
+                      '특징: ${_truncateString(gulItem.description, 7)}',
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                       overflow: TextOverflow.ellipsis,

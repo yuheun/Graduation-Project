@@ -149,7 +149,7 @@ class _ImsiGulScreenState extends State<ImsiGulScreen> {
                       ),
                     );
                   },
-                  child: Text('내 게시글 보기'),
+                  child: Text('내 게시글 목록 보기'),
                 ),
 
               ],

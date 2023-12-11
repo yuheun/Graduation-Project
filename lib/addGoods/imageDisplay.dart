@@ -325,7 +325,9 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ImsiGulScreen(
-                           // 넣을 데이터 추가
+                            ///////////변수 써야함////////////
+
+
                           ),
                         ),
                       );
