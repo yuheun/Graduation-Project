@@ -44,6 +44,10 @@ Naver Cloud Platform에서 Naver Map API 권한을 받아와 사용하였습니�
 
 ![naver api](https://github.com/berry1015/fortest/assets/120501910/621f2bca-9916-4317-884d-ad58a7bb0c81)
 
+앱 내 지도 실행 화면
+
+![map](https://github.com/berry1015/fortest/assets/120501910/cf56bd7d-ee11-4670-bae6-52c9b41430e1)
+
 ## 기술 스택
 - 프론트엔드: Flutter
 - 데이터베이스: Firebase
