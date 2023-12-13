@@ -166,12 +166,16 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
     }
   }
 
+<<<<<<< HEAD
+=======
+// Firebase 연결 (model 연결 이후에)
+>>>>>>> e7a15c2761ba2793eb9703ca66527de87afaf7aa
   void uploadDataToFirestore() async {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
         // Firestore 'posts' 컬렉션에 데이터 추가
-        await FirebaseFirestore.instance.collection('posts').add({
+        await FirebaseFirestore.instance.collection('z').add({
           'user_id': currentUser.uid,
           'image_url': widget.imagePath,
           'item': item,

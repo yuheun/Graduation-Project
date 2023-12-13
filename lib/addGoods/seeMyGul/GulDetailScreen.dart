@@ -78,9 +78,9 @@ class GulDetailScreen extends StatelessWidget {
                     1: FixedColumnWidth(200.0), // Set width for the value column
                   },
                   children: [
-                    _buildTableRow('종류', gulItem.subcategory),
+                    _buildTableRow('종류', gulItem.yolo_label),
                     _buildTableRow('대분류', gulItem.category),
-                    _buildTableRow('특징', gulItem.yolo_label),
+                    _buildTableRow('내용', gulItem.description),
                   ],
                 ),
               ),

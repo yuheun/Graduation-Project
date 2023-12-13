@@ -175,7 +175,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       )
                       : null,
                       title: Text('${item.yolo_label}'),
-                      subtitle: Text('대분류: ${item.category}\n중분류: ${item.subcategory}\n소분류: ${item.type}'),
+                      subtitle: Text('대분류: ${item.category}\n중분류: ${item.subcategory}\n내용: ${item.description}'),
                     ),
                   ),
                 );
