@@ -163,7 +163,7 @@ class _SeeMyGulScreenState extends State<SeeMyGulScreen> {
                     ),
                     SizedBox(height: 3),
                     Text(
-                      '특징: ${_truncateString(gulItem.description, 8)}',
+                      '특징: ${_truncateString(gulItem.yolo_label, 8)}',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,

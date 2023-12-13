@@ -20,68 +20,81 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   List<GulItem> postItems = [];
-  List<GulItem> filteredItems = [];
-  Map<String, GulItem> mappingData = {};
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    fetchItems(); // Fetch data when the screen is initialized
   }
 
-  Future<void> fetchItems() async {
+  Future<void> fetchItems(String searchQuery) async {
     print("fetchItems started");
 
-    // PostItems 컬렉션에서 데이터 가져오기 (화면에 띄울 데이터)
-    final postItemsQuerySnapshot = await FirebaseFirestore.instance
-        .collection('PostItems')
-        .get();
+    // Mapping 컬렉션에서 검색어에 해당하는 문서를 찾는다. (Mapping의 category, subcategory, type, yolo_label에서 모두 검색
+    var mappingQuerySnapshots = await Future.wait([
+      FirebaseFirestore.instance
+          .collection('Mapping')
+          .where('category', isEqualTo: searchQuery)
+          .get(),
+      FirebaseFirestore.instance
+          .collection('Mapping')
+          .where('subcategory', isEqualTo: searchQuery)
+          .get(),
+      FirebaseFirestore.instance
+          .collection('Mapping')
+          .where('type', isEqualTo: searchQuery)
+          .get(),
+      FirebaseFirestore.instance
+          .collection('Mapping')
+          .where('yolo_label', isEqualTo: searchQuery)
+          .get(),
+    ]);
 
-    print("items fetched: ${postItemsQuerySnapshot.docs}");
-
-    List<GulItem> newFetchedPostItems = [];
+    // 검색 결과 담을 리스트
+    List<GulItem> fetchedItems = [];
 
     // 'PostItems'의 각 항목에 대하여
-    for (var doc in postItemsQuerySnapshot.docs) {
-      print("PostItem: ${doc.data()}"); // PostItem 데이터 로깅
+    for (var snapshot in mappingQuerySnapshots) {
+      for (var doc in snapshot.docs) {
+        var mappingData = doc.data();
+        print("MappingData: ${mappingData}"); // PostItem 데이터 로깅
 
-      var postItemData = doc.data();
+        // 'PostItems' 컬렉션에서 추가 데이터 가져오기
+        var postItemsQuerySnapshot = await FirebaseFirestore.instance
+            .collection('PostItems')
+            .where('label_id', isEqualTo: mappingData['label_id'])
+            .get();
 
-      // 'Mapping' 컬렉션에서 추가 데이터 가져오기
-      var mappingDocSnapshot = await FirebaseFirestore.instance
-          .collection('Mapping')
-          .where('label_id', isEqualTo: postItemData['label_id'])
-          .get();
+        // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
+        if (postItemsQuerySnapshot.docs.isNotEmpty) {
+          // 문서가 존재하면 첫 번째 문서의 데이터를 사용
+          var postItemsDoc = postItemsQuerySnapshot.docs.first;
+          print("Mapping data for label_id ${postItemsDoc['label_id']}: ${postItemsDoc.data()}");
+          var postItemData = postItemsDoc.data();
 
-      // 만약 매핑 데이터가 있으면 'GulItem' 객체 생성
-      if (mappingDocSnapshot.docs.isNotEmpty) {
-        // 문서가 존재하면 첫 번째 문서의 데이터를 사용
-        var mappingDoc = mappingDocSnapshot.docs.first;
-        print("Mapping data for label_id ${postItemData['label_id']}: ${mappingDoc.data()}");
-        var mappingData = mappingDoc.data();
-
-        var gulItem = GulItem(
-          label_id: postItemData['label_id'],
-          image_url: postItemData['image_url'],
-          description: postItemData['description'],
-          location: postItemData['location'],
-          category: mappingData['category'] ?? 'Unknown', // 기본값 설정
-          subcategory: mappingData['subcategory'] ?? 'Unknown',
-          type: mappingData['type'] ?? 'Unknown',
-          yolo_label: mappingData['yolo_label'] ?? 'Unknown',
-        );
-        newFetchedPostItems.add(gulItem);
-      } else {
-        print("No mapping data found for label_id ${postItemData['label_id']}");
+          var gulItem = GulItem(
+            label_id: postItemData['label_id'],
+            image_url: postItemData['image_url'] ?? 'Unknown',
+            description: postItemData['description'],
+            location: postItemData['location'],
+            category: mappingData['category'] ?? 'Unknown',
+            // 기본값 설정
+            subcategory: mappingData['subcategory'] ?? 'Unknown',
+            type: mappingData['type'] ?? 'Unknown',
+            yolo_label: mappingData['yolo_label'] ?? 'Unknown',
+          );
+          fetchedItems.add(gulItem);
+        } else {
+          print(
+              "No mapping data found for label_id ${mappingData['label_id']}");
+        }
       }
-    }
 
-    // 상태 업데이트
-    setState(() {
-      postItems = newFetchedPostItems;
-      filteredItems = List.from(newFetchedPostItems);
-    });
+      // 상태 업데이트
+      setState(() {
+        postItems = fetchedItems;
+      });
+    }
   }
 
 
@@ -97,10 +110,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         title: Text("검색", style: TextStyle(fontSize: 20,
@@ -131,10 +140,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 controller: searchController,
                 onChanged: (value) {
                   setState(() {
-                    filteredItems = postItems
-                        .where((itemModel) =>
-                        itemModel.description.toLowerCase().contains(value.toLowerCase()))
-                        .toList();
                   });
                 },
                 decoration: InputDecoration(
@@ -143,8 +148,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
-                      // No need to duplicate the search logic here since it's already in onChanged
-                    },
+                      fetchItems(searchController.text);                    },
                   ),
                 ),
               ),
@@ -153,9 +157,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
           Expanded(
             child: ListView.builder(
-              itemCount: filteredItems.length,
+              itemCount: postItems.length,
               itemBuilder: (context, index) {
-                final GulItem item = filteredItems[index];
+                final GulItem item = postItems[index];
 
                 return GestureDetector(
                   onTap: () {
@@ -163,7 +167,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                   child: Card(
                     child: ListTile(
-                      leading: item.image_url != null ? Image.network(item.image_url) : null,
+                      leading: item.image_url != null
+                        ? SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Image.network(item.image_url, fit: BoxFit.cover),
+                      )
+                      : null,
                       title: Text('${item.yolo_label}'),
                       subtitle: Text('대분류: ${item.category}\n중분류: ${item.subcategory}\n소분류: ${item.type}'),
                     ),
