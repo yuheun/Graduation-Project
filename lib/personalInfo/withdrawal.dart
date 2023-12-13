@@ -142,9 +142,10 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Lost&Found Vision 계정 탈퇴 프로세스를 시작합니다.\n'
-                  '내 표시 이름, 아이디, 프로필이 더 이상 Lost&Found Vision에 표시되지 않습니다.',
+            Text(
+              'Lost&Found Vision 계정이 삭제됩니다.\n'
+                  '내 모든 콘텐츠와 개인 정보가 영구적으로 삭제되며,\n내 ID로'
+                  ' ${userData.nickname}' '을(를) 더 이상 사용할 수 없게 됩니다.',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 13
@@ -155,7 +156,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
             const Divider(),
             const SizedBox(height: 20),
             const Text(
-              '그 외에 내가 알아야할 사항',
+              '탈퇴 전 유의사항',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -163,7 +164,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              '계정을 실수로 또는 잘못 탈퇴한 후에도 30일 내에 복구할 수 있습니다.',
+              '계정을 실수로 또는 잘못 탈퇴한 후에도 30일 내에 복구할 수 있으며,'
+                  ' 탈퇴 요청을 처리하는 도중에 다시 로그인하면 탈퇴 절차가 중단됩니다.',
               style: TextStyle(
                 color: Colors.grey, fontSize: 13
               ),

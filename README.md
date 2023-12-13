@@ -18,10 +18,9 @@ samples, guidance on mobile development, and a full API reference.
 
 
 
-### -------------Written by berry1015-------------
+### -------------Plz see below text------------
 
-To use tflite model for computervision, we have to upload model in backend...
-
-It is too big to use in android studio.
-
-Also we have to make database for 'selectedDistrict'(지역구 설정), 'GulItem'(글목록) ,, 
+This is an application that allows you to register and find lost items.
+The purpose of this project is to make it easier and more convenient to find and register lost objects by utilizing computer vision.
+It provides convenience to users by allowing the model to recognize and analyze the photo of the lost object to be registered to capture the features of the photo and automatically write the features instead of the author.
+We hope this project will help society even a little.

@@ -73,4 +73,5 @@ flutter {
 dependencies {
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.3.1'
 }

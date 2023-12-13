@@ -52,8 +52,7 @@ class _AlarmScreenState extends State<AlarmScreen>{
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text("  알림~~~~화면 \n  알림 화면입니당. 나중에 만들자 방학 때나 \n"
-                "   내년 4-1 졸작3 때 하겠다고 합쉬당. 지금은 이거 할 수 없음^^..."),
+            Text("     키워드 알림 화면 \n     2024년 4학년 1학기 졸업작품3 때 진행할 예정입니다."),
           ],
         ),
       ),
