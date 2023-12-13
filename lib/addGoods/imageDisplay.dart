@@ -166,10 +166,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen> {
     }
   }
 
-<<<<<<< HEAD
-=======
 // Firebase 연결 (model 연결 이후에)
->>>>>>> e7a15c2761ba2793eb9703ca66527de87afaf7aa
   void uploadDataToFirestore() async {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
