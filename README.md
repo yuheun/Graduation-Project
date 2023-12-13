@@ -40,6 +40,8 @@
 <img width="552" alt="image" src="https://github.com/berry1015/for>
 
 ## Map
+Naver Cloud Platform에서 Naver Map API 권한을 받아와 사용하였습니다.
+
 ![naver api](https://github.com/berry1015/fortest/assets/120501910/621f2bca-9916-4317-884d-ad58a7bb0c81)
 
 ## 기술 스택
