@@ -37,8 +37,10 @@
    - 설정한 키워드와 관련된 물건이 업로드되면 알림을 받습니다.
 
 ## Database
-<img width="552" alt="image" src="https://github.com/berry1015/for용
+<img width="552" alt="image" src="https://github.com/berry1015/for>
 
+## Map
+![naver api](https://github.com/berry1015/fortest/assets/120501910/621f2bca-9916-4317-884d-ad58a7bb0c81)
 
 ## 기술 스택
 - 프론트엔드: Flutter
