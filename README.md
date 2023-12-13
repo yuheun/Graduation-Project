@@ -37,7 +37,8 @@
    - 설정한 키워드와 관련된 물건이 업로드되면 알림을 받습니다.
 
 ## Database
-<img width="452" alt="image" src="https://github.com/Chae0510/GraduationPrject/assets/85086390/515291bc-c425-4ff9-8ea4-5e361def8cd6">
+<img width="452" alt="image" src="<img width="552" alt="image" src="https://github.com/berry1015/fortest/assets/85086390/c67e4246-418b-4461-b3e7-683c63c1200c">
+">
 
 
 ## 기술 스택
