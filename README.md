@@ -67,6 +67,15 @@ This api is pretrained model that used COCO Dataset.
 We added AirPods and wallets to the label map according to the characteristics of our application.
 
 
+## Description about files (Explanation of codes)
+<img src="https://github.com/berry1015/fortest/assets/79952916/f6a041a6-06a4-45cf-b896-d61ee966d621" alt="mainscreen" width="200" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/15c8bb06-046e-478a-aa19-843587510cbc" alt="findGoods" width="200" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/b373017f-5ea1-484c-a68e-82efb14e058e" alt="search" width="200" height="400">
+</br>
+You can see a description of the files through the link below.
+https://github.com/berry1015/fortest/blob/main/README.md
+
+
 ## 기술 스택
 - 프론트엔드: Flutter
 - 데이터베이스: Firebase
