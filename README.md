@@ -70,6 +70,10 @@ We added AirPods and wallets to the label map according to the characteristics o
 
 - [Airpod dataset] : https://universe.roboflow.com/yolov5-oi1fm/detect-airpod/dataset/2
 
+Output of detection
+![detectionoutput](./assets/image/DetectionOutput.jpg)
+
+
 
 ## Description about files (Explanation of codes)
 <img src="https://github.com/berry1015/fortest/assets/79952916/f6a041a6-06a4-45cf-b896-d61ee966d621" alt="mainscreen" width="210" height="400">
