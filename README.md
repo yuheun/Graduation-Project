@@ -44,13 +44,16 @@ The 'Lost&Found Vision' project is a community-based lost and found recognition 
 
 
 ## Map
-Naver Cloud Platform에서 Naver Map API 권한을 받아와 사용하였습니다.
+Obtaining and using Naver Map API permission from Naver Cloud Platform
 
 ![naver api](https://github.com/berry1015/fortest/assets/120501910/621f2bca-9916-4317-884d-ad58a7bb0c81)
 
-앱 내 지도 실행 화면
+In-app Map Execution Screen
 
 ![map](https://github.com/berry1015/fortest/assets/120501910/cf56bd7d-ee11-4670-bae6-52c9b41430e1)
+
+- Marking Seoul's administrative autonomous districts with markers
+- Display the name of the administrative autonomous districts on the marker
 
 ## 기술 스택
 - 프론트엔드: Flutter
