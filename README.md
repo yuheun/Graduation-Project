@@ -1,4 +1,4 @@
-<img width="717" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/c50eed60-7491-4ad2-ac88-28a454df18c7"># GraduationPrject
+# GraduationPrject
 ## Lost&Found Vision
 
 The 'Lost&Found Vision' project is a community-based lost and found recognition and sharing application. This application utilizes location-based services and image processing technology to automatically recognize and categorize lost items, sharing them with the community to assist in their recovery.
