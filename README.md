@@ -8,17 +8,17 @@ The 'Lost&Found Vision' project is a community-based lost and found recognition 
 
 1. **User Finds an Object**: Display an image of a person discovering a lost item and picking it up.
 2. **Photo Capture**: Show the user taking a picture of the item with their smartphone.
-3. **Object Detection**: Illustrate the app interface with the uploaded photo, highlighting the item with a bounding box as the app analyzes the image.
+3. **Object Detection**: Illustrate the app interface with the uploaded photo, highlighting the item with a bounding box as the app analyzes the image.</br>
   <img width="548" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/037ed463-b2df-4cd0-b1a0-42dcd834015c">
 
-4. **Information Extraction**: Present the app identifying and extracting features such as color, shape, or any distinctive marks and categorizing the information into four levels: major category, intermediate category, minor category, and final classification, for storage in a database.
-   <img width="420" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/37f3924a-21f0-4339-a9a5-7699699dcf26">
+4. **Information Extraction**: Present the app identifying and extracting features such as color, shape, or any distinctive marks and categorizing the information into four levels: major category, intermediate category, minor category, and final classification, for storage in a database.</br>
+   <img width="420" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/37f3924a-21f0-4339-a9a5-7699699dcf26"></br>
    <img width="514" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/3d3a1939-92d1-46a8-8120-5644f26703ca">
 
-5. **Location Tagging**: Include a graphic or icon that signifies the recording or inputting of the item's location, such as a map icon.
+5. **Location Tagging**: Include a graphic or icon that signifies the recording or inputting of the item's location, such as a map icon.</br>
    <img width="233" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/578208d3-cf20-467e-b171-f3660a7037e9">
 
-6. **Database Upload**: Demonstrate that the extracted information is being uploaded to a database, indicated by a cloud upload icon or similar imagery.
+6. **Database Upload**: Demonstrate that the extracted information is being uploaded to a database, indicated by a cloud upload icon or similar imagery.</br>
      <img width="349" alt="image" src="https://github.com/GraduationProjectTeam7/GraduationProject/assets/85086390/2cbde90f-2dfc-493d-90b9-a60f5bb53baf">
 
 7. **Community Sharing**: Depict how the item's information is shared within a community or network, possibly shown as interconnected user profiles or icons.
@@ -45,18 +45,18 @@ The 'Lost&Found Vision' project is a community-based lost and found recognition 
 
 ## Map
 Obtaining and using Naver Map API permission from Naver Cloud Platform
-
+</br>
 ![naver api](https://github.com/berry1015/fortest/assets/120501910/621f2bca-9916-4317-884d-ad58a7bb0c81)
 
 In-app Map Execution Screen
-
+</br>
 ![map](https://github.com/berry1015/fortest/assets/120501910/cf56bd7d-ee11-4670-bae6-52c9b41430e1)
 
 - Marking Seoul's administrative autonomous districts with markers
 - Display the name of the administrative autonomous districts on the marker
 
 ## Object Detection
-Use Tensorflow Object Detection api to detect objects.
+Use Tensorflow Object Detection api to detect objects.</br>
 ![](https://www.tensorflow.org/static/images/tf_logo_social.png)
 [API] : https://github.com/tensorflow/models/tree/master/research/object_detection
 
