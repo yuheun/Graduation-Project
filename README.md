@@ -56,7 +56,11 @@ In-app Map Execution Screen
 - Display the name of the administrative autonomous districts on the marker
 
 ## Object Detection
-
+Use Tensorflow Object Detection api to detect objects.
+![](https://www.tensorflow.org/static/images/tf_logo_social.png)
+[API] : https://github.com/tensorflow/models/tree/master/research/object_detection
+This api is pretrained model that used COCO Dataset.
+We added AirPods and wallets to the label map according to the characteristics of our application.
 
 ## 기술 스택
 - 프론트엔드: Flutter
