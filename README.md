@@ -55,6 +55,9 @@ In-app Map Execution Screen
 - Marking Seoul's administrative autonomous districts with markers
 - Display the name of the administrative autonomous districts on the marker
 
+## Object Detection
+
+
 ## 기술 스택
 - 프론트엔드: Flutter
 - 데이터베이스: Firebase
