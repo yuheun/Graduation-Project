@@ -66,6 +66,10 @@ This api is pretrained model that used COCO Dataset.
 
 We added AirPods and wallets to the label map according to the characteristics of our application.
 
+- [Wallet dataset] : https://universe.roboflow.com/project-a5ktq/wallets/dataset/2
+
+- [Airpod dataset] : https://universe.roboflow.com/yolov5-oi1fm/detect-airpod/dataset/2
+
 
 ## Description about files (Explanation of codes)
 <img src="https://github.com/berry1015/fortest/assets/79952916/f6a041a6-06a4-45cf-b896-d61ee966d621" alt="mainscreen" width="210" height="400">
