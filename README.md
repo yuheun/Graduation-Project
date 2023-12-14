@@ -68,11 +68,12 @@ We added AirPods and wallets to the label map according to the characteristics o
 
 
 ## Description about files (Explanation of codes)
-<img src="https://github.com/berry1015/fortest/assets/79952916/f6a041a6-06a4-45cf-b896-d61ee966d621" alt="mainscreen" width="200" height="400">
-<img src="https://github.com/berry1015/fortest/assets/79952916/15c8bb06-046e-478a-aa19-843587510cbc" alt="findGoods" width="200" height="400">
-<img src="https://github.com/berry1015/fortest/assets/79952916/b373017f-5ea1-484c-a68e-82efb14e058e" alt="search" width="200" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/f6a041a6-06a4-45cf-b896-d61ee966d621" alt="mainscreen" width="210" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/15c8bb06-046e-478a-aa19-843587510cbc" alt="findGoods" width="210" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/b373017f-5ea1-484c-a68e-82efb14e058e" alt="search" width="210" height="400">
+<img src="https://github.com/berry1015/fortest/assets/79952916/e2fbf911-09c0-46de-a60f-11a8fb846ced" alt="login" width="210" height="400">
 </br>
-You can see a description of the files through the link below.
+You can see a description of the files through the link below.</br>
 https://github.com/berry1015/fortest/blob/main/README.md
 
 
