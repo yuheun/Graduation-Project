@@ -85,11 +85,11 @@ You can see a description of the files through the link below.</br>
 https://github.com/berry1015/fortest/blob/main/README.md
 
 
-## 기술 스택
-- 프론트엔드: Flutter
-- 데이터베이스: Firebase
-- 이미지 처리: OpenCV
-- 지도 서비스: Naver API
+## Technology Stack
+- front: Flutter
+- database: Firebase
+- image processing: OpenCV
+- map service: Naver API
 
 
 ----------------------------------------------------
